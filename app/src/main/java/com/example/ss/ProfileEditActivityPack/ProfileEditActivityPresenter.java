@@ -110,12 +110,13 @@ public class ProfileEditActivityPresenter {
 
 
                 storageRef.child(auth.getUid()+".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+
                     @Override
                     public void onSuccess(Uri uri) {
+
                         Log.e("", uri + "");
                         String link = uri.toString();
                         uploadLinkToFirebase(link, progressDialog);
-
 
                     }
 
