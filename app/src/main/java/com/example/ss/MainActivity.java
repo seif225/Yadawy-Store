@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity
             userRef.child(mAuth.getUid().toString()).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    if(!dataSnapshot.hasChild("userName")||!dataSnapshot.hasChild("phone")||!dataSnapshot.hasChild("adress")){
+                    if(!dataSnapshot.hasChild("userName")||!dataSnapshot.hasChild("phone")||!dataSnapshot.hasChild("address")){
 
                         sendUserToProfileEditActivity();
 

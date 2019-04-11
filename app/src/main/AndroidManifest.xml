@@ -12,8 +12,10 @@
         <activity android:name=".MailLoginPack.MailLoginActivity"></activity>
         <activity android:name=".signUpPack.SingUpActivity" />
         <activity android:name=".ProfileEditActivityPack.ProfileEditActivity" />
-
+        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat"/>
         <activity android:name=".SplashPack.SplashActivity" />
+
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"

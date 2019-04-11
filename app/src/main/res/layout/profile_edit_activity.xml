@@ -25,9 +25,9 @@
             app:layout_constraintVertical_bias="0.0" />
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/circleImageView"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
+            android:id="@+id/profilePicture"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
             android:layout_marginTop="120dp"
             android:layout_marginBottom="8dp"
             android:src="@drawable/user"
@@ -36,7 +36,8 @@
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="@+id/cover"
             app:layout_constraintTop_toTopOf="@+id/cover"
-            android:elevation=""
+            app:civ_border_color="@color/colorAccent"
+            app:civ_border_width="3dp"
             app:layout_constraintVertical_bias="0.0" />
 
         <android.support.design.widget.FloatingActionButton
@@ -48,8 +49,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.304"
-            app:layout_constraintStart_toStartOf="@+id/circleImageView"
-            app:layout_constraintTop_toTopOf="@+id/circleImageView"
+            app:layout_constraintStart_toStartOf="@+id/profilePicture"
+            app:layout_constraintTop_toTopOf="@+id/profilePicture"
             app:layout_constraintVertical_bias="0.148" />
 
         <TextView
@@ -132,7 +133,7 @@
             android:layout_marginLeft="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
-
+            android:inputType="phone"
             android:layout_marginBottom="8dp"
             android:hint="phone number"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -189,7 +190,7 @@
             app:layout_constraintTop_toBottomOf="@id/mail_address_et" />
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/adress_et"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
@@ -198,6 +199,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:hint="address"
+
             android:textColor="#f44336"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -213,10 +215,11 @@
             android:layout_marginRight="8dp"
             android:layout_marginBottom="8dp"
             android:text="update"
+            android:id="@+id/update_data_button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editText" />
+            app:layout_constraintTop_toBottomOf="@+id/adress_et" />
 
     </android.support.constraint.ConstraintLayout>
 
