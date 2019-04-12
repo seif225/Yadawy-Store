@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -16,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.ss.AdminProfilePack.ProfileFragment;
 import com.example.ss.ProfileEditActivityPack.ProfileEditActivity;
 import com.example.ss.SplashPack.SplashActivity;
 import com.example.ss.financeForBusinessUserPack.addFinancialInfoActivity;
@@ -132,19 +134,6 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-               /* Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();*/
-               FirebaseAuth.getInstance().signOut();
-               Intent i = new Intent(MainActivity.this,SplashActivity.class);
-               i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-               startActivity(i);
-            }
-        });
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -195,7 +184,7 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
+        Fragment selectedFragment =null;
         if (id == R.id.nav_home) {
             // Handle the camera action
         } else if (id == R.id.nav_categroies) {
@@ -203,7 +192,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_save) {
 
         } else if (id == R.id.nav_profile) {
-
+            selectedFragment = new ProfileFragment();
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_settings) {
@@ -212,9 +201,13 @@ public class MainActivity extends AppCompatActivity
         else if (id == R.id.nav_contct_us) {
 
         }else if (id == R.id.nav_logOut) {
+            mAuth.signOut();
+            sendUserToSplash();
 
         }
 
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                selectedFragment).commit();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

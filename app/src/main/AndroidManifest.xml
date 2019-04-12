@@ -10,7 +10,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".financeForBusinessUserPack.addFinancialInfoActivity"></activity>
-        <activity android:name=".AdminProfilePack.AdminProfileActivity" />
         <activity android:name=".MailLoginPack.MailLoginActivity" />
         <activity android:name=".signUpPack.SingUpActivity" />
         <activity android:name=".ProfileEditActivityPack.ProfileEditActivity" />
