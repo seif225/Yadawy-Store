@@ -64,6 +64,15 @@
                 app:layout_constraintTop_toBottomOf="@id/product_description_at_recyclerView" />
 
             <!-- TODO: put heart Like Button -->
+            <ImageButton
+                android:id="@+id/like_image_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_favorite_border_black_24dp"
+                app:layout_constraintHorizontal_bias="0.9"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/product_price_at_recyclerView" />
 
         </android.support.constraint.ConstraintLayout>
 
