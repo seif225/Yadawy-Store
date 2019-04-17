@@ -15,6 +15,7 @@
         <activity android:name=".MailLoginPack.MailLoginActivity" />
         <activity android:name=".signUpPack.SingUpActivity" />
         <activity android:name=".ProfileEditActivityPack.ProfileEditActivity" />
+        <activity android:name=".uploadProductImages.UploadProudctImagesActivity"></activity>
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
