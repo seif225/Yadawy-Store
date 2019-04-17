@@ -3,8 +3,10 @@ package com.example.ss.AdminProfilePack;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.ss.R;
@@ -27,7 +29,7 @@ public class ProfileFragmentPresenter {
     private DatabaseReference userRef;
     private FirebaseAuth mAuth;
     private String userName, bio, image;
-
+    boolean check;
     ProfileFragmentPresenter(Context context) {
         this.context = context;
         database = FirebaseDatabase.getInstance();
@@ -105,4 +107,27 @@ public class ProfileFragmentPresenter {
 
     }
 
+    public void showOrHideFab(final Button button) {
+
+      userRef.addValueEventListener(new ValueEventListener() {
+          @Override
+          public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+              if(dataSnapshot.child("account type").getValue().toString().equals("business account")){
+
+                button.setVisibility(View.VISIBLE);
+
+              }
+          }
+
+          @Override
+          public void onCancelled(@NonNull DatabaseError databaseError) {
+
+          }
+      });
+
+
+
+
+    }
 }

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,7 +28,7 @@ public class ProfileFragment extends Fragment {
     private CircleImageView profilePicture;
     private Button editProfileButton;
     private ProgressDialog progressDialog;
-
+    private Button uploadProductFab;
     public ProfileFragment() {
 
     }
@@ -40,14 +41,7 @@ public class ProfileFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_profile, container, false);
         intialiaizeFields();
         presenter.retriveUserData(progressDialog,userNameTv,profilePicture,bioTv);
-
-
-        editProfileButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sendUserToEditProfileActivity();
-            }
-        });
+      presenter.showOrHideFab(uploadProductFab);
 
         return view;
     }
@@ -66,6 +60,7 @@ public class ProfileFragment extends Fragment {
         profilePicture=view.findViewById(R.id.proile_picture_admin_profile);
         editProfileButton=view.findViewById(R.id.edit_profile_btn);
         progressDialog=new ProgressDialog(getActivity());
+        uploadProductFab = view.findViewById(R.id.upload_product_fab);
     }
 
 
