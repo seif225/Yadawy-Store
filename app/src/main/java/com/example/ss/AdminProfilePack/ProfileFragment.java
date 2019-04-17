@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.ss.AddProductPAckage.AddProductActivity;
 import com.example.ss.ProfileEditActivityPack.ProfileEditActivity;
 import com.example.ss.R;
 import com.squareup.picasso.Picasso;
@@ -43,9 +44,31 @@ public class ProfileFragment extends Fragment {
         presenter.retriveUserData(progressDialog,userNameTv,profilePicture,bioTv);
       presenter.showOrHideFab(uploadProductFab);
 
+      uploadProductFab.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+
+              startActivity(new Intent(getActivity(),AddProductActivity.class));
+
+
+          }
+      });
+
+            editProfileButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                   sendUserToEditProfileActivity();
+                }
+            });
         return view;
     }
 
+    private void sendUserToAddProductActivity() {
+
+        Intent i = new Intent (getContext(), AddProductActivity.class);
+        startActivity(i);
+
+    }
 
 
     private void sendUserToEditProfileActivity() {
