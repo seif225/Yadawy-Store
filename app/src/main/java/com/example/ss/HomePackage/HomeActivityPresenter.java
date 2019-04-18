@@ -62,16 +62,27 @@ public class HomeActivityPresenter {
                             if(dataSnapshot1.hasChild("images")){
                                 //productModel.setImagesLinks(dataSnapshot.child("images").getValue().toString());
                                 int i=0;
+                                listOfPictureLinks = new ArrayList<>();
                                 for (DataSnapshot imagesDataSnapShot:dataSnapshot1.child("images").getChildren()){
+
                                     listOfPictureLinks.add(imagesDataSnapShot.getValue().toString());
                                     //Log.e("images",imagesDataSnapShot.getValue().toString()+" msh null yasta wla eh?");
+                                   /* Log.e("datapshot fl presenter",dataSnapshot.toString());
 
-                                    Log.e("images",listOfPictureLinks.get(i)+" msh null yasta wla eh?");
+
+                                    // da esm el product ==>
+
+                                    Log.e("datapshot1 fl presenter",dataSnapshot1.getKey().toString());*/
+
+
+                                    //Log.e("images",listOfPictureLinks.get(i)+" msh null yasta wla eh?");
                                     //this counter is just for testing purposes
                                     i++;
                                 }
                                 productModel.setImagesLinks(listOfPictureLinks);
+
                             }
+
 
                             if(dataSnapshot1.hasChild("category")){
                                 productModel.setCategory(dataSnapshot1.child("category").getValue().toString());

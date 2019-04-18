@@ -35,15 +35,13 @@ public class NewsFeedRecyclerAdapter extends RecyclerView.Adapter<NewsFeedRecycl
         //this happens only if images exist
         if(list.get(i).getImagesLinks()!=null){
         Picasso.get().load(list.get(i).getImagesLinks().get(0)).placeholder(R.drawable.user).into(viewHolder.ProductImage);
-        Log.e("image in adapter",list.get(i).getImagesLinks().get(0));
+        Log.e("image in adapter",list.get(i).getImagesLinks().get(0)+"i =" +i + "size= "+list.get(i).getImagesLinks().size());
         }
 
         viewHolder.productTitle.setText(list.get(i).getProductName());
        // Log.e("title fl adapter",list.get(i).getProductName() + " ya rab msh null :''D");
         viewHolder.productDescription.setText(list.get(i).getProductDescribtion());
         viewHolder.productPrice.setText(list.get(i).getProdcutPrice());
-
-
     }
 
     @Override
