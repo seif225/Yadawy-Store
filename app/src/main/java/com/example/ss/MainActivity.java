@@ -18,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.ss.AdminProfilePack.ProfileFragment;
+import com.example.ss.HomePackage.HomeActivity;
 import com.example.ss.ProfileEditActivityPack.ProfileEditActivity;
 import com.example.ss.SplashPack.SplashActivity;
 import com.example.ss.financeForBusinessUserPack.addFinancialInfoActivity;
@@ -187,6 +188,9 @@ public class MainActivity extends AppCompatActivity
         Fragment selectedFragment =null;
         if (id == R.id.nav_home) {
             // Handle the camera action
+            selectedFragment = new HomeActivity();
+
+
         } else if (id == R.id.nav_categroies) {
 
         } else if (id == R.id.nav_save) {
