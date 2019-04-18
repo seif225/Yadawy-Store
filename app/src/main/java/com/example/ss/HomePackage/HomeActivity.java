@@ -1,10 +1,12 @@
 package com.example.ss.HomePackage;
 
+import android.app.ProgressDialog;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,23 +17,16 @@ import com.example.ss.R;
 
 public class HomeActivity extends Fragment {
 
-    ImageButton imgButton;
-    View view;
 
+    View view;
+    RecyclerView homeRecycler;
+    HomeActivityPresenter presenter;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.activity_home, container, false);
-
-
-        View.OnClickListener imgButtonHandler=new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                imgButton.setBackgroundResource(R.drawable.ic_favorite_black_24dp);
-            }
-        };
-
-
+            initializeFields();
+            presenter.getAndShowNewsFeedFromFirebase(new ProgressDialog(getContext()),homeRecycler);
 
 
         return view;
@@ -40,8 +35,11 @@ public class HomeActivity extends Fragment {
 
 
   void initializeFields(){
-      imgButton=view.findViewById(R.id.like_image_button);
-//      imgButton.setOnClickListener(imgButtonHandler);
+
+      presenter = new HomeActivityPresenter(getActivity());
+      homeRecycler = view.findViewById(R.id.homeRecycler);
+
+
   }
 
 }

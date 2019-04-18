@@ -38,12 +38,14 @@ public class MainActivity extends AppCompatActivity
     String currentUser;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference userRef;
+    Fragment selectedFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         FirebaseApp.initializeApp(this);
         intializeFields();
+
 
 
     }
@@ -146,6 +148,10 @@ public class MainActivity extends AppCompatActivity
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         userRef=firebaseDatabase.getReference().child("Users");
+        selectedFragment = new HomeActivity();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                selectedFragment).commit();
+
     }
 
     @Override
@@ -185,7 +191,7 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        Fragment selectedFragment =null;
+
         if (id == R.id.nav_home) {
             // Handle the camera action
             selectedFragment = new HomeActivity();
