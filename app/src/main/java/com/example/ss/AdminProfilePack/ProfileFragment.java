@@ -30,6 +30,7 @@ public class ProfileFragment extends Fragment {
     private Button editProfileButton;
     private ProgressDialog progressDialog;
     private Button uploadProductFab;
+
     public ProfileFragment() {
 
     }
