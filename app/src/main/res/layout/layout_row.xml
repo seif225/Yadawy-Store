@@ -45,16 +45,15 @@
 
             <TextView
                 android:id="@+id/product_description_at_recyclerView"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
                 android:text="description"
+                android:maxLines="2"
                 android:textSize="24sp"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/like_image_button"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/product_title_at_recyclerView"
                 app:layout_constraintTop_toBottomOf="@+id/product_image_at_recyclerView" />
@@ -64,24 +63,34 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
+                android:layout_marginEnd="8dp"
                 android:text="productPrice"
                 android:textSize="24sp"
-                app:layout_constraintHorizontal_bias="0.109"
+                app:layout_constraintEnd_toStartOf="@+id/like_image_button"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/product_description_at_recyclerView"
                 app:layout_constraintTop_toBottomOf="@id/product_description_at_recyclerView" />
 
             <!-- TODO: put heart Like Button -->
-            <ImageButton
+            <com.sackcentury.shinebuttonlib.ShineButton
                 android:id="@+id/like_image_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_favorite_border_black_24dp"
-                app:layout_constraintHorizontal_bias="0.9"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:src="@android:color/darker_gray"
+                app:allow_random_color="false"
+                app:btn_color="@android:color/darker_gray"
+                app:btn_fill_color="@android:color/holo_red_dark"
+                app:layout_constraintBottom_toBottomOf="@+id/product_price_at_recyclerView"
+                app:layout_constraintHorizontal_bias="0.95"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/product_price_at_recyclerView" />
+                app:layout_constraintTop_toTopOf="@+id/product_description_at_recyclerView"
+                app:siShape="@raw/heart" />
 
         </android.support.constraint.ConstraintLayout>
 

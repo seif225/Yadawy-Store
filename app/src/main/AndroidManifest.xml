@@ -9,13 +9,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".HomePackage.HomeActivity"></activity>
+        <activity android:name=".ProductActivityPack.ProductActivity"></activity>
+        <activity android:name=".HomePackage.HomeActivity" />
         <activity android:name=".AddProductPAckage.AddProductActivity" />
         <activity android:name=".financeForBusinessUserPack.addFinancialInfoActivity" />
         <activity android:name=".MailLoginPack.MailLoginActivity" />
         <activity android:name=".signUpPack.SingUpActivity" />
         <activity android:name=".ProfileEditActivityPack.ProfileEditActivity" />
-        <activity android:name=".uploadProductImages.UploadProudctImagesActivity"></activity>
+        <activity android:name=".uploadProductImages.UploadProudctImagesActivity" />
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
