@@ -38,7 +38,8 @@ public class HomeActivityPresenter {
          mAuth=FirebaseAuth.getInstance();
         listOfPictureLinks = new ArrayList<>();
         productsRef = database.getReference().child("products");
-         adapter=new NewsFeedRecyclerAdapter(listOfProducts);
+         adapter=new NewsFeedRecyclerAdapter(context,listOfProducts);
+
 
      }
 
@@ -114,7 +115,7 @@ public class HomeActivityPresenter {
 
                             }
                             if(dataSnapshot1.hasChild("use_id")){
-                                productModel.setCategory(dataSnapshot1.child("use_id").getValue().toString());
+                                productModel.setuId(dataSnapshot1.child("use_id").getValue().toString());
 
                             }
                             listOfProducts.add(productModel);

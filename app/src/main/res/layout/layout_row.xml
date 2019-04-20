@@ -61,7 +61,7 @@
                 android:id="@+id/product_price_at_recyclerView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-               android:paddingBottom="8dp"
+                android:paddingBottom="8dp"
                 android:layout_marginEnd="8dp"
                 android:text="productPrice"
                 android:textSize="24sp"

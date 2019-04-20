@@ -1,6 +1,9 @@
 package com.example.ss.HomePackage;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DialogTitle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -11,16 +14,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.ss.AddProductPAckage.AddProductActivity;
+import com.example.ss.ProductActivityPack.ProductActivity;
 import com.example.ss.R;
+import com.google.firebase.database.DatabaseReference;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class NewsFeedRecyclerAdapter extends RecyclerView.Adapter<NewsFeedRecyclerAdapter.ViewHolder> {
-    List<ProductModel> list;
+    private List<ProductModel> list;
+    private Context context;
 
-    public NewsFeedRecyclerAdapter(List<ProductModel> list) {
+    public NewsFeedRecyclerAdapter(Context context, List<ProductModel> list) {
         this.list = list;
+        this.context=context;
     }
 
     @Override
@@ -30,13 +37,26 @@ public class NewsFeedRecyclerAdapter extends RecyclerView.Adapter<NewsFeedRecycl
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
         //this picasso code shows only the first image of image collection in firebase
         //this happens only if images exist
         if(list.get(i).getImagesLinks()!=null){
         Picasso.get().load(list.get(i).getImagesLinks().get(0)).placeholder(R.drawable.user).into(viewHolder.ProductImage);
         Log.e("image in adapter",list.get(i).getImagesLinks().get(0)+"i =" +i + "size= "+list.get(i).getImagesLinks().size());
         }
+
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent j = new Intent(context,ProductActivity.class);
+                j.putExtra("uid",list.get(i).getuId());
+                Log.e("uid in adapter",list.get(i).getuId()+"  helafhasjf");
+                j.putExtra("productId",list.get(i).getProductId());
+
+                context.startActivity(j);
+
+            }
+        });
 
         viewHolder.productTitle.setText(list.get(i).getProductName());
        // Log.e("title fl adapter",list.get(i).getProductName() + " ya rab msh null :''D");

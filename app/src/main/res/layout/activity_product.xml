@@ -28,7 +28,7 @@
 
 
         <android.support.v7.widget.CardView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="@id/imageSlider"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -43,20 +43,20 @@
                 >
 
                 <TextView
+                    android:id="@+id/product_describtion_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="this is the describtion of unparticular proudct , this text is made only for some testing purpuses :)"
-                    android:textSize="24sp"
-
-                    android:id="@+id/product_describtion_tv"
-                    android:textColor="#000000"
-                    app:layout_constraintTop_toBottomOf="@id/product_category_tv"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
                     android:layout_marginTop="8dp"
 
+                    android:text="this is the describtion of unparticular proudct , this text is made only for some testing purpuses :)"
+                    android:textColor="#000000"
+                    android:textSize="24sp"
+                    app:layout_constraintHorizontal_bias="0.05"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
 
-                    />
+
+                    app:layout_constraintTop_toBottomOf="@id/product_category_tv" />
 
                 <TextView
                     android:id="@+id/textView7"
@@ -110,6 +110,22 @@
                     app:layout_constraintStart_toEndOf="@+id/textView8"
                     app:layout_constraintTop_toTopOf="@+id/textView8" />
 
+
+                <android.support.design.widget.FloatingActionButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:src="@drawable/ic_add_shopping_cart_black_24dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/product_describtion_tv"
+                    app:layout_constraintVertical_bias="1.0" />
+
+
                 <com.sackcentury.shinebuttonlib.ShineButton
                     android:id="@+id/like_image_button_in_product_activity"
                     android:layout_width="35dp"
@@ -130,6 +146,7 @@
                     app:layout_constraintStart_toEndOf="@+id/product_price_tv"
                     app:layout_constraintTop_toTopOf="@+id/product_price_tv"
                     app:siShape="@raw/heart" />
+
 
 
             </android.support.constraint.ConstraintLayout>
