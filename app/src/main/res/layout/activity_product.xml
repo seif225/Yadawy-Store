@@ -48,7 +48,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
 
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
                     android:text="this is the describtion of unparticular proudct , this text is made only for some testing purpuses :)"
                     android:textColor="#000000"
                     android:textSize="24sp"
@@ -72,7 +72,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="@+id/product_describtion_tv"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
                 <TextView
                     android:id="@+id/product_price_tv"
@@ -96,6 +96,7 @@
                     android:text="category: "
                     android:textSize="18sp"
                     app:layout_constraintEnd_toEndOf="@+id/textView7"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="@+id/textView7"
                     app:layout_constraintTop_toBottomOf="@id/textView7" />
 
@@ -121,12 +122,13 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginBottom="8dp"
+
                     android:src="@drawable/ic_add_shopping_cart_black_24dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/like_image_button_in_product_activity"
                     app:layout_constraintVertical_bias="1.0" />
 
 
@@ -151,7 +153,62 @@
                     app:layout_constraintTop_toTopOf="@+id/product_price_tv"
                     app:siShape="@raw/heart" />
 
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profile_picture_in_product_activity"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/user"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    app:layout_constraintEnd_toStartOf="@+id/like_image_button_in_product_activity"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:civ_border_width="1dp"
+                    />
 
+                <TextView
+                    android:id="@+id/user_name_in_product_activity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="seif elden ehab"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:textColor="#000000"
+                    app:layout_constraintBottom_toBottomOf="@+id/profile_picture_in_product_activity"
+                    app:layout_constraintEnd_toStartOf="@+id/like_image_button_in_product_activity"
+                    app:layout_constraintHorizontal_bias="0.08"
+                    app:layout_constraintStart_toEndOf="@+id/profile_picture_in_product_activity"
+                    app:layout_constraintTop_toTopOf="@+id/profile_picture_in_product_activity" />
+
+                <TextView
+                    android:id="@+id/textView9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginTop="8dp"
+
+                    android:text="product code:"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toStartOf="@+id/like_image_button_in_product_activity"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/textView7"
+                    app:layout_constraintTop_toBottomOf="@id/profile_picture_in_product_activity" />
+
+                <TextView
+                    android:id="@+id/product_code_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text="5050515684565415654"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView9"
+                    app:layout_constraintEnd_toStartOf="@+id/like_image_button_in_product_activity"
+                    app:layout_constraintHorizontal_bias="0.1"
+                    app:layout_constraintStart_toEndOf="@+id/textView9"
+                    app:layout_constraintTop_toTopOf="@+id/textView9" />
 
             </android.support.constraint.ConstraintLayout>
 
