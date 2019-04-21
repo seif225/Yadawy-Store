@@ -39,6 +39,7 @@ public class ProductActivity extends AppCompatActivity {
         presenter=new ProductActivityPresenter(this,userId,prodcutId);
         sliderLayout = findViewById(R.id.imageSlider);
         sliderLayout.setIndicatorAnimation(SliderLayout.Animations.WORM);
+        sliderLayout.animate();
         sliderLayout.setScrollTimeInSec(2);
 
         category=findViewById(R.id.product_category_tv);

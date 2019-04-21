@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.ss.HomePackage.ProductModel;
+import com.example.ss.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -121,21 +122,28 @@ class ProductActivityPresenter {
     private void setSliderViews(ArrayList<String> imagesLinks, SliderLayout sliderLayout) {
 
 
-        for ( int i = 0; i < imagesLinks.size(); i++) {
+        if(imagesLinks==null || imagesLinks.size()==0){
 
             SliderView sliderView = new SliderView(context);
-            sliderView.setImageUrl(listOfPictureLinks.get(i));
-
-
-
-
-
+            sliderView.setImageDrawable(R.drawable.user);
             sliderView.setImageScaleType(ImageView.ScaleType.CENTER_CROP);
             sliderView.setDescription(productModel.getProductName());
             sliderView.setDescriptionTextSize(18);
             //            Log.e("product name ",productModel.getProductName());
             sliderLayout.addSliderView(sliderView);
+        }
 
+        else{
+        for ( int i = 0; i < imagesLinks.size(); i++) {
+
+            SliderView sliderView = new SliderView(context);
+            sliderView.setImageUrl(listOfPictureLinks.get(i));
+            sliderView.setImageScaleType(ImageView.ScaleType.CENTER_CROP);
+            sliderView.setDescription(productModel.getProductName());
+            sliderView.setDescriptionTextSize(18);
+            //            Log.e("product name ",productModel.getProductName());
+            sliderLayout.addSliderView(sliderView);
+        }
 
     }
     }
