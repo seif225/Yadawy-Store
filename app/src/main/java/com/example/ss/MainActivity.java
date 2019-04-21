@@ -18,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.ss.AdminProfilePack.ProfileFragment;
+import com.example.ss.CategoryPackage.CategoryFragment;
 import com.example.ss.HomePackage.HomeActivity;
 import com.example.ss.ProfileEditActivityPack.ProfileEditActivity;
 import com.example.ss.SplashPack.SplashActivity;
@@ -198,6 +199,7 @@ public class MainActivity extends AppCompatActivity
 
 
         } else if (id == R.id.nav_categroies) {
+            selectedFragment = new CategoryFragment();
 
         } else if (id == R.id.nav_save) {
 

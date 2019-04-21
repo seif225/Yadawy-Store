@@ -128,12 +128,13 @@ public class AddProductActivity extends AppCompatActivity {
                 R.layout.support_simple_spinner_dropdown_item,priceRange));
 
         final ArrayList<String>category=new ArrayList<>();
-        category.add("perfumes");
-        category.add("purses");
-        category.add("birthday");
-        category.add("valentine");
-        category.add("wedding anniversary");
-        category.add("other");
+        category.add("Accessories");
+        category.add("Handmade gifts");
+        category.add("Krosheh");
+        category.add("Notebooks");
+
+        //category.add("DIY");
+
 
         categorySpinner.setAdapter(new ArrayAdapter<String>(this,
                 R.layout.support_simple_spinner_dropdown_item,category));

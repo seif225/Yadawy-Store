@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".CategoryPackage.CategoryFragment">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        >
+
+    <com.smarteist.autoimageslider.SliderLayout
+        android:id="@+id/imageSlider_in_cayegory_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_alignParentTop="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
+        />
+
+
+
+        <ImageView
+            android:layout_marginTop="8dp"
+            android:layout_width="0dp"
+            android:scaleType="centerCrop"
+            android:layout_marginEnd="8dp"
+            android:layout_height="150dp"
+            android:id="@+id/accessories_image_view"
+            app:layout_constraintTop_toBottomOf="@id/imageSlider_in_cayegory_fragment"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/krosheh"
+            android:layout_marginStart="24dp"
+            android:src="@drawable/access"
+
+
+            />
+        <ImageView
+            android:layout_marginStart="8dp"
+            android:layout_width="0dp"
+            android:layout_height="190dp"
+            android:id="@+id/krosheh"
+            app:layout_constraintTop_toBottomOf="@id/imageSlider_in_cayegory_fragment"
+           app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/accessories_image_view"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="18dp"
+            android:src="@drawable/kroshesh"
+            app:layout_goneMarginBottom="8dp"
+            android:layout_marginTop="8dp"
+
+
+
+            />
+
+        <ImageView
+            android:id="@+id/note_books"
+            android:layout_width="0dp"
+            android:layout_height="190dp"
+            android:src="@drawable/noteboook"
+            android:layout_marginBottom="18dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/accessories_image_view"
+            android:scaleType="centerCrop"
+            app:layout_constraintStart_toStartOf="@+id/accessories_image_view"
+            app:layout_constraintTop_toBottomOf="@id/accessories_image_view"
+            android:layout_marginTop="8dp"
+            />
+
+        <ImageView
+            android:id="@+id/hand_made_gifts"
+            android:layout_width="0dp"
+            android:layout_height="150dp"
+            android:layout_marginBottom="18dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/krosheh"
+            app:layout_constraintStart_toStartOf="@+id/krosheh"
+            android:src="@drawable/gifts"
+            android:scaleType="centerCrop"
+            app:layout_constraintTop_toBottomOf="@id/krosheh" />
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="gifts"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/hand_made_gifts"
+            app:layout_constraintEnd_toEndOf="@+id/hand_made_gifts"
+            app:layout_constraintStart_toStartOf="@+id/hand_made_gifts"
+            app:layout_constraintTop_toTopOf="@+id/hand_made_gifts"
+
+            app:layout_constraintVertical_bias="0.9" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="notebooks"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/note_books"
+            app:layout_constraintEnd_toEndOf="@+id/note_books"
+            app:layout_constraintStart_toStartOf="@+id/note_books"
+            app:layout_constraintTop_toTopOf="@+id/note_books"
+            app:layout_constraintVertical_bias="0.9" />
+
+
+
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="kroshesh"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/hand_made_gifts"
+            app:layout_constraintEnd_toEndOf="@+id/krosheh"
+            app:layout_constraintStart_toStartOf="@+id/krosheh"
+            app:layout_constraintTop_toTopOf="@+id/krosheh"
+            app:layout_constraintVertical_bias="0.9" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="accessories"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/note_books"
+            app:layout_constraintEnd_toStartOf="@+id/krosheh"
+            app:layout_constraintStart_toStartOf="@+id/accessories_image_view"
+            app:layout_constraintTop_toTopOf="@+id/accessories_image_view"
+
+            app:layout_constraintVertical_bias="0.9" />
+
+
+    </android.support.constraint.ConstraintLayout>
+
+
+</android.support.v4.widget.NestedScrollView>

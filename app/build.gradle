@@ -47,8 +47,9 @@ dependencies {
     implementation 'com.github.smarteist:autoimageslider:1.1.0'
 
 
-        //glide
+    //glide
     // implementation 'com.github.bumptech.glide:glide:4.7.1'
     //awesome buttons
     implementation 'com.sackcentury:shinebutton:0.2.0'
+    implementation 'com.willowtreeapps.spruce:spruce-android:1.0.1'
 }

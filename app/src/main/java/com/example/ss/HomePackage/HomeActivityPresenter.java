@@ -21,23 +21,24 @@ import java.util.ArrayList;
 public class HomeActivityPresenter {
 
     private Context context ;
-    private ArrayList<ProductModel> listOfProducts;
-    private ArrayList<String> listOfPictureLinks;
+
     private FirebaseDatabase database;
     private FirebaseAuth mAuth;
     private DatabaseReference productsRef;
     private ProductModel productModel;
+    private ArrayList<ProductModel> listOfProducts;
+    private ArrayList<String> listOfPictureLinks;
     private NewsFeedRecyclerAdapter adapter;
 
 
      HomeActivityPresenter(Context context) {
 
          this.context=context;
-         listOfProducts=new ArrayList<>();
          database = FirebaseDatabase.getInstance();
          mAuth=FirebaseAuth.getInstance();
-        listOfPictureLinks = new ArrayList<>();
+         listOfProducts=new ArrayList<>();
         productsRef = database.getReference().child("products");
+         listOfPictureLinks = new ArrayList<>();
          adapter=new NewsFeedRecyclerAdapter(context,listOfProducts);
 
 
