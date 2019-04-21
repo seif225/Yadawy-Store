@@ -200,9 +200,9 @@
 
                 <TextView
                     android:id="@+id/product_code_tv"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-
+                    android:layout_marginStart="8dp"
                     android:text="5050515684565415654"
                     app:layout_constraintBottom_toBottomOf="@+id/textView9"
                     app:layout_constraintEnd_toStartOf="@+id/like_image_button_in_product_activity"

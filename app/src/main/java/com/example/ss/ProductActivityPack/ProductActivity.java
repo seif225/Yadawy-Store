@@ -11,13 +11,15 @@ import com.example.ss.HomePackage.ProductModel;
 import com.example.ss.R;
 import com.smarteist.autoimageslider.SliderLayout;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class ProductActivity extends AppCompatActivity {
 
-    String prodcutId,userId;
-    ProductActivityPresenter presenter;
-    SliderLayout sliderLayout;;
-    TextView price,category,describtion;
-
+    private String prodcutId,userId;
+    private ProductActivityPresenter presenter;
+    private SliderLayout sliderLayout;;
+    private TextView price,category,describtion,userName,productIdTv;
+    private CircleImageView userPp;
 
 
     @Override
@@ -26,7 +28,7 @@ public class ProductActivity extends AppCompatActivity {
         setContentView(R.layout.activity_product);
         //Log.e("activity shit",productModel.getCategory()+"what so evaaaa ");
         intializeFields();
-        presenter.getProductData(new ProgressDialog(this),sliderLayout,category,price,describtion);
+        presenter.getProductData(new ProgressDialog(this),sliderLayout,category,price,describtion,userName,productIdTv,userPp);
 
 
     }
@@ -45,6 +47,9 @@ public class ProductActivity extends AppCompatActivity {
         category=findViewById(R.id.product_category_tv);
         price=findViewById(R.id.product_price_tv);
         describtion=findViewById(R.id.product_describtion_tv);
+        userName=findViewById(R.id.user_name_in_product_activity);
+        productIdTv=findViewById(R.id.product_code_tv);
+        userPp=findViewById(R.id.profile_picture_in_product_activity);
 
     }
 

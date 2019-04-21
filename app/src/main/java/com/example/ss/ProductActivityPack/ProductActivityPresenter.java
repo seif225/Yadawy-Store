@@ -16,8 +16,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.smarteist.autoimageslider.SliderLayout;
 import com.smarteist.autoimageslider.SliderView;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 class ProductActivityPresenter {
 
@@ -36,7 +39,9 @@ class ProductActivityPresenter {
 
     }
 
-     void getProductData(final ProgressDialog progressDialog, final SliderLayout sliderLayout, final TextView category, final TextView price, final TextView describtion) {
+     void getProductData(final ProgressDialog progressDialog, final SliderLayout sliderLayout, final TextView category,
+                         final TextView price, final TextView describtion, final TextView userName, final TextView productIdTv,
+                         final CircleImageView userPp) {
         progressDialog.setCancelable(false);
         progressDialog.setMessage("getting dataa ..");
         progressDialog.show();
@@ -52,18 +57,7 @@ class ProductActivityPresenter {
                     for (DataSnapshot imagesDataSnapShot:dataSnapshot.child("images").getChildren()){
 
                         listOfPictureLinks.add(imagesDataSnapShot.getValue().toString());
-                        //Log.e("images",imagesDataSnapShot.getValue().toString()+" msh null yasta wla eh?");
-                                   /* Log.e("datapshot fl presenter",dataSnapshot.toString());
 
-
-                                    // da esm el product ==>
-
-                                    Log.e("datapshot1 fl presenter",dataSnapshot1.getKey().toString());*/
-
-
-                        //Log.e("images",listOfPictureLinks.get(i)+" msh null yasta wla eh?");
-                        //this counter is just for testing purposes
-                        i++;
                     }
                     productModel.setImagesLinks(listOfPictureLinks);
                 }
@@ -88,7 +82,7 @@ class ProductActivityPresenter {
                 }
                 if(dataSnapshot.hasChild("product_id")){
                     productModel.setProductId(dataSnapshot.child("product_id").getValue().toString());
-
+                    productIdTv.setText(productModel.getProductId());
                 }
                 if(dataSnapshot.hasChild("product_name")){
                     productModel.setProductName(dataSnapshot.child("product_name").getValue().toString());
@@ -100,6 +94,24 @@ class ProductActivityPresenter {
                 }
                 if(dataSnapshot.hasChild("use_id")){
                     productModel.setuId(dataSnapshot.child("use_id").getValue().toString());
+                    FirebaseDatabase.getInstance().getReference().child("Users").child(productModel.getuId()).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                          //  userPp.setImageURI(dataSnapshot.child("image").getValue().toString());
+                            if(dataSnapshot.hasChild("image")){
+                            Picasso.get().load(dataSnapshot.child("image").getValue().toString()).
+                                    placeholder(R.drawable.user).into(userPp);
+                            }
+                            userName.setText(dataSnapshot.child("userName").getValue().toString());
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
 
                 }
                 setSliderViews(productModel.getImagesLinks(),sliderLayout);
