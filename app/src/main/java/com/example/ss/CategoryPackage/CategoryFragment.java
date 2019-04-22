@@ -11,11 +11,15 @@ import android.widget.ImageView;
 
 import com.example.ss.CategoryItems.CategoryItemsActivity;
 import com.example.ss.R;
+import com.smarteist.autoimageslider.SliderLayout;
 
 public class CategoryFragment extends Fragment {
-    ImageView  accessoriesImageView,giftsImageView,krosheshImageView,notebooksImageView;
-    View view;
-    Intent i ;
+    private ImageView  accessoriesImageView,giftsImageView,krosheshImageView,notebooksImageView;
+    private View view;
+    private Intent i ;
+    private SliderLayout sliderLayout;
+    private CategoryPresenter presenter;
+
     public CategoryFragment() {
 
     }
@@ -28,6 +32,8 @@ public class CategoryFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_category, container, false);
         intializeFields();
+        presenter.fillSlider(sliderLayout);
+
         accessoriesImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,7 +80,11 @@ public class CategoryFragment extends Fragment {
     krosheshImageView=view.findViewById(R.id.krosheh);
     notebooksImageView=view.findViewById(R.id.note_books);
     i = new Intent (getActivity(), CategoryItemsActivity.class);
-
+        sliderLayout = view.findViewById(R.id.imageSlider_in_cayegory_fragment);
+        sliderLayout.setIndicatorAnimation(SliderLayout.Animations.WORM);
+        sliderLayout.animate();
+        sliderLayout.setScrollTimeInSec(2);
+    presenter=new CategoryPresenter(getContext());
 
     }
 
