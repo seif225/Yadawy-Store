@@ -32,7 +32,6 @@
                 android:id="@+id/product_title_at_recyclerView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:text="productTitle"
                 android:textSize="30sp"
                 android:textStyle="bold"

@@ -235,7 +235,11 @@ public class ProfileFragmentPresenter {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         // Log.e("previewOnHome",listOfProducts.get(0).getCategory()+"inshallah msh null ");
+        recyclerView.setItemViewCacheSize(20);
+        recyclerView.setDrawingCacheEnabled(true);
+        recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
         recyclerView.setAdapter(adapter);
+
         progressDialog.dismiss();
 
     }

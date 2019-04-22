@@ -2,6 +2,11 @@ package com.example.ss.AdminProfilePack;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -13,6 +18,7 @@ import android.widget.TextView;
 
 import com.example.ss.HomePackage.NewsFeedRecyclerAdapter;
 import com.example.ss.HomePackage.ProductModel;
+import com.example.ss.MainActivity;
 import com.example.ss.ProductActivityPack.ProductActivity;
 import com.example.ss.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,9 +27,14 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import org.w3c.dom.Text;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -54,7 +65,9 @@ public class NewsFeedRecyclerAdapterForCurrentUser extends RecyclerView.Adapter<
 
 
         if(list.get(i).getImagesLinks()!=null){
-            Picasso.get().load(list.get(i).getImagesLinks().get(0)).placeholder(R.drawable.user).into(viewHolder.productPic);
+            //Picasso.get().load(list.get(i).getImagesLinks().get(0)).placeholder(R.drawable.gifts).into(viewHolder.productPic);
+            loadImageInBackground(viewHolder.productPic,list.get(i).getImagesLinks().get(0));
+            //notifyDataSetChanged();
             Log.e("image in adapter",list.get(i).getImagesLinks().get(0)+"i =" +i + "size= "+list.get(i).getImagesLinks().size());
         }
 
@@ -120,5 +133,38 @@ public class NewsFeedRecyclerAdapterForCurrentUser extends RecyclerView.Adapter<
             productName = itemView.findViewById(R.id.product_name_row_item_profile);
 
         }
+
     }
+    public void loadImageInBackground(final ImageView imageView, String s) {
+
+
+        Target target = new Target() {
+
+            @Override
+            public void onPrepareLoad(Drawable arg0) {
+
+            }
+
+            @Override
+            public void onBitmapLoaded(Bitmap arg0, Picasso.LoadedFrom arg1) {
+                imageView.setImageBitmap(arg0);
+
+            }
+
+            @Override
+            public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+
+
+            }
+
+
+        };
+        Log.e("load image in back",s+" yeah man");
+
+        Picasso.get()
+                .load(s)
+                .into(target);
+    }
+
+
 }
