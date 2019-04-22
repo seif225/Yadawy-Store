@@ -26,7 +26,7 @@ public class HomeActivity extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.activity_home, container, false);
             initializeFields();
-            presenter.getAndShowNewsFeedFromFirebase(new ProgressDialog(getContext()),homeRecycler);
+            presenter.getAndShowNewsFeedFromFirebase(new ProgressDialog(getActivity()),homeRecycler);
 
 
         return view;

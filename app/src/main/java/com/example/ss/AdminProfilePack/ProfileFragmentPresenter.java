@@ -4,11 +4,15 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.ss.HomePackage.NewsFeedRecyclerAdapter;
+import com.example.ss.HomePackage.ProductModel;
 import com.example.ss.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -20,21 +24,31 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileFragmentPresenter {
 
     private Context context;
     private FirebaseDatabase database;
-    private DatabaseReference userRef;
+    private DatabaseReference userRef,productsRef;
     private FirebaseAuth mAuth;
     private String userName, bio, image;
-    boolean check;
+    private ProductModel productModel;
+    private ArrayList<ProductModel> listOfProducts;
+    private ArrayList<String> listOfPictureLinks;
+    private NewsFeedRecyclerAdapterForCurrentUser adapter;
+
     ProfileFragmentPresenter(Context context) {
         this.context = context;
         database = FirebaseDatabase.getInstance();
         mAuth = FirebaseAuth.getInstance();
         userRef = database.getReference().child("Users").child(mAuth.getUid());
+        productsRef = database.getReference().child("products").child(mAuth.getUid());
+        listOfPictureLinks = new ArrayList<>();
+        listOfProducts=new ArrayList<>();
+        adapter= new NewsFeedRecyclerAdapterForCurrentUser(context,listOfProducts);
 
     }
 
@@ -130,4 +144,100 @@ public class ProfileFragmentPresenter {
 
 
     }
+
+    void getAndAddDataToRecycler(final RecyclerView recyclerView, final ProgressDialog progressDialog){
+
+        progressDialog.setMessage("getting data");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
+        productsRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+
+                adapter.notifyDataSetChanged();
+
+
+                    for (DataSnapshot dataSnapshot1: dataSnapshot.getChildren()) {
+                        productModel = new ProductModel();
+
+                        if(dataSnapshot1.hasChild("images")){
+                            //productModel.setImagesLinks(dataSnapshot.child("images").getValue().toString());
+                            int i=0;
+                            listOfPictureLinks = new ArrayList<>();
+                            for (DataSnapshot imagesDataSnapShot:dataSnapshot1.child("images").getChildren()){
+
+                                listOfPictureLinks.add(imagesDataSnapShot.getValue().toString());
+
+                            }
+                            productModel.setImagesLinks(listOfPictureLinks);
+
+                        }
+
+
+                        if(dataSnapshot1.hasChild("category")){
+                            productModel.setCategory(dataSnapshot1.child("category").getValue().toString());
+                            // Log.e("category",dataSnapshot1.child("category").getValue().toString()+" msh null yasta wla eh?");
+
+                        }
+                        if(dataSnapshot1.hasChild("color")){
+                            productModel.setColor(dataSnapshot1.child("color").getValue().toString());
+
+                        }
+                        if(dataSnapshot1.hasChild("price_range")){
+                            productModel.setPriceRange(dataSnapshot1.child("price_range").getValue().toString());
+
+                        }
+                        if(dataSnapshot1.hasChild("product_describtion")){
+                            productModel.setProductDescribtion(dataSnapshot1.child("product_describtion").getValue().toString());
+
+                        }
+                        if(dataSnapshot1.hasChild("product_id")){
+                            productModel.setProductId(dataSnapshot1.child("product_id").getValue().toString());
+
+                        }
+                        if(dataSnapshot1.hasChild("product_name")){
+                            productModel.setProductName(dataSnapshot1.child("product_name").getValue().toString());
+
+                        }
+                        if(dataSnapshot1.hasChild("product_price")){
+                            productModel.setProdcutPrice(dataSnapshot1.child("product_price").getValue().toString());
+
+                        }
+                        if(dataSnapshot1.hasChild("use_id")){
+                            productModel.setuId(dataSnapshot1.child("use_id").getValue().toString());
+                            Log.e("profile Fragment","id check "+productModel.getuId());
+
+
+                        }
+                        listOfProducts.add(productModel);
+                        previewDataOnHome(recyclerView,progressDialog);
+
+                        adapter.notifyDataSetChanged();
+
+
+                    }
+                }
+
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+    }
+    private void previewDataOnHome(RecyclerView recyclerView,ProgressDialog progressDialog) {
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        // Log.e("previewOnHome",listOfProducts.get(0).getCategory()+"inshallah msh null ");
+        recyclerView.setAdapter(adapter);
+        progressDialog.dismiss();
+
+    }
+
 }

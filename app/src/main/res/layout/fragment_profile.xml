@@ -15,20 +15,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
             android:layout_marginBottom="8dp"
             android:text="uploadPrpud"
             android:textSize="18sp"
             android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/card_view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.506"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/proile_picture_admin_profile"
-            app:layout_constraintVertical_bias="0.186" />
+            app:layout_constraintVertical_bias="0.65" />
 
         <ImageView
             android:id="@+id/cover_profile_admin"
@@ -211,11 +209,14 @@
         </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.RecyclerView
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:id="@+id/admin_profile_recycler_view"
             app:layout_constraintTop_toBottomOf="@+id/card_view"
-            android:layout_margin="8dp"
+            app:layout_constraintStart_toStartOf="@id/card_view"
+            app:layout_constraintEnd_toEndOf="@id/card_view"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             >
 
         </android.support.v7.widget.RecyclerView>

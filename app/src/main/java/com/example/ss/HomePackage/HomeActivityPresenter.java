@@ -36,9 +36,10 @@ public class HomeActivityPresenter {
          this.context=context;
          database = FirebaseDatabase.getInstance();
          mAuth=FirebaseAuth.getInstance();
-         listOfProducts=new ArrayList<>();
         productsRef = database.getReference().child("products");
          listOfPictureLinks = new ArrayList<>();
+         listOfProducts=new ArrayList<>();
+
          adapter=new NewsFeedRecyclerAdapter(context,listOfProducts);
 
 

@@ -64,6 +64,9 @@ public class NewsFeedRecyclerAdapter extends RecyclerView.Adapter<NewsFeedRecycl
             }
         });
 
+
+
+        Log.e("newfeedadapter","id check "+list.get(i).getuId());
         FirebaseDatabase.getInstance().getReference().child("Users").child(list.get(i).getuId()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -71,7 +74,6 @@ public class NewsFeedRecyclerAdapter extends RecyclerView.Adapter<NewsFeedRecycl
                 Picasso.get().load(dataSnapshot.child("image").getValue().toString()).placeholder(R.drawable.user).into(viewHolder.userPp);}
                 if(dataSnapshot.hasChild("userName")){
                 viewHolder.userName.setText(dataSnapshot.child("userName").getValue().toString());
-
                 }
 
 

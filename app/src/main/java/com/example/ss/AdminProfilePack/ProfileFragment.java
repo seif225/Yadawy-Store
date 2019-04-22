@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +31,7 @@ public class ProfileFragment extends Fragment {
     private Button editProfileButton;
     private ProgressDialog progressDialog;
     private Button uploadProductFab;
+    private RecyclerView recyclerView;
 
     public ProfileFragment() {
 
@@ -44,7 +46,7 @@ public class ProfileFragment extends Fragment {
         intialiaizeFields();
         presenter.retriveUserData(progressDialog,userNameTv,profilePicture,bioTv);
       presenter.showOrHideFab(uploadProductFab);
-
+        presenter.getAndAddDataToRecycler(recyclerView,new ProgressDialog(getContext()));
       uploadProductFab.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
@@ -85,6 +87,8 @@ public class ProfileFragment extends Fragment {
         editProfileButton=view.findViewById(R.id.edit_profile_btn);
         progressDialog=new ProgressDialog(getActivity());
         uploadProductFab = view.findViewById(R.id.upload_product_fab);
+        recyclerView = view.findViewById(R.id.admin_profile_recycler_view);
+
     }
 
 
