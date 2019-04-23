@@ -2,6 +2,7 @@ package com.example.ss.HomePackage;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DialogTitle;
@@ -106,12 +107,16 @@ public class NewsFeedRecyclerAdapter extends RecyclerView.Adapter<NewsFeedRecycl
 
         if(list.get(i).getImagesLinks()!=null){
         Picasso.get()
-
                 .load(list.get(i).getImagesLinks().get(0))
                 .resize(600, 200) // resizes the image to these dimensions (in pixel)
                 .centerCrop()
-                .placeholder(R.drawable.user).into(viewHolder.ProductImage);
+                .into(viewHolder.ProductImage);
         Log.e("image in adapter",list.get(i).getImagesLinks().get(0)+"i =" +i + "size= "+list.get(i).getImagesLinks().size());
+        }
+        else if(list.get(i).getImagesLinks()==null ){
+
+            viewHolder.ProductImage.setImageResource(R.drawable.user);
+
         }
 
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
