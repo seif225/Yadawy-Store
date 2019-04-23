@@ -20,6 +20,7 @@ import android.view.MenuItem;
 import com.example.ss.AdminProfilePack.ProfileFragment;
 import com.example.ss.CategoryPackage.CategoryFragment;
 import com.example.ss.HomePackage.HomeActivity;
+import com.example.ss.LikesFragmentPack.LikesFragment;
 import com.example.ss.ProfileEditActivityPack.ProfileEditActivity;
 import com.example.ss.SplashPack.SplashActivity;
 import com.example.ss.financeForBusinessUserPack.addFinancialInfoActivity;
@@ -202,6 +203,7 @@ public class MainActivity extends AppCompatActivity
             selectedFragment = new CategoryFragment();
 
         } else if (id == R.id.nav_save) {
+            selectedFragment= new LikesFragment();
 
         } else if (id == R.id.nav_profile) {
 

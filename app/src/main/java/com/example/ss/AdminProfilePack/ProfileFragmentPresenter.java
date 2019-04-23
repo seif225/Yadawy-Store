@@ -218,12 +218,17 @@ public class ProfileFragmentPresenter {
 
 
                     }
-                }
+                progressDialog.dismiss();
+
+            }
 
 
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                progressDialog.dismiss();
+
 
             }
         });

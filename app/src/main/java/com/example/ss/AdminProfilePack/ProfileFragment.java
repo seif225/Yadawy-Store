@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.ss.AddProductPAckage.AddProductActivity;
@@ -32,6 +33,7 @@ public class ProfileFragment extends Fragment {
     private ProgressDialog progressDialog;
     private Button uploadProductFab;
     private RecyclerView recyclerView;
+    private ImageView cover;
 
     public ProfileFragment() {
 
@@ -88,7 +90,10 @@ public class ProfileFragment extends Fragment {
         progressDialog=new ProgressDialog(getActivity());
         uploadProductFab = view.findViewById(R.id.upload_product_fab);
         recyclerView = view.findViewById(R.id.admin_profile_recycler_view);
-
+        cover=view.findViewById(R.id.cover_profile_admin);
+        Picasso.get().load(R.drawable.pic)
+                .centerCrop()
+                .resize(600,200).into(cover);
     }
 
 

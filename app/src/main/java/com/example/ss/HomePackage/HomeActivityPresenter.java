@@ -145,6 +145,7 @@ public class HomeActivityPresenter {
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
        // Log.e("previewOnHome",listOfProducts.get(0).getCategory()+"inshallah msh null ");
         recyclerView.setAdapter(adapter);
+
         //recyclerView.getLayoutManager().scrollToPosition(adapter.getItemCount());
         progressDialog.dismiss();
 
