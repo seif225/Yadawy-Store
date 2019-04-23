@@ -16,13 +16,16 @@ import android.widget.TextView;
 import com.example.ss.AddProductPAckage.AddProductActivity;
 import com.example.ss.ProductActivityPack.ProductActivity;
 import com.example.ss.R;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.sackcentury.shinebuttonlib.ShineButton;
 import com.squareup.picasso.Picasso;
 
+import java.util.HashMap;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -30,6 +33,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class NewsFeedRecyclerAdapter extends RecyclerView.Adapter<NewsFeedRecyclerAdapter.ViewHolder> {
     private List<ProductModel> list;
     private Context context;
+    private boolean likeState;
 
     public NewsFeedRecyclerAdapter(Context context, List<ProductModel> list) {
         this.list = list;
@@ -46,6 +50,59 @@ public class NewsFeedRecyclerAdapter extends RecyclerView.Adapter<NewsFeedRecycl
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int i) {
         //this picasso code shows only the first image of image collection in firebase
         //this happens only if images exist
+
+        DatabaseReference likRef=FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getUid());
+        likRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                if(dataSnapshot.hasChild("Likes")){
+                    if (dataSnapshot.child("Likes").hasChild(list.get(i).getProductName())){
+
+                       likeState = true;
+
+
+                    }
+                    else {
+
+                        viewHolder.likeButton.setChecked(false);
+                        likeState = false;
+
+                    }
+
+
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+        viewHolder.likeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                    if(!likeState){
+                    like(list.get(i).getProductId(),list.get(i).getuId(),list.get(i).getProductName());
+                    viewHolder.likeButton.setChecked(true);
+                    }
+                    else if (likeState){
+                        disLike(list.get(i).getProductId(),list.get(i).getuId(),list.get(i).getProductName());
+                        viewHolder.likeButton.setChecked(false);
+
+                    }
+
+
+            }
+        });
+
+
+
         if(list.get(i).getImagesLinks()!=null){
         Picasso.get()
 
@@ -96,6 +153,31 @@ public class NewsFeedRecyclerAdapter extends RecyclerView.Adapter<NewsFeedRecycl
         viewHolder.productPrice.setText(list.get(i).getProdcutPrice());
     }
 
+    private void disLike(String productId, String getuId, String productName) {
+
+    FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getUid()).child("Likes").child(productName).removeValue();
+    FirebaseDatabase.getInstance().getReference().child("products").child(getuId).child(productId).child("Likers").
+            child(FirebaseAuth.getInstance().getUid()).removeValue();
+
+
+    }
+
+    private void like(String productId, String getuId,String productName) {
+        HashMap<String,String> likedItem = new HashMap<>();
+        likedItem.put("productId",productId);
+        likedItem.put("userId",getuId);
+
+        FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getUid())
+                .child("Likes").child(productName).setValue(likedItem);
+
+        HashMap<String,String>liker=new HashMap<>();
+        liker.put("userId",FirebaseAuth.getInstance().getUid());
+        FirebaseDatabase.getInstance().getReference().child("products").child(getuId).child(productId)
+                .child("Likers").child(FirebaseAuth.getInstance().getUid()).setValue(liker);
+
+
+    }
+
     @Override
     public int getItemCount() {
         if (list == null) {
@@ -111,6 +193,7 @@ public class NewsFeedRecyclerAdapter extends RecyclerView.Adapter<NewsFeedRecycl
         TextView productPrice;
         CircleImageView userPp;
         TextView userName;
+        ShineButton likeButton;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -121,8 +204,9 @@ public class NewsFeedRecyclerAdapter extends RecyclerView.Adapter<NewsFeedRecycl
             productPrice = itemView.findViewById(R.id.product_price_at_recyclerView);
             userPp = itemView.findViewById(R.id.user_picture_in_layout_row);
             userName = itemView.findViewById(R.id.user_name_tv);
-
-
+            likeButton=itemView.findViewById(R.id.like_image_button);
+            likeButton.setChecked(true);
+            likeState=false;
         }
     }
 }
