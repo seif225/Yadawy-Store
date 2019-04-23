@@ -66,8 +66,13 @@ public class NewsFeedRecyclerAdapterForCurrentUser extends RecyclerView.Adapter<
 
         if(list.get(i).getImagesLinks()!=null){
             //Picasso.get().load(list.get(i).getImagesLinks().get(0)).placeholder(R.drawable.gifts).into(viewHolder.productPic);
-            loadImageInBackground(viewHolder.productPic,list.get(i).getImagesLinks().get(0));
+            //loadImageInBackground(viewHolder.productPic,list.get(i).getImagesLinks().get(0));
             //notifyDataSetChanged();
+            Picasso.get()
+                    .load(list.get(i).getImagesLinks().get(0))
+                    .resize(600, 200) // resizes the image to these dimensions (in pixel)
+                    .centerCrop()
+                    .into(viewHolder.productPic);
             Log.e("image in adapter",list.get(i).getImagesLinks().get(0)+"i =" +i + "size= "+list.get(i).getImagesLinks().size());
         }
 
@@ -163,6 +168,8 @@ public class NewsFeedRecyclerAdapterForCurrentUser extends RecyclerView.Adapter<
 
         Picasso.get()
                 .load(s)
+                .resize(600, 200) // resizes the image to these dimensions (in pixel)
+                .centerCrop()
                 .into(target);
     }
 

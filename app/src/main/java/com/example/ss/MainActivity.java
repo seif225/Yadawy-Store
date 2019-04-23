@@ -194,7 +194,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
-            // Handle the camera action
+
             selectedFragment = new HomeActivity();
 
 
@@ -204,6 +204,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_save) {
 
         } else if (id == R.id.nav_profile) {
+
             selectedFragment = new ProfileFragment();
         } else if (id == R.id.nav_share) {
 

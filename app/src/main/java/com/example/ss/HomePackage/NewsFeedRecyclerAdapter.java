@@ -47,7 +47,12 @@ public class NewsFeedRecyclerAdapter extends RecyclerView.Adapter<NewsFeedRecycl
         //this picasso code shows only the first image of image collection in firebase
         //this happens only if images exist
         if(list.get(i).getImagesLinks()!=null){
-        Picasso.get().load(list.get(i).getImagesLinks().get(0)).placeholder(R.drawable.user).into(viewHolder.ProductImage);
+        Picasso.get()
+
+                .load(list.get(i).getImagesLinks().get(0))
+                .resize(600, 200) // resizes the image to these dimensions (in pixel)
+                .centerCrop()
+                .placeholder(R.drawable.user).into(viewHolder.ProductImage);
         Log.e("image in adapter",list.get(i).getImagesLinks().get(0)+"i =" +i + "size= "+list.get(i).getImagesLinks().size());
         }
 
@@ -109,12 +114,14 @@ public class NewsFeedRecyclerAdapter extends RecyclerView.Adapter<NewsFeedRecycl
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+
             ProductImage = itemView.findViewById(R.id.product_image_at_recyclerView);
             productTitle = itemView.findViewById(R.id.product_title_at_recyclerView);
             productDescription = itemView.findViewById(R.id.product_description_at_recyclerView);
             productPrice = itemView.findViewById(R.id.product_price_at_recyclerView);
             userPp = itemView.findViewById(R.id.user_picture_in_layout_row);
             userName = itemView.findViewById(R.id.user_name_tv);
+
 
         }
     }
