@@ -50,9 +50,8 @@ public class CategoryItemPresenter {
         productsReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
+                listOfProducts.clear();
                 adapter.notifyDataSetChanged();
-
                 for (DataSnapshot d: dataSnapshot.getChildren()) {
                     for (DataSnapshot dataSnapshot1: d.getChildren()) {
                         productModel = new ProductModel();

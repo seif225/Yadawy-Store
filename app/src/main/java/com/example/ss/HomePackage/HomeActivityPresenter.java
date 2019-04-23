@@ -55,7 +55,7 @@ public class HomeActivityPresenter {
             productsRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
+                    listOfProducts.clear();
                     adapter.notifyDataSetChanged();
 
                     for (DataSnapshot d: dataSnapshot.getChildren()) {
