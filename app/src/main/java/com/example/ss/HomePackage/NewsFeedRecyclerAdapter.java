@@ -33,13 +33,13 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class NewsFeedRecyclerAdapter extends RecyclerView.Adapter<NewsFeedRecyclerAdapter.ViewHolder> {
     private List<ProductModel> list;
     private Context context;
-    private boolean likeState;
 
     public NewsFeedRecyclerAdapter(Context context, List<ProductModel> list) {
         this.list = list;
         this.context=context;
     }
 
+    @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int position) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_row, viewGroup, false);
@@ -59,14 +59,15 @@ public class NewsFeedRecyclerAdapter extends RecyclerView.Adapter<NewsFeedRecycl
                 if(dataSnapshot.hasChild("Likes")){
                     if (dataSnapshot.child("Likes").hasChild(list.get(i).getProductName())){
 
-                       likeState = true;
 
+                       viewHolder.likeState = true;
+                        viewHolder.likeButton.setChecked(true);
 
                     }
                     else {
 
                         viewHolder.likeButton.setChecked(false);
-                        likeState = false;
+                        viewHolder.likeState = false;
 
                     }
 
@@ -87,11 +88,11 @@ public class NewsFeedRecyclerAdapter extends RecyclerView.Adapter<NewsFeedRecycl
             @Override
             public void onClick(View v) {
 
-                    if(!likeState){
+                    if(!viewHolder.likeState){
                     like(list.get(i).getProductId(),list.get(i).getuId(),list.get(i).getProductName());
                     viewHolder.likeButton.setChecked(true);
                     }
-                    else if (likeState){
+                    else if (viewHolder.likeState){
                         disLike(list.get(i).getProductId(),list.get(i).getuId(),list.get(i).getProductName());
                         viewHolder.likeButton.setChecked(false);
 
@@ -194,6 +195,8 @@ public class NewsFeedRecyclerAdapter extends RecyclerView.Adapter<NewsFeedRecycl
         CircleImageView userPp;
         TextView userName;
         ShineButton likeButton;
+        private boolean likeState;
+
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -205,7 +208,7 @@ public class NewsFeedRecyclerAdapter extends RecyclerView.Adapter<NewsFeedRecycl
             userPp = itemView.findViewById(R.id.user_picture_in_layout_row);
             userName = itemView.findViewById(R.id.user_name_tv);
             likeButton=itemView.findViewById(R.id.like_image_button);
-            likeButton.setChecked(true);
+            //likeButton.setChecked(true);
             likeState=false;
         }
     }
