@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.example.ss.HomePackage.ProductModel;
 import com.example.ss.R;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -19,6 +20,7 @@ import com.smarteist.autoimageslider.SliderView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -130,6 +132,30 @@ class ProductActivityPresenter {
 
 
     }
+     void disLike() {
+
+        FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getUid()).child("Likes").child(productModel.getProductName()).removeValue();
+        FirebaseDatabase.getInstance().getReference().child("products").child(productModel.getuId()).child(productId).child("Likers").
+                child(FirebaseAuth.getInstance().getUid()).removeValue();
+
+
+    }
+
+     void like() {
+        HashMap<String,String> likedItem = new HashMap<>();
+        likedItem.put("productId",productId);
+        likedItem.put("userId",productModel.getuId());
+
+        FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getUid())
+                .child("Likes").child(productModel.getProductName()).setValue(likedItem);
+
+        HashMap<String,String>liker=new HashMap<>();
+        liker.put("userId",FirebaseAuth.getInstance().getUid());
+        FirebaseDatabase.getInstance().getReference().child("products").child(productModel.getuId()).child(productId)
+                .child("Likers").child(FirebaseAuth.getInstance().getUid()).setValue(liker);
+
+
+    }
 
     private void setSliderViews(ArrayList<String> imagesLinks, SliderLayout sliderLayout) {
 
@@ -158,6 +184,12 @@ class ProductActivityPresenter {
         }
 
     }
+    }
+    String getProducName(){
+
+
+
+        return productModel.getProductName();
     }
 
 }

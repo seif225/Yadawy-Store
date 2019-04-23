@@ -160,7 +160,7 @@ public class NewsFeedRecyclerAdapter extends RecyclerView.Adapter<NewsFeedRecycl
         viewHolder.productPrice.setText(list.get(i).getProdcutPrice());
     }
 
-    private void disLike(String productId, String getuId, String productName) {
+     void disLike(String productId, String getuId, String productName) {
 
     FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getUid()).child("Likes").child(productName).removeValue();
     FirebaseDatabase.getInstance().getReference().child("products").child(getuId).child(productId).child("Likers").
@@ -169,7 +169,7 @@ public class NewsFeedRecyclerAdapter extends RecyclerView.Adapter<NewsFeedRecycl
 
     }
 
-    private void like(String productId, String getuId,String productName) {
+     void like(String productId, String getuId,String productName) {
         HashMap<String,String> likedItem = new HashMap<>();
         likedItem.put("productId",productId);
         likedItem.put("userId",getuId);
