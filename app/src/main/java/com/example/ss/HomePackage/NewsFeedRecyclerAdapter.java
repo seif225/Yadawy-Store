@@ -158,6 +158,17 @@ public class NewsFeedRecyclerAdapter extends RecyclerView.Adapter<NewsFeedRecycl
        // Log.e("title fl adapter",list.get(i).getProductName() + " ya rab msh null :''D");
         viewHolder.productDescription.setText(list.get(i).getProductDescribtion());
         viewHolder.productPrice.setText(list.get(i).getProdcutPrice());
+
+        if(list.get(i).getProductLikes()!=null){
+            viewHolder.likesTv.setText(list.get(i).getProductLikes());
+
+        }
+        else{
+
+
+            viewHolder.likesTv.setText("0");
+        }
+
     }
 
      void disLike(String productId, String getuId, String productName) {
@@ -200,6 +211,7 @@ public class NewsFeedRecyclerAdapter extends RecyclerView.Adapter<NewsFeedRecycl
         TextView productPrice;
         CircleImageView userPp;
         TextView userName;
+        TextView likesTv;
         ShineButton likeButton;
         private boolean likeState;
 
@@ -216,6 +228,7 @@ public class NewsFeedRecyclerAdapter extends RecyclerView.Adapter<NewsFeedRecycl
             likeButton=itemView.findViewById(R.id.like_image_button);
             //likeButton.setChecked(true);
             likeState=false;
+            likesTv=itemView.findViewById(R.id.number_of_likes);
         }
     }
 }

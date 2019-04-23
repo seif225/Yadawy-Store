@@ -120,6 +120,14 @@ public class HomeActivityPresenter {
                                 productModel.setuId(dataSnapshot1.child("use_id").getValue().toString());
 
                             }
+
+                            if(dataSnapshot1.hasChild("Likers")){
+
+                                productModel.setProductLikes(dataSnapshot1.child("Likers").getChildrenCount()+"");
+
+                            }
+
+
                             listOfProducts.add(productModel);
                             previewDataOnHome(homeRecycler,progressDialog);
 

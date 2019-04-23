@@ -6,8 +6,11 @@ public class ProductModel {
 
     private ArrayList<String>imagesLinks;
     private String ProductName,prodcutPrice,productDescribtion,color,category
-            ,priceRange,uId,productId;
+            ,priceRange,uId,productId,productLikes;
 
+    public void setProductLikes(String productLikes) {
+        this.productLikes = productLikes;
+    }
 
     public void setImagesLinks(ArrayList<String> imagesLinks) {
         this.imagesLinks = imagesLinks;
@@ -81,4 +84,7 @@ public class ProductModel {
         return uId;
     }
 
+    public String getProductLikes() {
+        return productLikes;
+    }
 }
