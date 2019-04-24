@@ -50,7 +50,7 @@ public class ProfileEditActivity extends AppCompatActivity {
                 pickImage();
             }
         });
-
+        profileEditActivityPresenter.fillData(new ProgressDialog(this),userNameEt,bioEt,phoneEt,mailEt,adressEt,profilePicture);
         updateData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
