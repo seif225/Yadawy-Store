@@ -52,4 +52,5 @@ dependencies {
     //awesome buttons
     implementation 'com.sackcentury:shinebutton:0.2.0'
     implementation 'com.willowtreeapps.spruce:spruce-android:1.0.1'
+    implementation 'com.beardedhen:androidbootstrap:2.3.0'
 }

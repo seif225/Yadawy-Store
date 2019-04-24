@@ -2,10 +2,7 @@ package com.example.ss.HomePackage;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.DialogTitle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,9 +11,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.ss.AddProductPAckage.AddProductActivity;
 import com.example.ss.ProductActivityPack.ProductActivity;
 import com.example.ss.R;
+import com.example.ss.UserProfile.UserProfileActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -51,6 +48,25 @@ public class NewsFeedRecyclerAdapter extends RecyclerView.Adapter<NewsFeedRecycl
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int i) {
         //this picasso code shows only the first image of image collection in firebase
         //this happens only if images exist
+
+
+        viewHolder.userName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                sendUserToProfile(list.get(i));
+
+            }
+        });
+
+        viewHolder.userPp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendUserToProfile(list.get(i));
+            }
+        });
+
+
 
         DatabaseReference likRef=FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getUid());
         likRef.addValueEventListener(new ValueEventListener() {
@@ -171,7 +187,17 @@ public class NewsFeedRecyclerAdapter extends RecyclerView.Adapter<NewsFeedRecycl
 
     }
 
-     void disLike(String productId, String getuId, String productName) {
+    private void sendUserToProfile(ProductModel productModel) {
+        Intent i = new Intent (context, UserProfileActivity.class);
+        i.putExtra("uid",productModel.getuId());
+        context.startActivity(i);
+
+
+
+
+    }
+
+    void disLike(String productId, String getuId, String productName) {
 
     FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getUid()).child("Likes").child(productName).removeValue();
     FirebaseDatabase.getInstance().getReference().child("products").child(getuId).child(productId).child("Likers").
