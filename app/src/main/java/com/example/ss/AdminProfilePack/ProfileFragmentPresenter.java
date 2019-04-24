@@ -249,4 +249,30 @@ public class ProfileFragmentPresenter {
 
     }
 
+     void showProductsnumber(final TextView productsTv) {
+
+    FirebaseDatabase.getInstance().getReference().child("products").child(FirebaseAuth.getInstance().getUid()).addValueEventListener(new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+            productsTv.setText(dataSnapshot.getChildrenCount()+"");
+
+
+
+
+
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+        }
+    });
+
+
+
+
+
+
+    }
 }

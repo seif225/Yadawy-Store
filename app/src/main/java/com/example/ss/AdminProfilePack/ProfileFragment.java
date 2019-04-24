@@ -27,7 +27,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ProfileFragment extends Fragment {
     private View view;
     private ProfileFragmentPresenter presenter;
-    private TextView userNameTv,bioTv;
+    private TextView userNameTv,bioTv,productsTv;
     private CircleImageView profilePicture;
     private Button editProfileButton;
     private ProgressDialog progressDialog;
@@ -49,6 +49,7 @@ public class ProfileFragment extends Fragment {
         presenter.retriveUserData(progressDialog,userNameTv,profilePicture,bioTv);
       presenter.showOrHideFab(uploadProductFab);
         presenter.getAndAddDataToRecycler(recyclerView,new ProgressDialog(getContext()));
+        presenter.showProductsnumber(productsTv);
       uploadProductFab.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
@@ -83,17 +84,17 @@ public class ProfileFragment extends Fragment {
 
     private void intialiaizeFields() {
         presenter = new ProfileFragmentPresenter(getActivity());
-        userNameTv=view.findViewById(R.id.userName_tv_profile);
-        bioTv=view.findViewById(R.id.bio_tv_profile_fragment);
-        profilePicture=view.findViewById(R.id.proile_picture_admin_profile);
-        editProfileButton=view.findViewById(R.id.edit_profile_btn);
-        progressDialog=new ProgressDialog(getActivity());
+        userNameTv = view.findViewById(R.id.userName_tv_profile);
+        bioTv = view.findViewById(R.id.bio_tv_profile_fragment);
+        profilePicture = view.findViewById(R.id.proile_picture_admin_profile);
+        editProfileButton = view.findViewById(R.id.edit_profile_btn);
+        progressDialog = new ProgressDialog(getActivity());
         uploadProductFab = view.findViewById(R.id.upload_product_fab);
         recyclerView = view.findViewById(R.id.admin_profile_recycler_view);
-        cover=view.findViewById(R.id.cover_profile_admin);
-        Picasso.get().load(R.drawable.pic)
-                .centerCrop()
-                .resize(600,200).into(cover);
+        cover = view.findViewById(R.id.cover_profile_admin);
+        productsTv=view.findViewById(R.id.products_number_admin_profile);
+
+
     }
 
 
