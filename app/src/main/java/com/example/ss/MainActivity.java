@@ -16,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.example.ss.AdminProfilePack.ProfileFragment;
 import com.example.ss.CategoryPackage.CategoryFragment;
@@ -31,6 +32,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -41,12 +45,48 @@ public class MainActivity extends AppCompatActivity
     FirebaseDatabase firebaseDatabase;
     DatabaseReference userRef;
     Fragment selectedFragment;
+    View navigationHeader;
+    CircleImageView navuseRImage;
+    TextView navUserName,navUserMail;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         FirebaseApp.initializeApp(this);
         intializeFields();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        navigationHeader = navigationView.getHeaderView(0);
+        navuseRImage = navigationHeader.findViewById(R.id.userImageView_nav);
+        navUserName = navigationHeader.findViewById(R.id.userName_nav);
+        navUserMail = navigationHeader.findViewById(R.id.userMail_nav);
+        updateUserInfo();
+
+
+
+    }
+
+    private void updateUserInfo() {
+
+        FirebaseDatabase.getInstance().getReference().child("Users").
+                child(FirebaseAuth.getInstance().getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                Picasso.get().load(dataSnapshot.child("image").getValue().toString()).into(navuseRImage);
+                navUserName.setText(dataSnapshot.child("userName").getValue().toString());
+                navUserMail.setText(dataSnapshot.child("mail").getValue().toString());
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
 
 

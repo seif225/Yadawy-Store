@@ -97,7 +97,6 @@ class LikesFragmentPresenter {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot1) {
 
-
                     productModel = new ProductModel();
 
                     if(dataSnapshot1.hasChild("images")){
