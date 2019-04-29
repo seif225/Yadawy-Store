@@ -5,6 +5,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.TextView;
 
 import com.beardedhen.androidbootstrap.BootstrapButton;
@@ -33,20 +34,30 @@ class UserProfilePresenter {
     private ArrayList<String> listOfPictureLinks;
     private NewsFeedRecyclerAdapter adapter;
 private String profileId;
-    UserProfilePresenter(Context context,String profileId) {
+    UserProfilePresenter(Context context, String profileId, BootstrapButton followButton) {
         this.profileId=profileId;
         this.context=context;
         userRef = FirebaseDatabase.getInstance().getReference().child("Users");
         productRef=FirebaseDatabase.getInstance().getReference().child("products");
         listOfPictureLinks = new ArrayList<>();
         listOfProducts=new ArrayList<>();
-
+        handleButton(followButton);
         adapter=new NewsFeedRecyclerAdapter(context,listOfProducts);
 
     }
 
+    private void handleButton(BootstrapButton followButton) {
+    if(FirebaseAuth.getInstance().getUid().equals(profileId)){
 
-      void getAndPreviewUserData(final ProgressDialog progressDialog, final CircleImageView userPp, final TextView numberOfProducts, final TextView userName, TextView followers, TextView following, BootstrapButton followButton, final RecyclerView productsRecyclerView, final String uid) {
+        followButton.setVisibility(View.GONE);
+
+    }
+
+
+    }
+
+
+    void getAndPreviewUserData(final ProgressDialog progressDialog, final CircleImageView userPp, final TextView numberOfProducts, final TextView userName, TextView followers, TextView following, BootstrapButton followButton, final RecyclerView productsRecyclerView, final String uid) {
 
         userRef.child(uid).addValueEventListener(new ValueEventListener() {
             @Override

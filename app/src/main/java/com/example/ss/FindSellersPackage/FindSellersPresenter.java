@@ -60,7 +60,7 @@ class FindSellersPresenter {
 
         for (int i = 0; i <listOfFollowers.size() ; i++) {
 
-            listOfUsers.add();
+           // listOfUsers.add();
 
 
 

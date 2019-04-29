@@ -52,7 +52,7 @@ public class UserProfileActivity extends AppCompatActivity {
         userName=findViewById(R.id.user_name_user_profile);
         uid = i.getStringExtra("uid");
         Log.e("uid in userProfile",""+ uid+" hell yeaaaah ! ");
-    presenter=new UserProfilePresenter(this,uid);
+    presenter=new UserProfilePresenter(this,uid,followButton);
 
 
 

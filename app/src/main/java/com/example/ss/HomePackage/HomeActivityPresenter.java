@@ -64,10 +64,12 @@ public class HomeActivityPresenter {
                     getFollowers();
 
                     for (DataSnapshot d: dataSnapshot.getChildren()) {
-                        if(followersList.contains(d.child("use_id").getValue().toString())) {
+
                             for (DataSnapshot dataSnapshot1 : d.getChildren()) {
                                 productModel = new ProductModel();
+                                //TODO : Bug
 
+                                //if(followersList.contains(dataSnapshot1.child("use_id").getValue().toString())) {
                                 if (dataSnapshot1.hasChild("images")) {
                                     //productModel.setImagesLinks(dataSnapshot.child("images").getValue().toString());
                                     int i = 0;
@@ -143,7 +145,7 @@ public class HomeActivityPresenter {
                             }
                         }
                     }
-                }
+                //}
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
