@@ -187,8 +187,6 @@ class ProductActivityPresenter {
     }
     String getProducName(){
 
-
-
         return productModel.getProductName();
     }
 

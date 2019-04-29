@@ -166,7 +166,7 @@ public class ProfileEditActivityPresenter {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 if (dataSnapshot.hasChild("userName")) {
-                userNameEt.setText(dataSnapshot.child("userName").getValue().toString());
+                    userNameEt.setText(dataSnapshot.child("userName").getValue().toString());
                 }
                 if (dataSnapshot.hasChild("bio")) {
                     bioEt.setText(dataSnapshot.child("bio").getValue().toString());
@@ -176,6 +176,7 @@ public class ProfileEditActivityPresenter {
                     phoneEt.setText(dataSnapshot.child("phone").getValue().toString());
 
                 }
+
                 if (dataSnapshot.hasChild("mail")) {
                     mailEt.setText(dataSnapshot.child("mail").getValue().toString());
 
@@ -203,7 +204,6 @@ public class ProfileEditActivityPresenter {
 
 
     }
-
 
 
 }

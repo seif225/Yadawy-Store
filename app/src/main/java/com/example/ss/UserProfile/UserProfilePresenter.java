@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.example.ss.HomePackage.NewsFeedRecyclerAdapter;
 import com.example.ss.HomePackage.ProductModel;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -18,6 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -26,13 +28,13 @@ class UserProfilePresenter {
     private Context context;
     private DatabaseReference userRef, productRef;
     private ProductModel productModel;
-
+    private boolean check;
     private ArrayList<ProductModel> listOfProducts;
     private ArrayList<String> listOfPictureLinks;
     private NewsFeedRecyclerAdapter adapter;
-
-    UserProfilePresenter(Context context) {
-
+private String profileId;
+    UserProfilePresenter(Context context,String profileId) {
+        this.profileId=profileId;
         this.context=context;
         userRef = FirebaseDatabase.getInstance().getReference().child("Users");
         productRef=FirebaseDatabase.getInstance().getReference().child("products");
@@ -173,6 +175,48 @@ class UserProfilePresenter {
 
     }
 
+    boolean isFollowed(){
 
 
+        userRef.child(FirebaseAuth.getInstance().getUid()).child("followers").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                check = dataSnapshot.hasChild(profileId);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                check=false;
+            }
+        });
+
+
+        return  check;
+    }
+
+
+    void follow() {
+
+       userRef.child(FirebaseAuth.getInstance().getUid()).child("following").child(profileId).setValue(profileId);
+        userRef.child(profileId).child("followers").child(FirebaseAuth.getInstance().getUid()).setValue(FirebaseAuth.getInstance().getUid());
+
+    }
+
+    void unFollow() {
+        userRef.child(FirebaseAuth.getInstance().getUid()).child("following").child(profileId).removeValue();
+        userRef.child(profileId).child("followers").child(FirebaseAuth.getInstance().getUid()).removeValue();
+    }
+
+
+    public void handleFollowButton(BootstrapButton followButton) {
+
+        if(isFollowed()) {
+            followButton.setShowOutline(false);
+            followButton.setText(" x unfollow");
+        }
+
+
+    }
 }

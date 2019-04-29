@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import com.beardedhen.androidbootstrap.BootstrapButton;
@@ -28,6 +29,15 @@ public class UserProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_profile);
         initalizeFields();
         presenter.getAndPreviewUserData(new ProgressDialog(this),userPp,numberOfProducts,userName,followers,following,followButton,productsRecyclerView,uid);
+        presenter.handleFollowButton(followButton);
+        followButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(presenter.isFollowed()) presenter.unFollow();
+                else presenter.follow();
+            }
+        });
     }
 
     private void initalizeFields() {
@@ -38,11 +48,12 @@ public class UserProfileActivity extends AppCompatActivity {
     following=findViewById(R.id.following_number);
     followButton = findViewById(R.id.follow_button);
     productsRecyclerView=findViewById(R.id.recyclerView_in_user_profile);
-    presenter=new UserProfilePresenter(this);
-    Intent i = getIntent();
-    userName=findViewById(R.id.user_name_user_profile);
-    uid = i.getStringExtra("uid");
-    Log.e("uid in userProfile",""+ uid+" hell yeaaaah ! ");
+        Intent i = getIntent();
+        userName=findViewById(R.id.user_name_user_profile);
+        uid = i.getStringExtra("uid");
+        Log.e("uid in userProfile",""+ uid+" hell yeaaaah ! ");
+    presenter=new UserProfilePresenter(this,uid);
+
 
 
 

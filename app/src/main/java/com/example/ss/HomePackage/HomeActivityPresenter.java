@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -17,6 +18,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.StringJoiner;
 
 public class HomeActivityPresenter {
 
@@ -29,13 +31,15 @@ public class HomeActivityPresenter {
     private ArrayList<ProductModel> listOfProducts;
     private ArrayList<String> listOfPictureLinks;
     private NewsFeedRecyclerAdapter adapter;
+    private ArrayList<String> followersList;
 
 
-     HomeActivityPresenter(Context context) {
+    HomeActivityPresenter(Context context) {
 
          this.context=context;
          database = FirebaseDatabase.getInstance();
          mAuth=FirebaseAuth.getInstance();
+         followersList=new ArrayList<>();
         productsRef = database.getReference().child("products");
          listOfPictureLinks = new ArrayList<>();
          listOfProducts=new ArrayList<>();
@@ -57,19 +61,21 @@ public class HomeActivityPresenter {
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     listOfProducts.clear();
                     adapter.notifyDataSetChanged();
+                    getFollowers();
 
                     for (DataSnapshot d: dataSnapshot.getChildren()) {
-                        for (DataSnapshot dataSnapshot1: d.getChildren()) {
-                            productModel = new ProductModel();
+                        if(followersList.contains(d.child("use_id").getValue().toString())) {
+                            for (DataSnapshot dataSnapshot1 : d.getChildren()) {
+                                productModel = new ProductModel();
 
-                            if(dataSnapshot1.hasChild("images")){
-                                //productModel.setImagesLinks(dataSnapshot.child("images").getValue().toString());
-                                int i=0;
-                                listOfPictureLinks = new ArrayList<>();
-                                for (DataSnapshot imagesDataSnapShot:dataSnapshot1.child("images").getChildren()){
+                                if (dataSnapshot1.hasChild("images")) {
+                                    //productModel.setImagesLinks(dataSnapshot.child("images").getValue().toString());
+                                    int i = 0;
+                                    listOfPictureLinks = new ArrayList<>();
+                                    for (DataSnapshot imagesDataSnapShot : dataSnapshot1.child("images").getChildren()) {
 
-                                    listOfPictureLinks.add(imagesDataSnapShot.getValue().toString());
-                                    //Log.e("images",imagesDataSnapShot.getValue().toString()+" msh null yasta wla eh?");
+                                        listOfPictureLinks.add(imagesDataSnapShot.getValue().toString());
+                                        //Log.e("images",imagesDataSnapShot.getValue().toString()+" msh null yasta wla eh?");
                                    /* Log.e("datapshot fl presenter",dataSnapshot.toString());
 
 
@@ -78,62 +84,63 @@ public class HomeActivityPresenter {
                                     Log.e("datapshot1 fl presenter",dataSnapshot1.getKey().toString());*/
 
 
-                                    //Log.e("images",listOfPictureLinks.get(i)+" msh null yasta wla eh?");
-                                    //this counter is just for testing purposes
-                                    i++;
+                                        //Log.e("images",listOfPictureLinks.get(i)+" msh null yasta wla eh?");
+                                        //this counter is just for testing purposes
+                                        i++;
+                                    }
+                                    productModel.setImagesLinks(listOfPictureLinks);
+
                                 }
-                                productModel.setImagesLinks(listOfPictureLinks);
+
+
+                                if (dataSnapshot1.hasChild("category")) {
+                                    productModel.setCategory(dataSnapshot1.child("category").getValue().toString());
+                                    // Log.e("category",dataSnapshot1.child("category").getValue().toString()+" msh null yasta wla eh?");
+
+                                }
+                                if (dataSnapshot1.hasChild("color")) {
+                                    productModel.setColor(dataSnapshot1.child("color").getValue().toString());
+
+                                }
+                                if (dataSnapshot1.hasChild("price_range")) {
+                                    productModel.setPriceRange(dataSnapshot1.child("price_range").getValue().toString());
+
+                                }
+                                if (dataSnapshot1.hasChild("product_describtion")) {
+                                    productModel.setProductDescribtion(dataSnapshot1.child("product_describtion").getValue().toString());
+
+                                }
+                                if (dataSnapshot1.hasChild("product_id")) {
+                                    productModel.setProductId(dataSnapshot1.child("product_id").getValue().toString());
+
+                                }
+                                if (dataSnapshot1.hasChild("product_name")) {
+                                    productModel.setProductName(dataSnapshot1.child("product_name").getValue().toString());
+
+                                }
+                                if (dataSnapshot1.hasChild("product_price")) {
+                                    productModel.setProdcutPrice(dataSnapshot1.child("product_price").getValue().toString());
+
+                                }
+                                if (dataSnapshot1.hasChild("use_id")) {
+                                    productModel.setuId(dataSnapshot1.child("use_id").getValue().toString());
+
+                                }
+
+                                if (dataSnapshot1.hasChild("Likers")) {
+
+                                    productModel.setProductLikes(dataSnapshot1.child("Likers").getChildrenCount() + "");
+
+                                }
+
+
+                                listOfProducts.add(productModel);
+                                previewDataOnHome(homeRecycler, progressDialog);
+
+                                adapter.notifyDataSetChanged();
+
 
                             }
-
-
-                            if(dataSnapshot1.hasChild("category")){
-                                productModel.setCategory(dataSnapshot1.child("category").getValue().toString());
-                               // Log.e("category",dataSnapshot1.child("category").getValue().toString()+" msh null yasta wla eh?");
-
-                            }
-                            if(dataSnapshot1.hasChild("color")){
-                                productModel.setColor(dataSnapshot1.child("color").getValue().toString());
-
-                            }
-                            if(dataSnapshot1.hasChild("price_range")){
-                                productModel.setPriceRange(dataSnapshot1.child("price_range").getValue().toString());
-
-                            }
-                            if(dataSnapshot1.hasChild("product_describtion")){
-                                productModel.setProductDescribtion(dataSnapshot1.child("product_describtion").getValue().toString());
-
-                            }
-                            if(dataSnapshot1.hasChild("product_id")){
-                                productModel.setProductId(dataSnapshot1.child("product_id").getValue().toString());
-
-                            }
-                            if(dataSnapshot1.hasChild("product_name")){
-                                productModel.setProductName(dataSnapshot1.child("product_name").getValue().toString());
-
-                            }
-                            if(dataSnapshot1.hasChild("product_price")){
-                                productModel.setProdcutPrice(dataSnapshot1.child("product_price").getValue().toString());
-
-                            }
-                            if(dataSnapshot1.hasChild("use_id")){
-                                productModel.setuId(dataSnapshot1.child("use_id").getValue().toString());
-
-                            }
-
-                            if(dataSnapshot1.hasChild("Likers")){
-
-                                productModel.setProductLikes(dataSnapshot1.child("Likers").getChildrenCount()+"");
-
-                            }
-
-
-                            listOfProducts.add(productModel);
-                            previewDataOnHome(homeRecycler,progressDialog);
-
-                            adapter.notifyDataSetChanged();
-
-
                         }
                     }
                 }
@@ -148,6 +155,32 @@ public class HomeActivityPresenter {
 
     }
 
+    private void getFollowers() {
+
+     FirebaseDatabase.getInstance().getReference().child(FirebaseAuth.getInstance().getUid()).child("followers").addValueEventListener(new ValueEventListener() {
+         @Override
+         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+             for (DataSnapshot d:
+                  dataSnapshot.getChildren()) {
+                 followersList.add(d.getValue().toString());
+
+             }
+
+
+
+         }
+
+         @Override
+         public void onCancelled(@NonNull DatabaseError databaseError) {
+
+         }
+     });
+
+
+
+     }
+
     private void previewDataOnHome(RecyclerView recyclerView,ProgressDialog progressDialog) {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
@@ -156,6 +189,12 @@ public class HomeActivityPresenter {
 
         //recyclerView.getLayoutManager().scrollToPosition(adapter.getItemCount());
         progressDialog.dismiss();
+
+        if(followersList.isEmpty()){
+
+            Toast.makeText(context, "no followers yet", Toast.LENGTH_SHORT).show();
+
+        }
 
      }
 
