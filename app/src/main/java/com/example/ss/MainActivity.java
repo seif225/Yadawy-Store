@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.example.ss.AdminProfilePack.ProfileFragment;
 import com.example.ss.CategoryPackage.CategoryFragment;
+import com.example.ss.FindSellersPackage.FindSellersActivity;
 import com.example.ss.HomePackage.HomeActivity;
 import com.example.ss.LikesFragmentPack.LikesFragment;
 import com.example.ss.ProfileEditActivityPack.ProfileEditActivity;
@@ -224,8 +225,19 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.action_settings) {
             return true;
         }
+        if (id == R.id.find_sellers) {
+            sendUserToFindSellersActivity();
+
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void sendUserToFindSellersActivity() {
+    Intent i = new Intent (this, FindSellersActivity.class);
+    startActivity(i);
+
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
