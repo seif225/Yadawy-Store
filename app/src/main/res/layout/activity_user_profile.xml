@@ -175,22 +175,18 @@
 
     </android.support.v7.widget.RecyclerView>
 
-    <com.beardedhen.androidbootstrap.BootstrapButton
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Follow"
         android:id="@+id/follow_button"
         android:textStyle="bold"
-        app:bootstrapBrand="success"
-        app:bootstrapSize="lg"
-        app:buttonMode="regular"
         app:layout_constraintBottom_toTopOf="@+id/card_view_user_profile"
         app:layout_constraintEnd_toEndOf="@+id/user_name_user_profile"
         app:layout_constraintStart_toStartOf="@+id/user_name_user_profile"
         app:layout_constraintTop_toBottomOf="@+id/user_name_user_profile"
         app:layout_constraintVertical_bias="0.3"
-        app:roundedCorners="true"
-        app:showOutline="true" />
+        android:background="#32CD32" />
 
 </android.support.constraint.ConstraintLayout>
 </android.support.v4.widget.NestedScrollView>

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.beardedhen.androidbootstrap.BootstrapButton;
@@ -18,7 +19,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
     private CircleImageView userPp;
     private TextView numberOfProducts,followers,following,userName;
-    private BootstrapButton followButton;
+    private Button followButton;
     private UserProfilePresenter presenter;
     private RecyclerView productsRecyclerView;
     private String uid;
@@ -29,15 +30,7 @@ public class UserProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_profile);
         initalizeFields();
         presenter.getAndPreviewUserData(new ProgressDialog(this),userPp,numberOfProducts,userName,followers,following,followButton,productsRecyclerView,uid);
-        presenter.handleFollowButton(followButton);
-        followButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                if(presenter.isFollowed()) presenter.unFollow();
-                else presenter.follow();
-            }
-        });
     }
 
     private void initalizeFields() {

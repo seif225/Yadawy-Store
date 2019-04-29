@@ -110,6 +110,7 @@ public class NewsFeedRecyclerAdapter extends RecyclerView.Adapter<NewsFeedRecycl
                     viewHolder.likeButton.setChecked(true);
 
                     }
+
                     else if (viewHolder.likeState){
                         disLike(list.get(i).getProductId(),list.get(i).getuId(),list.get(i).getProductName());
                         viewHolder.likeButton.setChecked(false);
