@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.example.ss.R;
 
@@ -36,7 +37,7 @@ public class HomeActivity extends Fragment {
 
   void initializeFields(){
 
-      presenter = new HomeActivityPresenter(getActivity());
+      presenter = new HomeActivityPresenter(getActivity(),(TextView) view.findViewById(R.id.home_text_message));
       homeRecycler = view.findViewById(R.id.homeRecycler);
 
 

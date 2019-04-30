@@ -8,6 +8,8 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -16,6 +18,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.StringJoiner;
@@ -32,10 +36,10 @@ public class HomeActivityPresenter {
     private ArrayList<String> listOfPictureLinks;
     private NewsFeedRecyclerAdapter adapter;
     private ArrayList<String> followersList;
+    private TextView messageText;
 
-
-    HomeActivityPresenter(Context context) {
-
+    HomeActivityPresenter(Context context, TextView messageText) {
+        this.messageText=messageText;
          this.context=context;
          database = FirebaseDatabase.getInstance();
          mAuth=FirebaseAuth.getInstance();
@@ -56,132 +60,140 @@ public class HomeActivityPresenter {
             progressDialog.setCancelable(false);
             progressDialog.show();
 
-            productsRef.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    listOfProducts.clear();
-                    adapter.notifyDataSetChanged();
-                    getFollowers();
 
-                    for (DataSnapshot d: dataSnapshot.getChildren()) {
+//         adapter.notifyDataSetChanged();
+         FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getUid()).child("following").addValueEventListener(new ValueEventListener() {
+             @Override
+             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                            for (DataSnapshot dataSnapshot1 : d.getChildren()) {
-                                productModel = new ProductModel();
-                                //TODO : Bug
+                 listOfProducts.clear();
+                 adapter.notifyDataSetChanged();
 
-                                //if(followersList.contains(dataSnapshot1.child("use_id").getValue().toString())) {
-                                if (dataSnapshot1.hasChild("images")) {
-                                    //productModel.setImagesLinks(dataSnapshot.child("images").getValue().toString());
-                                    int i = 0;
-                                    listOfPictureLinks = new ArrayList<>();
-                                    for (DataSnapshot imagesDataSnapShot : dataSnapshot1.child("images").getChildren()) {
-
-                                        listOfPictureLinks.add(imagesDataSnapShot.getValue().toString());
-                                        //Log.e("images",imagesDataSnapShot.getValue().toString()+" msh null yasta wla eh?");
-                                   /* Log.e("datapshot fl presenter",dataSnapshot.toString());
+                 for (DataSnapshot d: dataSnapshot.getChildren()) {
+                     followersList.add(d.getValue().toString());
 
 
-                                    // da esm el product ==>
-
-                                    Log.e("datapshot1 fl presenter",dataSnapshot1.getKey().toString());*/
+                 }
 
 
-                                        //Log.e("images",listOfPictureLinks.get(i)+" msh null yasta wla eh?");
-                                        //this counter is just for testing purposes
-                                        i++;
-                                    }
-                                    productModel.setImagesLinks(listOfPictureLinks);
-
-                                }
+                 if (followersList.size()==0){
+                     progressDialog.dismiss();
+                     messageText.setVisibility(View.VISIBLE);
+                     messageText.setText("you have no followers");
+                 }
 
 
-                                if (dataSnapshot1.hasChild("category")) {
-                                    productModel.setCategory(dataSnapshot1.child("category").getValue().toString());
-                                    // Log.e("category",dataSnapshot1.child("category").getValue().toString()+" msh null yasta wla eh?");
+                 for (int i = 0; i <followersList.size() ; i++) {
 
-                                }
-                                if (dataSnapshot1.hasChild("color")) {
-                                    productModel.setColor(dataSnapshot1.child("color").getValue().toString());
+                     productsRef.child(followersList.get(i)).addValueEventListener(new ValueEventListener() {
+                         @Override
+                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                                }
-                                if (dataSnapshot1.hasChild("price_range")) {
-                                    productModel.setPriceRange(dataSnapshot1.child("price_range").getValue().toString());
-
-                                }
-                                if (dataSnapshot1.hasChild("product_describtion")) {
-                                    productModel.setProductDescribtion(dataSnapshot1.child("product_describtion").getValue().toString());
-
-                                }
-                                if (dataSnapshot1.hasChild("product_id")) {
-                                    productModel.setProductId(dataSnapshot1.child("product_id").getValue().toString());
-
-                                }
-                                if (dataSnapshot1.hasChild("product_name")) {
-                                    productModel.setProductName(dataSnapshot1.child("product_name").getValue().toString());
-
-                                }
-                                if (dataSnapshot1.hasChild("product_price")) {
-                                    productModel.setProdcutPrice(dataSnapshot1.child("product_price").getValue().toString());
-
-                                }
-                                if (dataSnapshot1.hasChild("use_id")) {
-                                    productModel.setuId(dataSnapshot1.child("use_id").getValue().toString());
-
-                                }
-
-                                if (dataSnapshot1.hasChild("Likers")) {
-
-                                    productModel.setProductLikes(dataSnapshot1.child("Likers").getChildrenCount() + "");
-
-                                }
+                             for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()) {
 
 
-                                listOfProducts.add(productModel);
-                                previewDataOnHome(homeRecycler, progressDialog);
 
-                                adapter.notifyDataSetChanged();
+                                         productModel = new ProductModel();
+                                         //TODO : Bug
+                                        // Log.e("following",dataSnapshot1.child("use_id").getValue().toString()+" ya rb msh null");
+
+                                         if (dataSnapshot1.hasChild("images")) {
+                                             //productModel.setImagesLinks(dataSnapshot.child("images").getValue().toString());
+                                             int i = 0;
+                                             listOfPictureLinks = new ArrayList<>();
+                                             for (DataSnapshot imagesDataSnapShot : dataSnapshot1.child("images").getChildren()) {
+
+                                                 listOfPictureLinks.add(imagesDataSnapShot.getValue().toString());
+
+                                                 i++;
+                                             }
+                                             productModel.setImagesLinks(listOfPictureLinks);
+
+                                         }
 
 
-                            }
-                        }
-                    }
-                //}
+                                         if (dataSnapshot1.hasChild("category")) {
+                                             productModel.setCategory(dataSnapshot1.child("category").getValue().toString());
+                                             // Log.e("category",dataSnapshot1.child("category").getValue().toString()+" msh null yasta wla eh?");
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
+                                         }
+                                         if (dataSnapshot1.hasChild("color")) {
+                                             productModel.setColor(dataSnapshot1.child("color").getValue().toString());
 
-                }
-            });
+                                         }
+                                         if (dataSnapshot1.hasChild("price_range")) {
+                                             productModel.setPriceRange(dataSnapshot1.child("price_range").getValue().toString());
+
+                                         }
+                                         if (dataSnapshot1.hasChild("product_describtion")) {
+                                             productModel.setProductDescribtion(dataSnapshot1.child("product_describtion").getValue().toString());
+
+                                         }
+                                         if (dataSnapshot1.hasChild("product_id")) {
+                                             productModel.setProductId(dataSnapshot1.child("product_id").getValue().toString());
+
+                                         }
+                                         if (dataSnapshot1.hasChild("product_name")) {
+                                             productModel.setProductName(dataSnapshot1.child("product_name").getValue().toString());
+
+                                         }
+                                         if (dataSnapshot1.hasChild("product_price")) {
+                                             productModel.setProdcutPrice(dataSnapshot1.child("product_price").getValue().toString());
+
+                                         }
+                                         if (dataSnapshot1.hasChild("use_id")) {
+                                             productModel.setuId(dataSnapshot1.child("use_id").getValue().toString());
+
+                                         }
+
+                                         if (dataSnapshot1.hasChild("Likers")) {
+
+                                             productModel.setProductLikes(dataSnapshot1.child("Likers").getChildrenCount() + "");
+
+                                         }
+
+
+                                         listOfProducts.add(productModel);
+                                         previewDataOnHome(homeRecycler, progressDialog);
+
+                                         adapter.notifyDataSetChanged();
+
+
+                                     }
+                                 }
+
+
+
+
+
+
+
+                         @Override
+                         public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                         }
+                     });
+
+
+
+
+                 }
+
+
+             }
+
+             @Override
+             public void onCancelled(@NonNull DatabaseError databaseError) {
+
+             }
+         });
+
+
 
 
 
     }
 
-    private void getFollowers() {
-
-     FirebaseDatabase.getInstance().getReference().child(FirebaseAuth.getInstance().getUid()).child("followers").addValueEventListener(new ValueEventListener() {
-         @Override
-         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-             for (DataSnapshot d:
-                  dataSnapshot.getChildren()) {
-                 followersList.add(d.getValue().toString());
-
-             }
-
-
-
-         }
-
-         @Override
-         public void onCancelled(@NonNull DatabaseError databaseError) {
-
-         }
-     });
-
-
-
-     }
 
     private void previewDataOnHome(RecyclerView recyclerView,ProgressDialog progressDialog) {
 

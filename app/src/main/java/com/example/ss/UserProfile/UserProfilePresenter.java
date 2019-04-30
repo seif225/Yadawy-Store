@@ -30,7 +30,7 @@ class UserProfilePresenter {
     private Context context;
     private DatabaseReference userRef, productRef;
     private ProductModel productModel;
-    private boolean check;
+    private boolean check=true;
     private ArrayList<ProductModel> listOfProducts;
     private ArrayList<String> listOfPictureLinks;
     private NewsFeedRecyclerAdapter adapter;
@@ -185,14 +185,14 @@ class UserProfilePresenter {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                        if (dataSnapshot.hasChild("following")) {
+                       /* if (dataSnapshot.hasChild("following")) {
 
                             check = dataSnapshot.child("following").hasChild(uid);
                             Log.e("if", check + "");
 
                         } else check = false;
-                        Log.e("else 1", check + "");
-
+                        Log.e("else 1", check + "");*/
+                        check = dataSnapshot.child("following").hasChild(uid);
                     }
 
                     @Override

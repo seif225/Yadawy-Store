@@ -3,7 +3,9 @@ package com.example.ss.FindSellersPackage;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -20,10 +22,12 @@ class FindSellersPresenter {
     private FindSellersRecyclerAdapter adapter;
     private ArrayList<String> listOfFollowers;
     private UserModel userModel;
+
     FindSellersPresenter(Context context){
         this.context=context;
         listOfUsers= new ArrayList<>();
         listOfFollowers = new ArrayList<>();
+        adapter=new FindSellersRecyclerAdapter(context,listOfUsers);
     }
 
 
@@ -36,9 +40,11 @@ class FindSellersPresenter {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
+
+
                 for (DataSnapshot d :dataSnapshot.getChildren()) {
-                    if(d.child("account type").getValue().toString().equals("business account"))
-                    listOfFollowers.add(d.child("userId").getValue().toString());
+                    if(d.child("account type").getValue().toString().equals("business account")){
+                        listOfFollowers.add(d.child("userID").getValue().toString());}
                 }
 
                 getUsers(progressDialog,recyclerView);
@@ -56,15 +62,52 @@ class FindSellersPresenter {
 
     }
 
-    private void getUsers(ProgressDialog progressDialog, RecyclerView recyclerView) {
+    private void getUsers(final ProgressDialog progressDialog, final RecyclerView recyclerView) {
 
         for (int i = 0; i <listOfFollowers.size() ; i++) {
 
-           // listOfUsers.add();
+
+            final int finalI = i;
+
+            FirebaseDatabase.getInstance().getReference().child("Users").child(listOfFollowers.get(i)).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+
+                    userModel = new UserModel();
+                    userModel.setName(dataSnapshot.child("userName").getValue().toString());
+                    if(dataSnapshot.hasChild("image")){
+                        userModel.setProfilePicture(dataSnapshot.child("image").getValue().toString());
+                    }
+                    userModel.setuId(listOfFollowers.get(finalI));
+                    listOfUsers.add(userModel);
+                    previewDataOnActivity(recyclerView, progressDialog);
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
 
 
 
         }
+
+
+    }
+
+    private void previewDataOnActivity(RecyclerView recyclerView, ProgressDialog progressDialog) {
+
+
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+
+        recyclerView.setAdapter(adapter);
+
+
+        progressDialog.dismiss();
 
 
     }

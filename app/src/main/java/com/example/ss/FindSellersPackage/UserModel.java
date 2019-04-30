@@ -1,7 +1,7 @@
 package com.example.ss.FindSellersPackage;
 
 public class UserModel {
-    private String name,profilePicture;
+    private String name,profilePicture,uId;
     private boolean follow_state;
 
     UserModel(){}
@@ -10,6 +10,14 @@ public class UserModel {
         this.profilePicture=profilePicture;
         this.follow_state=follow_state;
 
+    }
+
+    public void setuId(String uId) {
+        this.uId = uId;
+    }
+
+    public String getuId() {
+        return uId;
     }
 
     public void setFollow_state(boolean follow_state) {
