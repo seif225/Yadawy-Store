@@ -6,11 +6,11 @@ import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.example.ss.HomePackage.NewsFeedRecyclerAdapter;
 import com.example.ss.HomePackage.ProductModel;
 import com.google.firebase.auth.FirebaseAuth;
@@ -22,7 +22,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -49,8 +48,6 @@ class UserProfilePresenter {
 
 
     }
-
-
 
 
     void getAndPreviewUserData(final ProgressDialog progressDialog, final CircleImageView userPp, final TextView numberOfProducts, final TextView userName, TextView followers, TextView following, Button followButton, final RecyclerView productsRecyclerView, final String uid) {
@@ -172,14 +169,69 @@ class UserProfilePresenter {
     private void previewDataOnHome(RecyclerView recyclerView, ProgressDialog progressDialog) {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        // Log.e("previewOnHome",listOfProducts.get(0).getCategory()+"inshallah msh null ");
+
         recyclerView.setAdapter(adapter);
 
-        //recyclerView.getLayoutManager().scrollToPosition(adapter.getItemCount());
+
         progressDialog.dismiss();
 
     }
 
+
+    boolean isFollowed(final String uid) {
+
+        FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getUid())
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        if (dataSnapshot.hasChild("following")) {
+
+                            check = dataSnapshot.child("following").hasChild(uid);
+                            Log.e("if", check + "");
+
+                        } else check = false;
+                        Log.e("else 1", check + "");
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        check = false;
+                        Log.e("else 2", check + "");
+
+                    }
+
+
+
+                });
+
+
+        return check;
+    }
+
+    void checkButtonSettings(Button followButton) {
+
+
+        if(profileId.equals(FirebaseAuth.getInstance().getUid())){
+
+            followButton.setVisibility(View.GONE);
+
+        }
+
+
+        if (isFollowed(profileId)) {
+
+            followButton.setText("follow");
+            followButton.setBackgroundColor(Color.GREEN);
+
+
+        } else {
+            followButton.setText("unfollow");
+            followButton.setBackgroundColor(Color.RED);
+        }
+    }
 
     void follow() {
 

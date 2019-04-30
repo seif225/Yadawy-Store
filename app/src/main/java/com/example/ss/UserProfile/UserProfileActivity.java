@@ -2,6 +2,7 @@ package com.example.ss.UserProfile;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -31,7 +32,29 @@ public class UserProfileActivity extends AppCompatActivity {
         initalizeFields();
         presenter.getAndPreviewUserData(new ProgressDialog(this),userPp,numberOfProducts,userName,followers,following,followButton,productsRecyclerView,uid);
 
+       presenter.checkButtonSettings(followButton);
+
+        followButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(presenter.isFollowed(uid)){
+                    presenter.unFollow();
+                    presenter.checkButtonSettings(followButton);
+
+                }
+                else{ presenter.follow();
+                    presenter.checkButtonSettings(followButton);
+
+                };
+
+            }
+        });
+
+
     }
+
+
 
     private void initalizeFields() {
 
@@ -46,7 +69,6 @@ public class UserProfileActivity extends AppCompatActivity {
         uid = i.getStringExtra("uid");
         Log.e("uid in userProfile",""+ uid+" hell yeaaaah ! ");
     presenter=new UserProfilePresenter(this,uid,followButton);
-
 
 
 
