@@ -71,26 +71,29 @@ public class HomeActivityPresenter {
 
                  for (DataSnapshot d: dataSnapshot.getChildren()) {
                      followersList.add(d.getValue().toString());
-
+                        Log.e("first loop[ ", followersList.get(0));
 
                  }
 
 
-                 if (followersList.size()==0){
+                 if (followersList.size()==0 || listOfProducts.size()==0    ){
                      progressDialog.dismiss();
                      messageText.setVisibility(View.VISIBLE);
                      messageText.setText("you have no followers");
+                     Log.e("first loop[ ", followersList.size()+"");
+
                  }
 
 
                  for (int i = 0; i <followersList.size() ; i++) {
-
+                    //getting products
                      productsRef.child(followersList.get(i)).addValueEventListener(new ValueEventListener() {
                          @Override
                          public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                              for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()) {
 
+                                    Log.e("onDataChange","heey");
 
 
                                          productModel = new ProductModel();
@@ -114,7 +117,7 @@ public class HomeActivityPresenter {
 
                                          if (dataSnapshot1.hasChild("category")) {
                                              productModel.setCategory(dataSnapshot1.child("category").getValue().toString());
-                                             // Log.e("category",dataSnapshot1.child("category").getValue().toString()+" msh null yasta wla eh?");
+                                              Log.e("category",dataSnapshot1.child("category").getValue().toString()+" msh null yasta wla eh?");
 
                                          }
                                          if (dataSnapshot1.hasChild("color")) {
@@ -154,13 +157,17 @@ public class HomeActivityPresenter {
 
 
                                          listOfProducts.add(productModel);
-                                         previewDataOnHome(homeRecycler, progressDialog);
-
+                                        // previewDataOnHome(homeRecycler, progressDialog);
+                                            progressDialog.dismiss();
                                          adapter.notifyDataSetChanged();
 
 
                                      }
-                                 }
+                             progressDialog.dismiss();
+                             previewDataOnHome(homeRecycler, progressDialog);
+
+
+                         }
 
 
 
@@ -170,6 +177,8 @@ public class HomeActivityPresenter {
 
                          @Override
                          public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                             progressDialog.dismiss();
 
                          }
                      });
@@ -185,6 +194,8 @@ public class HomeActivityPresenter {
              @Override
              public void onCancelled(@NonNull DatabaseError databaseError) {
 
+                 progressDialog.dismiss();
+
              }
          });
 
@@ -197,17 +208,29 @@ public class HomeActivityPresenter {
 
     private void previewDataOnHome(RecyclerView recyclerView,ProgressDialog progressDialog) {
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(context));
-       // Log.e("previewOnHome",listOfProducts.get(0).getCategory()+"inshallah msh null ");
-        recyclerView.setAdapter(adapter);
+        /*Log.e("preview home data",listOfProducts+" hah");
+        Log.e("preview home data","without list" +"hah");
+*/
 
-        //recyclerView.getLayoutManager().scrollToPosition(adapter.getItemCount());
-        progressDialog.dismiss();
-
-        if(followersList.isEmpty()){
+        if(followersList.isEmpty() || listOfProducts.isEmpty()){
 
             Toast.makeText(context, "no followers yet", Toast.LENGTH_SHORT).show();
+            progressDialog.dismiss();
+            //recyclerView.setVisibility(View.GONE);
+            Log.e("if",listOfProducts+" hah");
+           // messageText.setVisibility(View.VISIBLE);
 
+        }
+        else
+        {
+            messageText.setVisibility(View.INVISIBLE);
+            Log.e("else",listOfProducts+" haha ");
+            recyclerView.setLayoutManager(new LinearLayoutManager(context));
+            // Log.e("previewOnHome",listOfProducts.get(0).getCategory()+"inshallah msh null ");
+            recyclerView.setAdapter(adapter);
+
+            //recyclerView.getLayoutManager().scrollToPosition(adapter.getItemCount());
+            progressDialog.dismiss();
         }
 
      }
