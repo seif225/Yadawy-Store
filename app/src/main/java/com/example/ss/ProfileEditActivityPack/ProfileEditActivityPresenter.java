@@ -137,8 +137,10 @@ public class ProfileEditActivityPresenter {
         usersRef.child(auth.getUid()).child("image").setValue(link).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
                 progressDialog.dismiss();
                 sendUsertoMain();
+                }
 
             }
         });

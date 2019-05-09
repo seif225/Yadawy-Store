@@ -1,5 +1,6 @@
 package com.example.ss;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity
     View navigationHeader;
     CircleImageView navuseRImage;
     TextView navUserName, navUserMail;
+    public static Context MAIN_CONTEXT;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -177,7 +179,7 @@ public class MainActivity extends AppCompatActivity
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        MAIN_CONTEXT = this.getApplicationContext();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);

@@ -1,11 +1,13 @@
 package com.example.ss.HomePackage;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.ContentFrameLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +16,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.example.ss.MainActivity;
 import com.example.ss.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -23,10 +26,11 @@ import com.google.firebase.database.ValueEventListener;
 
 public class HomeActivity extends Fragment {
 
-
+    Context context;
     View view;
     RecyclerView homeRecycler;
     HomeActivityPresenter presenter;
+    ProgressDialog progressDialog;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -42,15 +46,16 @@ public class HomeActivity extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        FirebaseDatabase.getInstance().getReference().child("users").addValueEventListener(new ValueEventListener() {
+
+        FirebaseDatabase.getInstance().getReference().child("Users").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
 
 if(FirebaseAuth.getInstance().getCurrentUser()!=null) {
-    if (dataSnapshot.hasChild(FirebaseAuth.getInstance().getUid())) {
+    if (dataSnapshot.hasChild(FirebaseAuth.getInstance().getUid()+"")) {
 
-        presenter.getAndShowNewsFeedFromFirebase(new ProgressDialog(getActivity()), homeRecycler);
+        presenter.getAndShowNewsFeedFromFirebase(homeRecycler);
 
     }
 }
@@ -69,7 +74,7 @@ if(FirebaseAuth.getInstance().getCurrentUser()!=null) {
 
       presenter = new HomeActivityPresenter(getActivity(),(TextView) view.findViewById(R.id.home_text_message));
       homeRecycler = view.findViewById(R.id.homeRecycler);
-
+        context=getActivity();
 
   }
 

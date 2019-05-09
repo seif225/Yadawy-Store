@@ -38,7 +38,9 @@ public class HomeActivityPresenter {
     private ArrayList<String> followersList;
     private TextView messageText;
 
+private ProgressDialog progressDialog;
     HomeActivityPresenter(Context context, TextView messageText) {
+
         this.messageText=messageText;
          this.context=context;
          database = FirebaseDatabase.getInstance();
@@ -47,18 +49,17 @@ public class HomeActivityPresenter {
         productsRef = database.getReference().child("products");
          listOfPictureLinks = new ArrayList<>();
          listOfProducts=new ArrayList<>();
-
+         progressDialog= new ProgressDialog(context);
          adapter=new NewsFeedRecyclerAdapter(context,listOfProducts);
 
 
      }
 
 
-     void getAndShowNewsFeedFromFirebase(final ProgressDialog progressDialog, final RecyclerView homeRecycler) {
+     void getAndShowNewsFeedFromFirebase( final RecyclerView homeRecycler) {
 
             progressDialog.setMessage("getting data");
             progressDialog.setCancelable(false);
-            progressDialog.show();
 
 
 //         adapter.notifyDataSetChanged();
@@ -66,6 +67,7 @@ public class HomeActivityPresenter {
          FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getUid()).child("following").addValueEventListener(new ValueEventListener() {
              @Override
              public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                 //progressDialog.show();
 
                  listOfProducts.clear();
                  adapter.notifyDataSetChanged();
