@@ -73,22 +73,22 @@ public class NewsFeedRecyclerAdapter extends RecyclerView.Adapter<NewsFeedRecycl
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                if(dataSnapshot.hasChild("Likes")){
-                    if (dataSnapshot.child("Likes").hasChild(list.get(i).getProductName())){
+                if(dataSnapshot.hasChild("Likes")) {
+                    if (i <= list.size()){
+                        if (dataSnapshot.child("Likes").hasChild(list.get(i).getProductName())) {
 
 
-                       viewHolder.likeState = true;
-                        viewHolder.likeButton.setChecked(true);
+                            viewHolder.likeState = true;
+                            viewHolder.likeButton.setChecked(true);
 
-                    }
-                    else {
+                        } else {
 
-                        viewHolder.likeButton.setChecked(false);
-                        viewHolder.likeState = false;
+                            viewHolder.likeButton.setChecked(false);
+                            viewHolder.likeState = false;
 
-                    }
+                        }
 
-
+                }
                 }
 
 

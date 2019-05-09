@@ -69,8 +69,7 @@ private ProgressDialog progressDialog;
              public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                  //progressDialog.show();
 
-                 listOfProducts.clear();
-                 adapter.notifyDataSetChanged();
+
 
                  for (DataSnapshot d: dataSnapshot.getChildren()) {
                      followersList.add(d.getValue().toString());
@@ -93,6 +92,8 @@ private ProgressDialog progressDialog;
                      productsRef.child(followersList.get(i)).addValueEventListener(new ValueEventListener() {
                          @Override
                          public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                             listOfProducts.clear();
+                             adapter.notifyDataSetChanged();
 
                              for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()) {
 

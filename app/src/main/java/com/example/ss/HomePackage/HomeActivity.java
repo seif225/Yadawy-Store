@@ -54,8 +54,11 @@ public class HomeActivity extends Fragment {
 
 if(FirebaseAuth.getInstance().getCurrentUser()!=null) {
     if (dataSnapshot.hasChild(FirebaseAuth.getInstance().getUid()+"")) {
-
+       // progressDialog.show();
         presenter.getAndShowNewsFeedFromFirebase(homeRecycler);
+        if(homeRecycler.isAttachedToWindow()){
+            progressDialog.dismiss();
+        }
 
     }
 }
@@ -71,7 +74,7 @@ if(FirebaseAuth.getInstance().getCurrentUser()!=null) {
     }
 
     void initializeFields(){
-
+    progressDialog=new ProgressDialog(getActivity());
       presenter = new HomeActivityPresenter(getActivity(),(TextView) view.findViewById(R.id.home_text_message));
       homeRecycler = view.findViewById(R.id.homeRecycler);
         context=getActivity();
