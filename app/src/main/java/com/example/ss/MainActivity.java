@@ -76,9 +76,12 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                Picasso.get().load(dataSnapshot.child("image").getValue().toString()).into(navuseRImage);
-                navUserName.setText(dataSnapshot.child("userName").getValue().toString());
-                navUserMail.setText(dataSnapshot.child("mail").getValue().toString());
+                if(dataSnapshot.hasChild("image")){
+                Picasso.get().load(dataSnapshot.child("image").getValue().toString()).into(navuseRImage);}
+                if(dataSnapshot.hasChild("userName")){
+                navUserName.setText(dataSnapshot.child("userName").getValue().toString());}
+                if(dataSnapshot.hasChild("mail")){
+                navUserMail.setText(dataSnapshot.child("mail").getValue().toString());}
 
 
             }
