@@ -48,7 +48,8 @@ public class MainActivity extends AppCompatActivity
     Fragment selectedFragment;
     View navigationHeader;
     CircleImageView navuseRImage;
-    TextView navUserName,navUserMail;
+    TextView navUserName, navUserMail;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,23 +67,26 @@ public class MainActivity extends AppCompatActivity
         updateUserInfo();
 
 
-
     }
 
     private void updateUserInfo() {
 
         FirebaseDatabase.getInstance().getReference().child("Users").
-                child(FirebaseAuth.getInstance().getUid()).addValueEventListener(new ValueEventListener() {
+              addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                if(dataSnapshot.hasChild("image")){
-                Picasso.get().load(dataSnapshot.child("image").getValue().toString()).into(navuseRImage);}
-                if(dataSnapshot.hasChild("userName")){
-                navUserName.setText(dataSnapshot.child("userName").getValue().toString());}
-                if(dataSnapshot.hasChild("mail")){
-                navUserMail.setText(dataSnapshot.child("mail").getValue().toString());}
-
+                if (dataSnapshot.hasChild(FirebaseAuth.getInstance().getUid())) {
+                    if (dataSnapshot.child(FirebaseAuth.getInstance().getUid()).hasChild("image")) {
+                        Picasso.get().load(dataSnapshot.child("image").getValue().toString()).into(navuseRImage);
+                    }
+                    if (dataSnapshot.child(FirebaseAuth.getInstance().getUid()).hasChild("userName")) {
+                        navUserName.setText(dataSnapshot.child("userName").getValue().toString());
+                    }
+                    if (dataSnapshot.child(FirebaseAuth.getInstance().getUid()).hasChild("mail")) {
+                        navUserMail.setText(dataSnapshot.child("mail").getValue().toString());
+                    }
+                }
 
             }
 
@@ -93,39 +97,35 @@ public class MainActivity extends AppCompatActivity
         });
 
 
-
     }
 
     @Override
     protected void onStart() {
         super.onStart();
 
-        mAuth= FirebaseAuth.getInstance();
-        if(mAuth.getCurrentUser()==null){
+        mAuth = FirebaseAuth.getInstance();
+        if (mAuth.getCurrentUser() == null) {
             sendUserToSplash();
-        }
-        else {
-            userRef.child(mAuth.getUid().toString()).addValueEventListener(new ValueEventListener() {
+        } else {
+            userRef.child(mAuth.getUid()).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    if(!dataSnapshot.hasChild("userName")||!dataSnapshot.hasChild("phone")||!dataSnapshot.hasChild("address")){
+
+                    if (!dataSnapshot.hasChild("userName") || !dataSnapshot.hasChild("phone") || !dataSnapshot.hasChild("address")) {
 
                         sendUserToProfileEditActivity();
 
 
-                    }
-                    else if (dataSnapshot.hasChild("userName")&&dataSnapshot.hasChild("phone")&&dataSnapshot.hasChild("address")
-                            &&dataSnapshot.hasChild("account type")){
+                    } else if (dataSnapshot.hasChild("userName") && dataSnapshot.hasChild("phone") && dataSnapshot.hasChild("address")
+                            && dataSnapshot.hasChild("account type")) {
 
-                        if(dataSnapshot.child("account type").getValue().equals("business account")&&!dataSnapshot.hasChild("finance")){
+                        if (dataSnapshot.child("account type").getValue().equals("business account") && !dataSnapshot.hasChild("finance")) {
 
 
                             sendUsertoAddFinancialinfoActivity();
 
 
-
                         }
-
 
 
                     }
@@ -139,43 +139,36 @@ public class MainActivity extends AppCompatActivity
             });
 
 
-
-
         }
-
-
-
 
 
     }
 
     private void sendUsertoAddFinancialinfoActivity() {
-        Intent i = new Intent (this, addFinancialInfoActivity.class);
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+        Intent i = new Intent(this, addFinancialInfoActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(i);
 
     }
 
     private void sendUserToProfileEditActivity() {
 
-    Intent i = new Intent (this, ProfileEditActivity.class);
-    i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-    startActivity(i);
-        Log.e("here","onw");
+        Intent i = new Intent(this, ProfileEditActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(i);
+        //Log.e("here","onw");
 
 
     }
-
 
 
     private void sendUserToSplash() {
 
         Intent i = new Intent(this, SplashActivity.class);
-        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(i);
 
     }
-
 
 
     private void intializeFields() {
@@ -193,7 +186,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         firebaseDatabase = FirebaseDatabase.getInstance();
-        userRef=firebaseDatabase.getReference().child("Users");
+        userRef = firebaseDatabase.getReference().child("Users");
         selectedFragment = new HomeActivity();
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                 selectedFragment).commit();
@@ -238,8 +231,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void sendUserToFindSellersActivity() {
-    Intent i = new Intent (this, FindSellersActivity.class);
-    startActivity(i);
+        Intent i = new Intent(this, FindSellersActivity.class);
+        startActivity(i);
 
     }
 
@@ -258,7 +251,7 @@ public class MainActivity extends AppCompatActivity
             selectedFragment = new CategoryFragment();
 
         } else if (id == R.id.nav_save) {
-            selectedFragment= new LikesFragment();
+            selectedFragment = new LikesFragment();
 
         } else if (id == R.id.nav_profile) {
 
@@ -267,10 +260,9 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_settings) {
 
-        }
-        else if (id == R.id.nav_contct_us) {
+        } else if (id == R.id.nav_contct_us) {
 
-        }else if (id == R.id.nav_logOut) {
+        } else if (id == R.id.nav_logOut) {
             mAuth.signOut();
             sendUserToSplash();
 

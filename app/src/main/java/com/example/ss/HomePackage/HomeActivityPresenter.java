@@ -62,6 +62,7 @@ public class HomeActivityPresenter {
 
 
 //         adapter.notifyDataSetChanged();
+
          FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getUid()).child("following").addValueEventListener(new ValueEventListener() {
              @Override
              public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
