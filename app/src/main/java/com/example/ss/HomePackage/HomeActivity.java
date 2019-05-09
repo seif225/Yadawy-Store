@@ -15,6 +15,11 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.ss.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class HomeActivity extends Fragment {
 
@@ -27,15 +32,40 @@ public class HomeActivity extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.activity_home, container, false);
             initializeFields();
-            presenter.getAndShowNewsFeedFromFirebase(new ProgressDialog(getActivity()),homeRecycler);
+
+
 
 
         return view;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        FirebaseDatabase.getInstance().getReference().child("users").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
 
-  void initializeFields(){
+if(FirebaseAuth.getInstance().getCurrentUser()!=null) {
+    if (dataSnapshot.hasChild(FirebaseAuth.getInstance().getUid())) {
+
+        presenter.getAndShowNewsFeedFromFirebase(new ProgressDialog(getActivity()), homeRecycler);
+
+    }
+}
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+    }
+
+    void initializeFields(){
 
       presenter = new HomeActivityPresenter(getActivity(),(TextView) view.findViewById(R.id.home_text_message));
       homeRecycler = view.findViewById(R.id.homeRecycler);

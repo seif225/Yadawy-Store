@@ -76,17 +76,19 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
+                if(FirebaseAuth.getInstance().getCurrentUser()!=null){
                 if (dataSnapshot.hasChild(FirebaseAuth.getInstance().getUid())) {
                     if (dataSnapshot.child(FirebaseAuth.getInstance().getUid()).hasChild("image")) {
-                        Picasso.get().load(dataSnapshot.child("image").getValue().toString()).into(navuseRImage);
+                        Picasso.get().load(dataSnapshot.child(FirebaseAuth.getInstance().getUid()).child("image").getValue().toString()).into(navuseRImage);
                     }
                     if (dataSnapshot.child(FirebaseAuth.getInstance().getUid()).hasChild("userName")) {
-                        navUserName.setText(dataSnapshot.child("userName").getValue().toString());
+                        navUserName.setText(dataSnapshot.child(FirebaseAuth.getInstance().getUid()).child("userName").getValue().toString()+"");
                     }
                     if (dataSnapshot.child(FirebaseAuth.getInstance().getUid()).hasChild("mail")) {
-                        navUserMail.setText(dataSnapshot.child("mail").getValue().toString());
+                        navUserMail.setText(dataSnapshot.child(FirebaseAuth.getInstance().getUid()).child("mail").getValue().toString()+"");
                     }
                 }
+            }
 
             }
 
