@@ -175,12 +175,14 @@
 
     </android.support.v7.widget.RecyclerView>
 
-    <Button
+    <android.support.v7.widget.AppCompatCheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Follow"
         android:id="@+id/follow_button"
         android:textStyle="bold"
+        android:padding="8dp"
+
         app:layout_constraintBottom_toTopOf="@+id/card_view_user_profile"
         app:layout_constraintEnd_toEndOf="@+id/user_name_user_profile"
         app:layout_constraintStart_toStartOf="@+id/user_name_user_profile"

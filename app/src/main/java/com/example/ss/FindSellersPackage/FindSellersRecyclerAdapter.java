@@ -36,33 +36,39 @@ public class FindSellersRecyclerAdapter extends RecyclerView.Adapter<FindSellers
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
 
+    if(listOfUsers.size()>=i) {
+
         viewHolder.userName.setText(listOfUsers.get(i).getName());
-       if(listOfUsers.get(i).getProfilePicture()!= null) {
-           Picasso.get().load(listOfUsers.get(i).getProfilePicture()).into(viewHolder.profilePic);
-       }
-       else{
-           viewHolder.profilePic.setImageResource(R.drawable.user);
-       }
+        if (listOfUsers.get(i).getProfilePicture() != null) {
+            Picasso.get().load(listOfUsers.get(i).getProfilePicture()).into(viewHolder.profilePic);
+        } else {
+            viewHolder.profilePic.setImageResource(R.drawable.user);
+        }
 
-       viewHolder.profilePic.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               sendUserToProfile(listOfUsers.get(i).getuId());
+        viewHolder.profilePic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendUserToProfile(listOfUsers.get(i).getuId());
 
-           }
-       });
+            }
+        });
 
 
-       viewHolder.userName.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
+        viewHolder.userName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-               sendUserToProfile(listOfUsers.get(i).getuId());
+                sendUserToProfile(listOfUsers.get(i).getuId());
 
-           }
-       });
+            }
+        });
 
     }
+
+    }
+
+
+
 
     private void sendUserToProfile(String uid) {
 

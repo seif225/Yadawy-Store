@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.beardedhen.androidbootstrap.BootstrapButton;
@@ -20,11 +21,11 @@ public class UserProfileActivity extends AppCompatActivity {
 
     private CircleImageView userPp;
     private TextView numberOfProducts,followers,following,userName;
-    private Button followButton;
+    private CheckBox followButton;
     private UserProfilePresenter presenter;
     private RecyclerView productsRecyclerView;
     private String uid;
-
+    private boolean follow_state;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +39,8 @@ public class UserProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                presenter.checkButtonSettings(followButton);
+
                 if(presenter.isFollowed(uid)){
                     presenter.unFollow();
                     presenter.checkButtonSettings(followButton);
@@ -49,10 +52,14 @@ public class UserProfileActivity extends AppCompatActivity {
                 };
 
             }
+            
         });
 
 
     }
+
+
+
 
 
 
@@ -69,7 +76,7 @@ public class UserProfileActivity extends AppCompatActivity {
         uid = i.getStringExtra("uid");
         Log.e("uid in userProfile",""+ uid+" hell yeaaaah ! ");
     presenter=new UserProfilePresenter(this,uid,followButton);
-
+    follow_state=false;
 
 
     }

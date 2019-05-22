@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.example.ss.HomePackage.NewsFeedRecyclerAdapter;
@@ -36,8 +37,9 @@ class UserProfilePresenter {
     private NewsFeedRecyclerAdapter adapter;
     private String profileId;
     private boolean follow_state;
+    private CheckBox followbutton;
 
-    UserProfilePresenter(Context context, String profileId, Button followButton) {
+    UserProfilePresenter(Context context, String profileId, CheckBox followButton) {
         this.profileId = profileId;
         this.context = context;
         userRef = FirebaseDatabase.getInstance().getReference().child("Users");
@@ -45,6 +47,7 @@ class UserProfilePresenter {
         listOfPictureLinks = new ArrayList<>();
         listOfProducts = new ArrayList<>();
         adapter = new NewsFeedRecyclerAdapter(context, listOfProducts);
+        this.followbutton=followButton;
 
 
     }
@@ -193,12 +196,14 @@ class UserProfilePresenter {
                         } else check = false;
                         Log.e("else 1", check + "");*/
                         check = dataSnapshot.child("following").hasChild(uid);
+                        checkButtonSettings(followbutton);
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
 
                         check = false;
+                        checkButtonSettings(followbutton);
                         Log.e("else 2", check + "");
 
                     }
@@ -211,25 +216,32 @@ class UserProfilePresenter {
         return check;
     }
 
-    void checkButtonSettings(Button followButton) {
+    void checkButtonSettings(CheckBox followButton) {
+
 
 
         if(profileId.equals(FirebaseAuth.getInstance().getUid())){
 
             followButton.setVisibility(View.GONE);
 
+
+
         }
 
 
-        if (isFollowed(profileId)) {
+        if (!isFollowed(profileId)) {
 
             followButton.setText("follow");
+            followButton.setChecked(false);
             followButton.setBackgroundColor(Color.GREEN);
 
 
         } else {
             followButton.setText("unfollow");
             followButton.setBackgroundColor(Color.RED);
+            followButton.setChecked(true);
+
+
         }
     }
 

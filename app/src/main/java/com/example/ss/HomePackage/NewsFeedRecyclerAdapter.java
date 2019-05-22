@@ -100,7 +100,7 @@ public class NewsFeedRecyclerAdapter extends RecyclerView.Adapter<NewsFeedRecycl
             }
         });
 
-
+/// on click
         viewHolder.likeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
