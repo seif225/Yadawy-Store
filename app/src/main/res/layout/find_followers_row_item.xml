@@ -32,7 +32,7 @@
         android:text="Follow"
         android:id="@+id/follow_button_find_followers"
         android:textStyle="bold"
-
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/user_name_find_seller"
         app:layout_constraintTop_toTopOf="parent"

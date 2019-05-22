@@ -70,13 +70,16 @@ class UserProfilePresenter {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
 
+                        listOfProducts.clear();
+                        adapter.notifyDataSetChanged();
+
                         numberOfProducts.setText(dataSnapshot.getChildrenCount() + "");
 
                         for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                             productModel = new ProductModel();
 
                             if (dataSnapshot1.hasChild("images")) {
-                                //productModel.setImagesLinks(dataSnapshot.child("images").getValue().toString());
+
                                 int i = 0;
                                 listOfPictureLinks = new ArrayList<>();
                                 for (DataSnapshot imagesDataSnapShot : dataSnapshot1.child("images").getChildren()) {

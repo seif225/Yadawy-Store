@@ -32,113 +32,72 @@ class FindSellersPresenter {
         adapter = new FindSellersRecyclerAdapter(context, listOfUsers);
         userRef = FirebaseDatabase.getInstance().getReference().child("Users");
         businessAcoountsCounter = 0;
-        countAccounts();
     }
 
+    public void previewSellers(final ProgressDialog progressDialog, final RecyclerView recyclerView) {
 
-    private void countAccounts() {
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+progressDialog.setCancelable(false);
+                progressDialog.show();
+
+        userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                businessAcoountsCounter=0;
-                listOfUsers.clear();
-
-
-                for (DataSnapshot d : dataSnapshot.getChildren()) {
-
-                    if (d.child("account type").getValue().equals("business account")) {
-
-                        businessAcoountsCounter++;
-                        Log.e("business",""+businessAcoountsCounter);
-                    }
-
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-
-    void previewSellers(final ProgressDialog progressDialog, final RecyclerView recyclerView) {
-
-        progressDialog.setTitle("loading..");
-        progressDialog.show();
-
-        FirebaseDatabase.getInstance().getReference().child("Users").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                listOfUsers.clear();
-
-                for (DataSnapshot d : dataSnapshot.getChildren()) {
-                    if (d.child("account type").getValue().toString().equals("business account")) {
-                        listOfFollowers.add(d.child("userID").getValue().toString());
-                        // businessAcoountsCounter++;
-                    }
-                }
-
-                getUsers(progressDialog, recyclerView);
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-
-    }
-
-    private void getUsers(final ProgressDialog progressDialog, final RecyclerView recyclerView) {
-
-        for (int i = 0; i < businessAcoountsCounter; i++) {
-
-
-            final int finalI = i;
-
-            FirebaseDatabase.getInstance().getReference().child("Users").child(listOfFollowers.get(i)).addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    listOfUsers.clear();
                     adapter.notifyDataSetChanged();
-                    userModel = new UserModel();
-                    userModel.setName(dataSnapshot.child("userName").getValue().toString());
-                    if (dataSnapshot.hasChild("image")) {
-                        userModel.setProfilePicture(dataSnapshot.child("image").getValue().toString());
+                for (DataSnapshot d:dataSnapshot.getChildren()) {
+
+                    if(d.child("account type").getValue().equals("business account")){
+                        userModel = new UserModel();
+                        userModel.setuId(d.child("userID").getValue().toString());
+                        userModel.setName(d.child("userName").getValue().toString());
+                        if(d.hasChild("image")){
+                        userModel.setProfilePicture(d.child("image").getValue().toString());}
+                        listOfUsers.add(userModel);
                     }
-                    userModel.setuId(listOfFollowers.get(finalI));
-                    listOfUsers.add(userModel);
-                    previewDataOnActivity(recyclerView, progressDialog);
+
 
                 }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                }
-            });
+                preview(progressDialog,recyclerView);
 
 
-        }
+
+            }
+
+            private void preview(ProgressDialog progressDialog, RecyclerView recyclerView) {
+
+            recyclerView.setAdapter(adapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(context));
+
+            progressDialog.dismiss();
+
+
+
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+
 
 
     }
 
-    private void previewDataOnActivity(RecyclerView recyclerView, ProgressDialog progressDialog) {
 
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(context));
-
-        recyclerView.setAdapter(adapter);
 
 
-        progressDialog.dismiss();
 
 
-    }
+
+
+
+
 }
