@@ -137,6 +137,7 @@ public class ProductActivity extends AppCompatActivity {
         likeButton=findViewById(R.id.like_image_button_in_product_activity);
         ratingBar = findViewById(R.id.rate);
         ratingBar.setMax(5);
+        ratingBar.setStepSize(0.01f);
         textView= findViewById(R.id.write_review);
 
     }
