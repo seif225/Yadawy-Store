@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.ss.ChooseAccountTypeForBusinessAcountPack.ChooseAccountTypeForBusinessAccount;
 import com.example.ss.MailLoginPack.MailLoginActivity;
 import com.example.ss.MainActivity;
 import com.example.ss.signUpPack.SingUpActivity;
@@ -18,6 +19,10 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class SplashPresenter {
 
@@ -77,6 +82,9 @@ public class SplashPresenter {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.e("Splash Presenter", "signInWithCredential:success");
+                            FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getUid()).child("userID").setValue(FirebaseAuth.getInstance().getUid());
+                            FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getUid()).child("mail").setValue(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+
                             enterToHome();
                         } else {
                             // If sign in fails, display a message to the user.
@@ -89,10 +97,36 @@ public class SplashPresenter {
     }
 
     public static void enterToHome(){
-        /*Intent i=new Intent(context, MainActivity.class);
-        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK| Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        context.startActivity(i);
-*/
+
+
+        FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.hasChild("account type")){
+
+
+                    Intent i=new Intent(context, MainActivity.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK| Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    context.startActivity(i);
+                }
+
+                else{
+                    Intent i=new Intent(context, ChooseAccountTypeForBusinessAccount.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK| Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    context.startActivity(i);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+
+
         Log.e("testttt","succcc");
         Toast.makeText(context, "Succccccc", Toast.LENGTH_SHORT).show();
     }

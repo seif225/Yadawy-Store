@@ -2,6 +2,7 @@ package com.example.ss.ProductActivityPack;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.media.Rating;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -34,8 +35,7 @@ class ProductActivityPresenter {
     private ProductModel productModel;
     private ArrayList<String> listOfPictureLinks;
     private Context context;
-    float rate=0;
-
+    float rate = 0;
 
 
     ProductActivityPresenter(Context context, String userId, String productId) {
@@ -128,7 +128,7 @@ class ProductActivityPresenter {
 
 
                 setSliderViews(productModel.getImagesLinks(), sliderLayout);
-                getStats(progress,accuRate,rateCounter);
+                getStats(progress, accuRate, rateCounter);
 
                 progressDialog.dismiss();
 
@@ -226,17 +226,17 @@ class ProductActivityPresenter {
 
     }
 
-     void previewUserRate(final RatingBar ratingBar){
+    void previewUserRate(final RatingBar ratingBar) {
 
 
         FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-            if (dataSnapshot.hasChild("ratings"))
+                if (dataSnapshot.hasChild("ratings"))
 
-                if(dataSnapshot.child("ratings").hasChild(productModel.getProductId()))
+                    if (dataSnapshot.child("ratings").hasChild(productModel.getProductId()))
 
-                ratingBar.setRating(Float.parseFloat(dataSnapshot.child("ratings").child(productModel.getProductId()).child("rate").getValue().toString()));
+                        ratingBar.setRating(Float.parseFloat(dataSnapshot.child("ratings").child(productModel.getProductId()).child("rate").getValue().toString()));
             }
 
             @Override
@@ -246,23 +246,22 @@ class ProductActivityPresenter {
         });
 
 
-
     }
 
 
-     void getStats(final ProgressRingView progress, final TextView accuRate, final TextView rateCounter) {
-        Log.e("get stats",productModel.getuId() + " " + productModel.getProductId());
+    void getStats(final ProgressRingView progress, final TextView accuRate, final TextView rateCounter) {
+        Log.e("get stats", productModel.getuId() + " " + productModel.getProductId());
         FirebaseDatabase.getInstance().getReference().child("products")
                 .child(productModel.getuId()).child(productModel.getProductId()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                rate =0;
+                rate = 0;
 
-                if(dataSnapshot.hasChild("ratings")){
+                if (dataSnapshot.hasChild("ratings")) {
 
-                    for (DataSnapshot d: dataSnapshot.child("ratings").getChildren()) {
+                    for (DataSnapshot d : dataSnapshot.child("ratings").getChildren()) {
 
-                    rate = rate + Float.parseFloat(d.child("rate").getValue().toString()) / dataSnapshot.child("ratings").getChildrenCount()  ;
+                        rate = rate + Float.parseFloat(d.child("rate").getValue().toString()) / dataSnapshot.child("ratings").getChildrenCount();
 
 
                     }
@@ -271,11 +270,33 @@ class ProductActivityPresenter {
                 }
 
 
-                    progress.setProgress(rate*2/10);
-                    accuRate.setText( String.valueOf(rate));
-                    progress.setAnimated(true);
-                    progress.setAnimationDuration(500);
-                    rateCounter.setText(dataSnapshot.child("ratings").getChildrenCount() + " rated this product");
+                progress.setProgress(rate * 2 / 10);
+                accuRate.setText(String.valueOf(rate));
+                progress.setAnimated(true);
+                progress.setAnimationDuration(500);
+                Log.e("productActPresenter","the rate is :" + rate);
+                if ((int) rate ==0) {
+
+                    progress.setProgressColor(Color.RED);
+
+                } else if ((int) rate ==1) {
+                    progress.setProgressColor(context.getResources().getColor(R.color.orange));
+
+                } else if ((int) rate ==2) {
+                    progress.setProgressColor(context.getResources().getColor(R.color.yellow));
+
+
+                } else if ((int) rate ==3) {
+                    progress.setProgressColor(context.getResources().getColor(R.color.lightGreen));
+
+
+                } else if ((int) rate ==4) {
+
+                    progress.setProgressColor(Color.GREEN);
+
+                }
+
+                rateCounter.setText(dataSnapshot.child("ratings").getChildrenCount() + " rated this product");
 
 
             }
@@ -285,9 +306,6 @@ class ProductActivityPresenter {
 
             }
         });
-
-
-
 
 
     }
