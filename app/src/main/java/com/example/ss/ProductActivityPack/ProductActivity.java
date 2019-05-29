@@ -41,16 +41,29 @@ public class ProductActivity extends AppCompatActivity {
         setContentView(R.layout.activity_product);
         //Log.e("activity shit",productModel.getCategory()+"what so evaaaa ");
         intializeFields();
+
+
+
        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
            @Override
            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
                if(ratingBar.getRating()!=0){
+                   presenter.updateRating(rating);
                    textView.setVisibility(View.VISIBLE);
+               }
+               if(rating==0){
+                   textView.setVisibility(View.GONE);
+                   presenter.updateRating(0);
+
                }
 
 
            }
        });
+
+
+
+
         presenter.getProductData(new ProgressDialog(this),sliderLayout,category,price,describtion,userName,productIdTv,userPp);
         DatabaseReference likRef= FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getUid());
         likRef.addValueEventListener(new ValueEventListener() {

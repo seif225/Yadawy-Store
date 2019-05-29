@@ -40,9 +40,12 @@ public class NewsFeedRecyclerAdapter extends RecyclerView.Adapter<NewsFeedRecycl
         this.list = list;
         this.context=context;
 
-        likesRef= FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getUid());
-        userRef =FirebaseDatabase.getInstance().getReference().child("Users");
-
+        if(FirebaseAuth.getInstance().getCurrentUser()!=null) {
+            likesRef = FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getUid());
+            userRef = FirebaseDatabase.getInstance().getReference().child("Users");
+        }else{
+            notifyDataSetChanged();
+        }
 
     }
 
@@ -264,7 +267,7 @@ public class NewsFeedRecyclerAdapter extends RecyclerView.Adapter<NewsFeedRecycl
     }
 
 
-    void startListeningOnLikes (final int i , final ViewHolder viewHolder){
+    private void startListeningOnLikes(final int i, final ViewHolder viewHolder){
 
 
 
@@ -274,6 +277,7 @@ public class NewsFeedRecyclerAdapter extends RecyclerView.Adapter<NewsFeedRecycl
 
                 if(dataSnapshot.hasChild("Likes")) {
                     if (i <= list.size()){
+                        Log.e("startListeningLikes","adapter , numbers of likes: "+ list.size());
                         if (dataSnapshot.child("Likes").hasChild(list.get(i).getProductName())) {
 
 

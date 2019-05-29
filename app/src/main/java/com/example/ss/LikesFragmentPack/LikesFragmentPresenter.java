@@ -87,6 +87,8 @@ class LikesFragmentPresenter {
 
     private void makeListOfProducts(final RecyclerView likesRecycler, final ProgressDialog progressDialog) {
 
+
+
         for (int i = 0; i < listOfModels.size(); i++) {
             Log.e("makelistofp",listOfModels.size()+"heeey");
             final int finalI = i;
@@ -96,6 +98,7 @@ class LikesFragmentPresenter {
             productRef.child(listOfModels.get(i).getUserId()).child(listOfModels.get(i).getProductId()).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot1) {
+
 
                     productModel = new ProductModel();
 
@@ -149,9 +152,10 @@ class LikesFragmentPresenter {
 
                     }
                     listofProducts.add(productModel);
+
                     previewDataOnHome(likesRecycler,progressDialog);
 
-                    adapter.notifyDataSetChanged();
+                    //adapter.notifyDataSetChanged();
 
 
 
@@ -184,17 +188,10 @@ class LikesFragmentPresenter {
 
     private void previewDataOnHome(RecyclerView recyclerView, ProgressDialog progressDialog) {
 
-        for (int i = 0; i <listofProducts.size() ; i++) {
-
-           Log.e ("iddds ",listofProducts.get(i).getuId()+" id aho ya3m :D ");
-            Log.e ("iddds ",listofProducts.get(i).getPriceRange()+" id aho ya3m :D ");
-
-
-        }
+         Log.e ("PreviewDataOnhome"," LikesFragmentPresenter ");
 
 
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        // Log.e("previewOnHome",listOfProducts.get(0).getCategory()+"inshallah msh null ");
         recyclerView.setItemViewCacheSize(20);
         recyclerView.setDrawingCacheEnabled(true);
         recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);

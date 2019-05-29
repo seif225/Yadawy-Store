@@ -116,6 +116,7 @@ class ProductActivityPresenter {
                     });
 
                 }
+
                 setSliderViews(productModel.getImagesLinks(),sliderLayout);
 
               progressDialog.dismiss();
@@ -189,6 +190,31 @@ class ProductActivityPresenter {
 
         return productModel.getProductName();
     }
+
+     void updateRating(float rating) {
+
+
+    updateRatingForUser(rating);
+    updateRatingForProduct(rating);
+
+
+
+
+
+
+    }
+
+    private void updateRatingForUser(float rating) {
+
+        FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getUid()).child("ratings").child(productModel.getProductId()).child("rate").setValue(""+rating);
+        FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getUid()).child("ratings").child(productModel.getProductId()).child("productId").setValue(productModel.getProductId());
+
+
+    }
+
+    private void updateRatingForProduct(float rating) {
+    }
+
 
 }
 
