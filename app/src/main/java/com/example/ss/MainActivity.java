@@ -116,7 +116,11 @@ public class MainActivity extends AppCompatActivity
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                    if(!dataSnapshot.hasChild("account type")){
+                    if(!dataSnapshot.hasChild("mail")){
+
+                        sendUserToSplash();
+                    }
+                    else if(!dataSnapshot.hasChild("account type") && dataSnapshot.hasChild("mail")){
                         sendUserToChooseAccountType();
 
                     }
