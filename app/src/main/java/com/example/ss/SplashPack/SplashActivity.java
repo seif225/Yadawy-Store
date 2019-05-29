@@ -16,9 +16,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 public class SplashActivity extends AppCompatActivity {
 
     private static final int RC_SIGN_IN =0 ;
-    Button mailLog,phoneLog,signUp,googleLog;
+    Button mailLog,signUp,googleLog;
     SplashPresenter splashPresenter;
-    private static Context context;
+
 
     GoogleSignInOptions gso;
     GoogleSignInClient mGoogleSignInClient;
@@ -28,7 +28,7 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         intializeFields();
-        context=getBaseContext();
+
 
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,7 +63,7 @@ public class SplashActivity extends AppCompatActivity {
 
     private void intializeFields() {
         mailLog=findViewById(R.id.mailLogin);
-        phoneLog=findViewById(R.id.phoneLogin);
+
         signUp=findViewById(R.id.signUp);
         googleLog=findViewById(R.id.googleLogin);
         splashPresenter=new SplashPresenter(this);

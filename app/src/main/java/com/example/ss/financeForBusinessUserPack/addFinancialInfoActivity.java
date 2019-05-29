@@ -31,7 +31,7 @@ public class addFinancialInfoActivity extends AppCompatActivity {
                 expairyDate = expairyMonthEt.getText()+"/"+expairyYearEt.getText();
                 cvv=cvvEt.getText().toString();
 
-                if(cardNumber.isEmpty() ||cardNumber.length()!=14){
+                if(cardNumber.isEmpty() ||cardNumber.length()!=16){
 
                     cardNumberEt.setError("this card number is not correct");
                    // Log.e("card num",cardNumber.charAt(0) +".."+cardNumber.length()+"");

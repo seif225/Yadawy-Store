@@ -172,6 +172,13 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+
+    private void sendUsertoAddFinancialinfoActivityWithoutFlag() {
+        Intent i = new Intent(this, addFinancialInfoActivity.class);
+        startActivity(i);
+
+    }
+
     private void sendUserToProfileEditActivity() {
 
         Intent i = new Intent(this, ProfileEditActivity.class);
@@ -239,10 +246,10 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+       /* if (id == R.id.action_settings) {
             return true;
         }
-
+*/
 
         return super.onOptionsItemSelected(item);
     }
@@ -287,6 +294,11 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.find_sellers_nav_menu) {
            selectedFragment = new FindSellersActivity();
+
+        }
+        else if (id == R.id.finance){
+
+            sendUsertoAddFinancialinfoActivityWithoutFlag();
 
         }
         //return true;

@@ -284,7 +284,7 @@
                     android:layout_marginEnd="8dp"
                     android:text="write review"
                     android:visibility="gone"
-                    android:textSize="18sp"
+                    android:textSize="22sp"
                     android:id="@+id/write_review"
                     android:textColor="@color/colorAccent"
                     app:layout_constraintEnd_toEndOf="parent"

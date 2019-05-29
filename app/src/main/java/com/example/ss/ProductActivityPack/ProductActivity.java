@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ss.HomePackage.ProductModel;
 import com.example.ss.R;
@@ -117,7 +118,12 @@ public class ProductActivity extends AppCompatActivity {
         });
 
        presenter.previewUserRate(ratingBar);
-
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(ProductActivity.this, "Working on it :D , sry :( ", Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 
