@@ -74,31 +74,31 @@ public class MainActivity extends AppCompatActivity
     private void updateUserInfo() {
 
         FirebaseDatabase.getInstance().getReference().child("Users").
-              addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                if(FirebaseAuth.getInstance().getCurrentUser()!=null){
-                if (dataSnapshot.hasChild(FirebaseAuth.getInstance().getUid())) {
-                    if (dataSnapshot.child(FirebaseAuth.getInstance().getUid()).hasChild("image")) {
-                        Picasso.get().load(dataSnapshot.child(FirebaseAuth.getInstance().getUid()).child("image").getValue().toString()).into(navuseRImage);
+                        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+                            if (dataSnapshot.hasChild(FirebaseAuth.getInstance().getUid())) {
+                                if (dataSnapshot.child(FirebaseAuth.getInstance().getUid()).hasChild("image")) {
+                                    Picasso.get().load(dataSnapshot.child(FirebaseAuth.getInstance().getUid()).child("image").getValue().toString()).into(navuseRImage);
+                                }
+                                if (dataSnapshot.child(FirebaseAuth.getInstance().getUid()).hasChild("userName")) {
+                                    navUserName.setText(dataSnapshot.child(FirebaseAuth.getInstance().getUid()).child("userName").getValue().toString() + "");
+                                }
+                                if (dataSnapshot.child(FirebaseAuth.getInstance().getUid()).hasChild("mail")) {
+                                    navUserMail.setText(dataSnapshot.child(FirebaseAuth.getInstance().getUid()).child("mail").getValue().toString() + "");
+                                }
+                            }
+                        }
+
                     }
-                    if (dataSnapshot.child(FirebaseAuth.getInstance().getUid()).hasChild("userName")) {
-                        navUserName.setText(dataSnapshot.child(FirebaseAuth.getInstance().getUid()).child("userName").getValue().toString()+"");
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
                     }
-                    if (dataSnapshot.child(FirebaseAuth.getInstance().getUid()).hasChild("mail")) {
-                        navUserMail.setText(dataSnapshot.child(FirebaseAuth.getInstance().getUid()).child("mail").getValue().toString()+"");
-                    }
-                }
-            }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+                });
 
 
     }
@@ -225,17 +225,15 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.action_settings) {
             return true;
         }
-        if (id == R.id.find_sellers) {
-            sendUserToFindSellersActivity();
 
-            return true;
-        }
 
         return super.onOptionsItemSelected(item);
     }
 
     private void sendUserToFindSellersActivity() {
         Intent i = new Intent(this, FindSellersActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(i);
 
     }
@@ -270,7 +268,12 @@ public class MainActivity extends AppCompatActivity
             mAuth.signOut();
             sendUserToSplash();
 
+        } else if (id == R.id.find_sellers_nav_menu) {
+           selectedFragment = new FindSellersActivity();
+
         }
+        //return true;
+
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                 selectedFragment).commit();

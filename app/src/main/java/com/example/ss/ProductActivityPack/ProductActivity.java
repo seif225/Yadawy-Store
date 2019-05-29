@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.ss.HomePackage.ProductModel;
@@ -31,6 +32,8 @@ public class ProductActivity extends AppCompatActivity {
     private CircleImageView userPp;
     private ShineButton likeButton;
     private boolean likeState;
+    private RatingBar ratingBar;
+    private TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +41,16 @@ public class ProductActivity extends AppCompatActivity {
         setContentView(R.layout.activity_product);
         //Log.e("activity shit",productModel.getCategory()+"what so evaaaa ");
         intializeFields();
+       ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+           @Override
+           public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+               if(ratingBar.getRating()!=0){
+                   textView.setVisibility(View.VISIBLE);
+               }
+
+
+           }
+       });
         presenter.getProductData(new ProgressDialog(this),sliderLayout,category,price,describtion,userName,productIdTv,userPp);
         DatabaseReference likRef= FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getUid());
         likRef.addValueEventListener(new ValueEventListener() {
@@ -108,6 +121,10 @@ public class ProductActivity extends AppCompatActivity {
         productIdTv=findViewById(R.id.product_code_tv);
         userPp=findViewById(R.id.profile_picture_in_product_activity);
         likeButton=findViewById(R.id.like_image_button_in_product_activity);
+        ratingBar = findViewById(R.id.rate);
+        ratingBar.setMax(5);
+        textView= findViewById(R.id.write_review);
+
     }
 
 

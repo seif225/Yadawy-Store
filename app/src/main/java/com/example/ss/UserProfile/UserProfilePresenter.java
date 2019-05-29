@@ -31,16 +31,16 @@ class UserProfilePresenter {
     private Context context;
     private DatabaseReference userRef, productRef;
     private ProductModel productModel;
-    private boolean check=true;
+    private boolean check;
     private ArrayList<ProductModel> listOfProducts;
     private ArrayList<String> listOfPictureLinks;
     private NewsFeedRecyclerAdapter adapter;
     private String profileId;
-    private boolean follow_state;
+    //private boolean follow_state;
     private CheckBox followbutton;
 
     UserProfilePresenter(Context context, String profileId, CheckBox followButton) {
-        this.profileId = profileId;
+        //this.profileId = profileId;
         this.context = context;
         userRef = FirebaseDatabase.getInstance().getReference().child("Users");
         productRef = FirebaseDatabase.getInstance().getReference().child("products");
@@ -48,13 +48,13 @@ class UserProfilePresenter {
         listOfProducts = new ArrayList<>();
         adapter = new NewsFeedRecyclerAdapter(context, listOfProducts);
         this.followbutton=followButton;
-
+        check = isFollowed(profileId);
 
     }
 
 
     void getAndPreviewUserData(final ProgressDialog progressDialog, final CircleImageView userPp, final TextView numberOfProducts, final TextView userName, TextView followers, TextView following, Button followButton, final RecyclerView productsRecyclerView, final String uid) {
-
+profileId = uid;
         userRef.child(uid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -62,7 +62,7 @@ class UserProfilePresenter {
                 userName.setText(dataSnapshot.child("userName").getValue().toString());
 
                 if (dataSnapshot.hasChild("image")) {
-                    Picasso.get().load(dataSnapshot.child("image").getValue().toString()).into(userPp);
+                    Picasso.get().load(dataSnapshot.child("image").getValue().toString()).resize(200,200).into(userPp);
                 }
 
                 productRef.child(uid).addValueEventListener(new ValueEventListener() {
@@ -85,17 +85,7 @@ class UserProfilePresenter {
                                 for (DataSnapshot imagesDataSnapShot : dataSnapshot1.child("images").getChildren()) {
 
                                     listOfPictureLinks.add(imagesDataSnapShot.getValue().toString());
-                                    //Log.e("images",imagesDataSnapShot.getValue().toString()+" msh null yasta wla eh?");
-                                   /* Log.e("datapshot fl presenter",dataSnapshot.toString());
 
-
-                                    // da esm el product ==>
-
-                                    Log.e("datapshot1 fl presenter",dataSnapshot1.getKey().toString());*/
-
-
-                                    //Log.e("images",listOfPictureLinks.get(i)+" msh null yasta wla eh?");
-                                    //this counter is just for testing purposes
                                     i++;
                                 }
                                 productModel.setImagesLinks(listOfPictureLinks);
@@ -185,28 +175,22 @@ class UserProfilePresenter {
 
 
     boolean isFollowed(final String uid) {
-
+        //checkButtonSettings(followbutton,uid);
         FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getUid())
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                       /* if (dataSnapshot.hasChild("following")) {
 
-                            check = dataSnapshot.child("following").hasChild(uid);
-                            Log.e("if", check + "");
-
-                        } else check = false;
-                        Log.e("else 1", check + "");*/
                         check = dataSnapshot.child("following").hasChild(uid);
-                        checkButtonSettings(followbutton);
+                       checkButtonSettings(followbutton,uid);
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
 
                         check = false;
-                        checkButtonSettings(followbutton);
+                        checkButtonSettings(followbutton,uid);
                         Log.e("else 2", check + "");
 
                     }
@@ -219,11 +203,12 @@ class UserProfilePresenter {
         return check;
     }
 
-    void checkButtonSettings(CheckBox followButton) {
+    void checkButtonSettings(CheckBox followButton,String id) {
+
+        Log.e("uid in userProfilePre", "" + id + " hell yeaaaah ! ");
 
 
-
-        if(profileId.equals(FirebaseAuth.getInstance().getUid())){
+        if(id.equals(FirebaseAuth.getInstance().getUid())){
 
             followButton.setVisibility(View.GONE);
 
@@ -232,7 +217,7 @@ class UserProfilePresenter {
         }
 
 
-        if (!isFollowed(profileId)) {
+        if (!check) {
 
             followButton.setText("follow");
             followButton.setChecked(false);

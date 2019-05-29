@@ -1,5 +1,7 @@
 package com.example.ss.HomePackage;
 
+//ackage com.example.ss.UserProfile;
+
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -31,10 +33,33 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class NewsFeedRecyclerAdapter extends RecyclerView.Adapter<NewsFeedRecyclerAdapter.ViewHolder> {
     private List<ProductModel> list;
     private Context context;
+    private ValueEventListener likesListner,userListner;
+    private DatabaseReference userRef,likesRef;
 
     public NewsFeedRecyclerAdapter(Context context, List<ProductModel> list) {
         this.list = list;
         this.context=context;
+
+        likesRef= FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getUid());
+        userRef =FirebaseDatabase.getInstance().getReference().child("Users");
+
+
+    }
+
+    public DatabaseReference getUserRef() {
+        return userRef;
+    }
+
+    public ValueEventListener getUserListner() {
+        return userListner;
+    }
+
+    public DatabaseReference getLikesRef() {
+        return likesRef;
+    }
+
+    public ValueEventListener getLikesListner() {
+        return likesListner;
     }
 
     @NonNull
@@ -68,54 +93,25 @@ public class NewsFeedRecyclerAdapter extends RecyclerView.Adapter<NewsFeedRecycl
 
 
 
-        DatabaseReference likRef=FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getUid());
-        likRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                if(dataSnapshot.hasChild("Likes")) {
-                    if (i <= list.size()){
-                        if (dataSnapshot.child("Likes").hasChild(list.get(i).getProductName())) {
-
-
-                            viewHolder.likeState = true;
-                            viewHolder.likeButton.setChecked(true);
-
-                        } else {
-
-                            viewHolder.likeButton.setChecked(false);
-                            viewHolder.likeState = false;
-
-                        }
-
-                }
-                }
-
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+        startListeningOnLikes(i,viewHolder);
+        likesRef.addValueEventListener(likesListner);
 
 /// on click
         viewHolder.likeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                    if(!viewHolder.likeState){
+                if(!viewHolder.likeState){
                     like(list.get(i).getProductId(),list.get(i).getuId(),list.get(i).getProductName());
                     viewHolder.likeButton.setChecked(true);
 
-                    }
+                }
 
-                    else if (viewHolder.likeState){
-                        disLike(list.get(i).getProductId(),list.get(i).getuId(),list.get(i).getProductName());
-                        viewHolder.likeButton.setChecked(false);
+                else if (viewHolder.likeState){
+                    disLike(list.get(i).getProductId(),list.get(i).getuId(),list.get(i).getProductName());
+                    viewHolder.likeButton.setChecked(false);
 
-                    }
+                }
 
 
             }
@@ -124,12 +120,12 @@ public class NewsFeedRecyclerAdapter extends RecyclerView.Adapter<NewsFeedRecycl
 
 
         if(list.get(i).getImagesLinks()!=null){
-        Picasso.get()
-                .load(list.get(i).getImagesLinks().get(0))
-                .resize(600, 200) // resizes the image to these dimensions (in pixel)
-                .centerCrop()
-                .into(viewHolder.ProductImage);
-        Log.e("image in adapter",list.get(i).getImagesLinks().get(0)+"i =" +i + "size= "+list.get(i).getImagesLinks().size());
+            Picasso.get()
+                    .load(list.get(i).getImagesLinks().get(0))
+                    .resize(600, 200) // resizes the image to these dimensions (in pixel)
+                    .centerCrop()
+                    .into(viewHolder.ProductImage);
+            Log.e("image in adapter",list.get(i).getImagesLinks().get(0)+"i =" +i + "size= "+list.get(i).getImagesLinks().size());
         }
         else if(list.get(i).getImagesLinks()==null ){
 
@@ -140,7 +136,7 @@ public class NewsFeedRecyclerAdapter extends RecyclerView.Adapter<NewsFeedRecycl
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent j = new Intent(context,ProductActivity.class);
+                Intent j = new Intent(context, ProductActivity.class);
                 j.putExtra("uid",list.get(i).getuId());
                 Log.e("uid in adapter",list.get(i).getuId()+"  helafhasjf");
                 j.putExtra("productId",list.get(i).getProductId());
@@ -153,28 +149,14 @@ public class NewsFeedRecyclerAdapter extends RecyclerView.Adapter<NewsFeedRecycl
 
 
         Log.e("newfeedadapter","id check "+list.get(i).getuId());
-        FirebaseDatabase.getInstance().getReference().child("Users").child(list.get(i).getuId()).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.hasChild("image")){
-                Picasso.get().load(dataSnapshot.child("image").getValue().toString()).placeholder(R.drawable.user).into(viewHolder.userPp);}
-                if(dataSnapshot.hasChild("userName")){
-                viewHolder.userName.setText(dataSnapshot.child("userName").getValue().toString());
-                }
-
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+        startListeningOnUsers(viewHolder);
+        userRef.child(list.get(i).getuId()).addValueEventListener(userListner);
 
         viewHolder.productTitle.setText(list.get(i).getProductName());
-       // Log.e("title fl adapter",list.get(i).getProductName() + " ya rab msh null :''D");
+        // Log.e("title fl adapter",list.get(i).getProductName() + " ya rab msh null :''D");
         viewHolder.productDescription.setText(list.get(i).getProductDescribtion());
         viewHolder.productPrice.setText(list.get(i).getProdcutPrice());
+
 
         if(list.get(i).getProductLikes()!=null){
             viewHolder.likesTv.setText(list.get(i).getProductLikes());
@@ -185,6 +167,28 @@ public class NewsFeedRecyclerAdapter extends RecyclerView.Adapter<NewsFeedRecycl
 
             viewHolder.likesTv.setText("0");
         }
+
+    }
+
+    private void startListeningOnUsers(final ViewHolder viewHolder) {
+
+        userListner=new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.hasChild("image")){
+                    Picasso.get().load(dataSnapshot.child("image").getValue().toString()).resize(100,100).placeholder(R.drawable.user).into(viewHolder.userPp);}
+                if(dataSnapshot.hasChild("userName")){
+                    viewHolder.userName.setText(dataSnapshot.child("userName").getValue().toString());
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        };
 
     }
 
@@ -200,14 +204,14 @@ public class NewsFeedRecyclerAdapter extends RecyclerView.Adapter<NewsFeedRecycl
 
     void disLike(String productId, String getuId, String productName) {
 
-    FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getUid()).child("Likes").child(productName).removeValue();
-    FirebaseDatabase.getInstance().getReference().child("products").child(getuId).child(productId).child("Likers").
-            child(FirebaseAuth.getInstance().getUid()).removeValue();
+        FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getUid()).child("Likes").child(productName).removeValue();
+        FirebaseDatabase.getInstance().getReference().child("products").child(getuId).child(productId).child("Likers").
+                child(FirebaseAuth.getInstance().getUid()).removeValue();
 
 
     }
 
-     void like(String productId, String getuId,String productName) {
+    void like(String productId, String getuId,String productName) {
         HashMap<String,String> likedItem = new HashMap<>();
         likedItem.put("productId",productId);
         likedItem.put("userId",getuId);
@@ -258,4 +262,47 @@ public class NewsFeedRecyclerAdapter extends RecyclerView.Adapter<NewsFeedRecycl
             likesTv=itemView.findViewById(R.id.number_of_likes);
         }
     }
+
+
+    void startListeningOnLikes (final int i , final ViewHolder viewHolder){
+
+
+
+        likesListner=new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                if(dataSnapshot.hasChild("Likes")) {
+                    if (i <= list.size()){
+                        if (dataSnapshot.child("Likes").hasChild(list.get(i).getProductName())) {
+
+
+                            viewHolder.likeState = true;
+                            viewHolder.likeButton.setChecked(true);
+
+                        } else {
+
+                            viewHolder.likeButton.setChecked(false);
+                            viewHolder.likeState = false;
+
+                        }
+
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        };
+
+
+
+
+    }
+
+
 }

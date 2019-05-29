@@ -21,6 +21,7 @@ import com.example.ss.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
@@ -31,6 +32,9 @@ public class HomeActivity extends Fragment {
     RecyclerView homeRecycler;
     HomeActivityPresenter presenter;
     ProgressDialog progressDialog;
+    boolean activityState;
+    ValueEventListener myListner;
+    DatabaseReference myRef;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -47,37 +51,66 @@ public class HomeActivity extends Fragment {
     public void onStart() {
         super.onStart();
 
-        FirebaseDatabase.getInstance().getReference().child("Users").addValueEventListener(new ValueEventListener() {
+      myRef.addValueEventListener(myListner);
+
+
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        activityState = false;
+        if(myListner!=null)  myRef.removeEventListener(myListner);
+
+        if(presenter.getProductListner()!=null) presenter.getProductsRef().removeEventListener(presenter.getProductListner());
+        if(presenter.getLikesListner()!=null) presenter.getAdapterrLikesRef().removeEventListener(presenter.getLikesListner());
+        if(presenter.getUserListner()!=null) presenter.getAdapterUserRef().removeEventListener(presenter.getUserListner());
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        activityState = false;
+        if(myListner!=null)  myRef.removeEventListener(myListner);
+
+        if(presenter.getProductListner()!=null) presenter.getProductsRef().removeEventListener(presenter.getProductListner());
+        if(presenter.getLikesListner()!=null) presenter.getAdapterrLikesRef().removeEventListener(presenter.getLikesListner());
+        if(presenter.getUserListner()!=null) presenter.getAdapterUserRef().removeEventListener(presenter.getUserListner());
+
+    }
+
+    void initializeFields(){
+    progressDialog=new ProgressDialog(getActivity());
+        homeRecycler = view.findViewById(R.id.homeRecycler);
+
+        presenter = new HomeActivityPresenter(getActivity(),homeRecycler,(TextView) view.findViewById(R.id.home_text_message));
+        context=getActivity();
+        activityState = false;
+        myListner = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
 
-if(FirebaseAuth.getInstance().getCurrentUser()!=null) {
-    if (dataSnapshot.hasChild(FirebaseAuth.getInstance().getUid()+"")) {
-       // progressDialog.show();
-        presenter.getAndShowNewsFeedFromFirebase(homeRecycler);
-        if(homeRecycler.isAttachedToWindow()){
-            progressDialog.dismiss();
-        }
+                if(FirebaseAuth.getInstance().getCurrentUser()!=null) {
+                    if (dataSnapshot.hasChild(FirebaseAuth.getInstance().getUid()+"")) {
+                        // progressDialog.show();
+                        presenter.getAndShowNewsFeedFromFirebase(homeRecycler);
+                        if(homeRecycler.isAttachedToWindow()){
+                            progressDialog.dismiss();
+                        }
 
-    }
-}
+                    }
+                }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });
+        };
 
-
-    }
-
-    void initializeFields(){
-    progressDialog=new ProgressDialog(getActivity());
-      presenter = new HomeActivityPresenter(getActivity(),(TextView) view.findViewById(R.id.home_text_message));
-      homeRecycler = view.findViewById(R.id.homeRecycler);
-        context=getActivity();
+        myRef =  FirebaseDatabase.getInstance().getReference().child("Users");
 
   }
 

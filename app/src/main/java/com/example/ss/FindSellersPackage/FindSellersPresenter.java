@@ -17,42 +17,53 @@ import java.util.ArrayList;
 
 class FindSellersPresenter {
 
-    private ArrayList<UserModel> listOfUsers;
-    private Context context;
-    private FindSellersRecyclerAdapter adapter;
-    private ArrayList<String> listOfFollowers;
-    private UserModel userModel;
-    private int businessAcoountsCounter;
-    private DatabaseReference userRef;
-
-    FindSellersPresenter(Context context) {
-        this.context = context;
-        listOfUsers = new ArrayList<>();
-        listOfFollowers = new ArrayList<>();
-        adapter = new FindSellersRecyclerAdapter(context, listOfUsers);
-        userRef = FirebaseDatabase.getInstance().getReference().child("Users");
-        businessAcoountsCounter = 0;
+    public ValueEventListener getUserListner() {
+        return userListner;
     }
 
-    public void previewSellers(final ProgressDialog progressDialog, final RecyclerView recyclerView) {
+    public DatabaseReference getUserRef() {
+        return userRef;
+    }
 
-progressDialog.setCancelable(false);
-                progressDialog.show();
+    private ArrayList<UserModel> listOfUsers;
 
-        userRef.addValueEventListener(new ValueEventListener() {
+    private FindSellersRecyclerAdapter adapter;
+
+    private UserModel userModel;
+
+    private DatabaseReference userRef;
+    private ValueEventListener userListner;
+    private  ProgressDialog progressDialog;
+
+
+
+
+
+    FindSellersPresenter(final Context context,final RecyclerView recyclerView) {
+
+        listOfUsers = new ArrayList<>();
+        progressDialog = new ProgressDialog(context);
+
+        adapter = new FindSellersRecyclerAdapter(context, listOfUsers);
+        userRef = FirebaseDatabase.getInstance().getReference().child("Users");
+
+        userListner = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    listOfUsers.clear();
-                    adapter.notifyDataSetChanged();
+                listOfUsers.clear();
+                adapter.notifyDataSetChanged();
                 for (DataSnapshot d:dataSnapshot.getChildren()) {
 
-                    if(d.child("account type").getValue().equals("business account")){
+                    if(d.hasChild("account type")&&d.child("account type").getValue().equals("business account")){
                         userModel = new UserModel();
                         userModel.setuId(d.child("userID").getValue().toString());
-                        userModel.setName(d.child("userName").getValue().toString());
+                        if(d.hasChild("userName")){
+                            userModel.setName(d.child("userName").getValue().toString());}
+
                         if(d.hasChild("image")){
-                        userModel.setProfilePicture(d.child("image").getValue().toString());}
-                        listOfUsers.add(userModel);
+                            userModel.setProfilePicture(d.child("image").getValue().toString());}
+                        if(userModel.getName()!= null && userModel.getuId()!=null )
+                            listOfUsers.add(userModel);
                     }
 
 
@@ -67,10 +78,10 @@ progressDialog.setCancelable(false);
 
             private void preview(ProgressDialog progressDialog, RecyclerView recyclerView) {
 
-            recyclerView.setAdapter(adapter);
-            recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                recyclerView.setAdapter(adapter);
+                recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
-            progressDialog.dismiss();
+                progressDialog.dismiss();
 
 
 
@@ -82,7 +93,15 @@ progressDialog.setCancelable(false);
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });
+        };
+    }
+
+    public void previewSellers(final ProgressDialog pr, final RecyclerView recyclerView) {
+
+progressDialog.setCancelable(false);
+                progressDialog.show();
+
+        userRef.addValueEventListener(userListner);
 
 
 

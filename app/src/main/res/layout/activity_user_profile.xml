@@ -1,23 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.v4.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".UserProfile.UserProfileActivity"
-    >
-
-
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".UserProfile.UserProfileActivity">
-
-
 
     <ImageView
         android:layout_width="match_parent"
@@ -161,28 +149,38 @@
 
     </android.support.v7.widget.CardView>
 
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/card_view_user_profile"
+    app:layout_constraintVertical_bias="0.1"
+    >
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView_in_user_profile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-       android:layout_margin="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/card_view_user_profile"
-        app:layout_constraintVertical_bias="0.1">
+        android:layout_marginTop="18dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+      >
 
     </android.support.v7.widget.RecyclerView>
 
-    <android.support.v7.widget.AppCompatCheckBox
+</ScrollView>
+
+
+    <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Follow"
         android:id="@+id/follow_button"
         android:textStyle="bold"
         android:padding="8dp"
-
         app:layout_constraintBottom_toTopOf="@+id/card_view_user_profile"
         app:layout_constraintEnd_toEndOf="@+id/user_name_user_profile"
         app:layout_constraintStart_toStartOf="@+id/user_name_user_profile"
@@ -191,4 +189,3 @@
         android:background="#32CD32" />
 
 </android.support.constraint.ConstraintLayout>
-</android.support.v4.widget.NestedScrollView>

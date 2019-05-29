@@ -40,7 +40,7 @@ public class FindSellersRecyclerAdapter extends RecyclerView.Adapter<FindSellers
 
         viewHolder.userName.setText(listOfUsers.get(i).getName());
         if (listOfUsers.get(i).getProfilePicture() != null) {
-            Picasso.get().load(listOfUsers.get(i).getProfilePicture()).into(viewHolder.profilePic);
+            Picasso.get().load(listOfUsers.get(i).getProfilePicture()).resize(100,100).into(viewHolder.profilePic);
         } else {
             viewHolder.profilePic.setImageResource(R.drawable.user);
         }
@@ -76,6 +76,8 @@ public class FindSellersRecyclerAdapter extends RecyclerView.Adapter<FindSellers
 
         Intent i = new Intent (context, UserProfileActivity.class);
         i.putExtra("uid",uid);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         context.startActivity(i);
 
     }
