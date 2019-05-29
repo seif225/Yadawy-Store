@@ -17,7 +17,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:text="uploadPrpud"
+            android:text="uploadProduct"
             android:textSize="18sp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/edit_profile_btn"
