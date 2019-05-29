@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.example.ss.AdminProfilePack.ProfileFragment;
 import com.example.ss.CategoryPackage.CategoryFragment;
+import com.example.ss.ChooseAccountTypeForBusinessAcountPack.ChooseAccountTypeForBusinessAccount;
 import com.example.ss.FindSellersPackage.FindSellersActivity;
 import com.example.ss.HomePackage.HomeActivity;
 import com.example.ss.LikesFragmentPack.LikesFragment;
@@ -115,7 +116,12 @@ public class MainActivity extends AppCompatActivity
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                    if (!dataSnapshot.hasChild("userName") || !dataSnapshot.hasChild("phone") || !dataSnapshot.hasChild("address")) {
+                    if(!dataSnapshot.hasChild("account type")){
+                        sendUserToChooseAccountType();
+
+                    }
+
+                    else if (!dataSnapshot.hasChild("userName") || !dataSnapshot.hasChild("phone") || !dataSnapshot.hasChild("address")) {
 
                         sendUserToProfileEditActivity();
 
@@ -145,6 +151,13 @@ public class MainActivity extends AppCompatActivity
 
         }
 
+
+    }
+
+    private void sendUserToChooseAccountType() {
+        Intent i = new Intent(this, ChooseAccountTypeForBusinessAccount.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(i);
 
     }
 
