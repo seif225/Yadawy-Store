@@ -43,7 +43,6 @@ public class ProductActivity extends AppCompatActivity {
         intializeFields();
 
 
-
        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
            @Override
            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
@@ -113,6 +112,8 @@ public class ProductActivity extends AppCompatActivity {
                 }
             }
         });
+
+       presenter.previewUserRate(ratingBar);
 
     }
 

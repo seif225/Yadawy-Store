@@ -44,6 +44,7 @@ public class NewsFeedRecyclerAdapter extends RecyclerView.Adapter<NewsFeedRecycl
             likesRef = FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getUid());
             userRef = FirebaseDatabase.getInstance().getReference().child("Users");
         }else{
+
             notifyDataSetChanged();
         }
 
