@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import flepsik.github.com.progress_ring.ProgressRingView;
 
 class ProductActivityPresenter {
 
@@ -33,7 +34,8 @@ class ProductActivityPresenter {
     private ProductModel productModel;
     private ArrayList<String> listOfPictureLinks;
     private Context context;
-    private float rating;
+    float rate=0;
+
 
 
     ProductActivityPresenter(Context context, String userId, String productId) {
@@ -48,7 +50,7 @@ class ProductActivityPresenter {
 
     void getProductData(final ProgressDialog progressDialog, final SliderLayout sliderLayout, final TextView category,
                         final TextView price, final TextView describtion, final TextView userName, final TextView productIdTv,
-                        final CircleImageView userPp) {
+                        final CircleImageView userPp, final ProgressRingView progress, final TextView accuRate, final TextView rateCounter) {
         progressDialog.setCancelable(false);
         progressDialog.setMessage("getting dataa ..");
         progressDialog.show();
@@ -99,6 +101,8 @@ class ProductActivityPresenter {
                     productModel.setProdcutPrice(dataSnapshot.child("product_price").getValue().toString());
                     price.setText(productModel.getProdcutPrice());
                 }
+
+
                 if (dataSnapshot.hasChild("use_id")) {
                     productModel.setuId(dataSnapshot.child("use_id").getValue().toString());
                     FirebaseDatabase.getInstance().getReference().child("Users").child(productModel.getuId()).addValueEventListener(new ValueEventListener() {
@@ -122,7 +126,9 @@ class ProductActivityPresenter {
 
                 }
 
+
                 setSliderViews(productModel.getImagesLinks(), sliderLayout);
+                getStats(progress,accuRate,rateCounter);
 
                 progressDialog.dismiss();
 
@@ -244,6 +250,47 @@ class ProductActivityPresenter {
     }
 
 
+     void getStats(final ProgressRingView progress, final TextView accuRate, final TextView rateCounter) {
+        Log.e("get stats",productModel.getuId() + " " + productModel.getProductId());
+        FirebaseDatabase.getInstance().getReference().child("products")
+                .child(productModel.getuId()).child(productModel.getProductId()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                rate =0;
+
+                if(dataSnapshot.hasChild("ratings")){
+
+                    for (DataSnapshot d: dataSnapshot.child("ratings").getChildren()) {
+
+                    rate = rate + Float.parseFloat(d.child("rate").getValue().toString()) / dataSnapshot.child("ratings").getChildrenCount()  ;
+
+
+                    }
+
+
+                }
+
+
+                    progress.setProgress(rate*2/10);
+                    accuRate.setText( String.valueOf(rate));
+                    progress.setAnimated(true);
+                    progress.setAnimationDuration(500);
+                    rateCounter.setText(dataSnapshot.child("ratings").getChildrenCount() + " rated this product");
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+
+
+    }
 }
 
 

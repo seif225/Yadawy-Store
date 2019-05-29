@@ -22,6 +22,7 @@ import com.sackcentury.shinebuttonlib.ShineButton;
 import com.smarteist.autoimageslider.SliderLayout;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import flepsik.github.com.progress_ring.ProgressRingView;
 
 public class ProductActivity extends AppCompatActivity {
 
@@ -33,7 +34,9 @@ public class ProductActivity extends AppCompatActivity {
     private ShineButton likeButton;
     private boolean likeState;
     private RatingBar ratingBar;
-    private TextView textView;
+    private TextView textView,accuRate,rateCounter;
+    private ProgressRingView progress;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +66,7 @@ public class ProductActivity extends AppCompatActivity {
 
 
 
-        presenter.getProductData(new ProgressDialog(this),sliderLayout,category,price,describtion,userName,productIdTv,userPp);
+        presenter.getProductData(new ProgressDialog(this),sliderLayout,category,price,describtion,userName,productIdTv,userPp,progress,accuRate,rateCounter);
         DatabaseReference likRef= FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getUid());
         likRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -115,6 +118,7 @@ public class ProductActivity extends AppCompatActivity {
 
        presenter.previewUserRate(ratingBar);
 
+
     }
 
     private void intializeFields() {
@@ -127,7 +131,9 @@ public class ProductActivity extends AppCompatActivity {
         sliderLayout.setIndicatorAnimation(SliderLayout.Animations.WORM);
         sliderLayout.animate();
         sliderLayout.setScrollTimeInSec(2);
-
+        progress = findViewById(R.id.progressRing);
+        accuRate = findViewById(R.id.accumlated_rate);
+        rateCounter = findViewById(R.id.ratings_counter);
         category=findViewById(R.id.product_category_tv);
         price=findViewById(R.id.product_price_tv);
         describtion=findViewById(R.id.product_describtion_tv);
