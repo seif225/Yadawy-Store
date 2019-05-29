@@ -59,11 +59,20 @@ class FindSellersPresenter {
                         userModel.setuId(d.child("userID").getValue().toString());
                         if(d.hasChild("userName")){
                             userModel.setName(d.child("userName").getValue().toString());}
+                        if(d.hasChild("bio")){
+
+                        userModel.setBio(d.child("bio").getValue().toString());
+
+                        }
+
 
                         if(d.hasChild("image")){
                             userModel.setProfilePicture(d.child("image").getValue().toString());}
                         if(userModel.getName()!= null && userModel.getuId()!=null )
                             listOfUsers.add(userModel);
+
+
+
                     }
 
 

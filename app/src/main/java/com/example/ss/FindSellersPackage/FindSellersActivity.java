@@ -55,8 +55,12 @@ public class FindSellersActivity extends Fragment {
         presenter.getUserRef().removeEventListener(presenter.getUserListner());
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
 
+        presenter.getUserRef().addValueEventListener(presenter.getUserListner());
 
-
-
+        presenter.getUserRef().addValueEventListener(presenter.getUserListner());
+    }
 }

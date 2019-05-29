@@ -19,16 +19,18 @@ import java.util.ArrayList;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class FindSellersRecyclerAdapter extends RecyclerView.Adapter<FindSellersRecyclerAdapter.ViewHolder> {
-    Context context; ArrayList<UserModel> listOfUsers;
+    Context context;
+    ArrayList<UserModel> listOfUsers;
+
     public FindSellersRecyclerAdapter(Context context, ArrayList<UserModel> listOfUsers) {
-        this.context=context;
-        this.listOfUsers=listOfUsers;
+        this.context = context;
+        this.listOfUsers = listOfUsers;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(context).inflate(R.layout.find_followers_row_item,viewGroup,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.find_followers_row_item, viewGroup, false);
 
         return new ViewHolder(view);
     }
@@ -36,46 +38,53 @@ public class FindSellersRecyclerAdapter extends RecyclerView.Adapter<FindSellers
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
 
-    if(listOfUsers.size()>=i) {
+        if (listOfUsers.size() >= i) {
 
-        viewHolder.userName.setText(listOfUsers.get(i).getName());
-        if (listOfUsers.get(i).getProfilePicture() != null) {
-            Picasso.get().load(listOfUsers.get(i).getProfilePicture()).resize(100,100).into(viewHolder.profilePic);
-        } else {
-            viewHolder.profilePic.setImageResource(R.drawable.user);
+            viewHolder.userName.setText(listOfUsers.get(i).getName());
+            if (listOfUsers.get(i).getProfilePicture() != null) {
+                Picasso.get().load(listOfUsers.get(i).getProfilePicture()).resize(100, 100).into(viewHolder.profilePic);
+            } else {
+                viewHolder.profilePic.setImageResource(R.drawable.user);
+            }
+
+            if(listOfUsers.get(i).getBio()!=null){
+
+                viewHolder.bio.setText(listOfUsers.get(i).getBio());
+            }
+            else{
+
+                viewHolder.bio.setText("no bio");
+
+            }
+
+            viewHolder.profilePic.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    sendUserToProfile(listOfUsers.get(i).getuId());
+
+                }
+            });
+
+
+            viewHolder.userName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    sendUserToProfile(listOfUsers.get(i).getuId());
+
+                }
+            });
+
         }
 
-        viewHolder.profilePic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sendUserToProfile(listOfUsers.get(i).getuId());
-
-            }
-        });
-
-
-        viewHolder.userName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                sendUserToProfile(listOfUsers.get(i).getuId());
-
-            }
-        });
-
     }
-
-    }
-
-
 
 
     private void sendUserToProfile(String uid) {
 
 
-
-        Intent i = new Intent (context, UserProfileActivity.class);
-        i.putExtra("uid",uid);
+        Intent i = new Intent(context, UserProfileActivity.class);
+        i.putExtra("uid", uid);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         context.startActivity(i);
@@ -84,7 +93,7 @@ public class FindSellersRecyclerAdapter extends RecyclerView.Adapter<FindSellers
 
     @Override
     public int getItemCount() {
-        if(listOfUsers==null){
+        if (listOfUsers == null) {
 
             return 0;
 
@@ -95,16 +104,17 @@ public class FindSellersRecyclerAdapter extends RecyclerView.Adapter<FindSellers
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         CircleImageView profilePic;
-        TextView userName;
+        TextView userName, bio;
         Button followButton;
 
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-        profilePic=itemView.findViewById(R.id.profle_picture_find_seller);
-        userName=itemView.findViewById(R.id.user_name_find_seller);
-        followButton=itemView.findViewById(R.id.follow_button_find_followers);
+            profilePic = itemView.findViewById(R.id.profle_picture_find_seller);
+            userName = itemView.findViewById(R.id.user_name_find_seller);
+            followButton = itemView.findViewById(R.id.follow_button_find_followers);
+            bio = itemView.findViewById(R.id.bio_find_seller);
 
 
         }
