@@ -52,7 +52,6 @@ class LikesFragmentPresenter {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-
                 if (dataSnapshot.hasChild("Likes")) {
 
                     for (DataSnapshot d : dataSnapshot.child("Likes").getChildren()) {
@@ -151,6 +150,12 @@ class LikesFragmentPresenter {
 
 
                     }
+
+                    if(dataSnapshot1.hasChild("Likers")){
+
+                        productModel.setProductLikes(String.valueOf(dataSnapshot1.child("Likers").getChildrenCount()));
+                    }
+
                     listofProducts.add(productModel);
 
                     previewDataOnHome(likesRecycler,progressDialog);

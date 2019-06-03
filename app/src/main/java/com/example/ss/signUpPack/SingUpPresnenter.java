@@ -26,6 +26,7 @@ public class SingUpPresnenter {
     private FirebaseAuth mAuth;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
+
     SingUpPresnenter(Context context){
 
         this.context=context;
@@ -46,7 +47,10 @@ public class SingUpPresnenter {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
+
+                    //uploads mail and password ,account typee to firebase.
                     progressDialog.dismiss();
+
                     Log.e("here",mail+password+accountType+FirebaseAuth.getInstance().getCurrentUser().getUid());
                   databaseReference.child("Users").child(mAuth.getCurrentUser().getUid()).child("mail").setValue(mail);
                   databaseReference.child("Users").child(mAuth.getCurrentUser().getUid()).child("password").setValue(password);
@@ -60,15 +64,22 @@ public class SingUpPresnenter {
                 else{
 
                     progressDialog.dismiss();
-                    Toast.makeText(context,  task.getException().toString(), Toast.LENGTH_SHORT).show();
+
+                    Toast.makeText(context,  task.getException().toString(), Toast.LENGTH_LONG).show();
 
                 }
             }
 
             private void sendUserToSplash() {
 
+                //this line redirects you to splash activity
+
             Intent i = new Intent(context, SplashActivity.class);
+
+            //this line kills the the activity before directing
             i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+            //starting the activity
+
             context.startActivity(i);
 
             }
@@ -86,4 +97,5 @@ public class SingUpPresnenter {
     public ArrayList<String> getAccountTypes() {
         return accountTypes;
     }
+
 }

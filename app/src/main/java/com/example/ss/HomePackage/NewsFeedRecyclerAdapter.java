@@ -66,6 +66,7 @@ public class NewsFeedRecyclerAdapter extends RecyclerView.Adapter<NewsFeedRecycl
         return likesListner;
     }
 
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int position) {
@@ -79,47 +80,15 @@ public class NewsFeedRecyclerAdapter extends RecyclerView.Adapter<NewsFeedRecycl
         //this happens only if images exist
 
 
-        viewHolder.userName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+       startListeningOnLikes(i,viewHolder);
 
-                sendUserToProfile(list.get(i));
-
-            }
-        });
-
-        viewHolder.userPp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sendUserToProfile(list.get(i));
-            }
-        });
-
-
-
-        startListeningOnLikes(i,viewHolder);
         likesRef.addValueEventListener(likesListner);
-
-/// on click
-        viewHolder.likeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if(!viewHolder.likeState){
-                    like(list.get(i).getProductId(),list.get(i).getuId(),list.get(i).getProductName());
-                    viewHolder.likeButton.setChecked(true);
-
-                }
-
-                else if (viewHolder.likeState){
-                    disLike(list.get(i).getProductId(),list.get(i).getuId(),list.get(i).getProductName());
-                    viewHolder.likeButton.setChecked(false);
-
-                }
+        startListeningOnUsers(viewHolder);
 
 
-            }
-        });
+
+        Log.e("NewsAdapter",list.get(i).getuId());
+        userRef.child(list.get(i).getuId()).addValueEventListener(userListner);
 
 
 
@@ -153,8 +122,8 @@ public class NewsFeedRecyclerAdapter extends RecyclerView.Adapter<NewsFeedRecycl
 
 
         Log.e("newfeedadapter","id check "+list.get(i).getuId());
-        startListeningOnUsers(viewHolder);
-        userRef.child(list.get(i).getuId()).addValueEventListener(userListner);
+
+
 
         viewHolder.productTitle.setText(list.get(i).getProductName());
         // Log.e("title fl adapter",list.get(i).getProductName() + " ya rab msh null :''D");
@@ -171,6 +140,47 @@ public class NewsFeedRecyclerAdapter extends RecyclerView.Adapter<NewsFeedRecycl
 
             viewHolder.likesTv.setText("0");
         }
+
+
+
+        viewHolder.userName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                sendUserToProfile(list.get(i));
+
+            }
+        });
+
+        viewHolder.userPp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendUserToProfile(list.get(i));
+            }
+        });
+
+
+/// on click
+        viewHolder.likeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(!viewHolder.likeState){
+                    like(list.get(i).getProductId(),list.get(i).getuId(),list.get(i).getProductName());
+                    viewHolder.likeButton.setChecked(true);
+
+                }
+
+                else if (viewHolder.likeState){
+                    disLike(list.get(i).getProductId(),list.get(i).getuId(),list.get(i).getProductName());
+                    viewHolder.likeButton.setChecked(false);
+
+                }
+
+
+            }
+        });
+
 
     }
 
@@ -277,8 +287,11 @@ public class NewsFeedRecyclerAdapter extends RecyclerView.Adapter<NewsFeedRecycl
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 if(dataSnapshot.hasChild("Likes")) {
-                    if (i <= list.size()){
+
+                    if (i <= list.size()  ){
+
                         Log.e("startListeningLikes","adapter , numbers of likes: "+ list.size());
+
                         if (dataSnapshot.child("Likes").hasChild(list.get(i).getProductName())) {
 
 
@@ -292,6 +305,9 @@ public class NewsFeedRecyclerAdapter extends RecyclerView.Adapter<NewsFeedRecycl
 
                         }
 
+                    }
+                    else {
+                        notifyDataSetChanged();
                     }
                 }
 

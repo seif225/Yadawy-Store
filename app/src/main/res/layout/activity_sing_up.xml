@@ -22,7 +22,11 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password_et_sign_up"
-        app:layout_constraintVertical_bias="0.036"></Spinner>
+        app:layout_constraintVertical_bias="0.036"
+        >
+
+
+    </Spinner>
 
     <EditText
         android:id="@+id/mail_et_sign_up"
@@ -41,6 +45,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.215"
         android:inputType="textEmailAddress"
+
         />
 
     <EditText
@@ -70,7 +75,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
-        android:text="register"
+        android:text="sign up"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"

@@ -39,6 +39,7 @@ public class HomeActivity extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.activity_home, container, false);
+
             initializeFields();
 
 
@@ -47,15 +48,29 @@ public class HomeActivity extends Fragment {
         return view;
     }
 
+
+
     @Override
     public void onStart() {
         super.onStart();
+        if(myListner!=null)  myRef.removeEventListener(myListner);
 
-      myRef.addValueEventListener(myListner);
+        if(presenter.getProductListner()!=null) presenter.getProductsRef().removeEventListener(presenter.getProductListner());
+        if(presenter.getLikesListner()!=null) presenter.getAdapterrLikesRef().removeEventListener(presenter.getLikesListner());
+        if(presenter.getUserListner()!=null) presenter.getAdapterUserRef().removeEventListener(presenter.getUserListner());
+
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        myRef.addValueEventListener(myListner);
 
 
 
     }
+
 
     @Override
     public void onPause() {

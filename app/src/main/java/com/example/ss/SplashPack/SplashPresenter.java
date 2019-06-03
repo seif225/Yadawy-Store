@@ -36,10 +36,25 @@ public class SplashPresenter {
 
 
     public void sendUserToSingup(){
+
+
+
+
         Intent i = new Intent(context, SingUpActivity.class);
 
         context.startActivity(i);
+
+
+
+
     }
+
+
+
+
+
+
+
     public void sendUserToMailLogin(){
         Intent i = new Intent(context, MailLoginActivity.class);
         context.startActivity(i);

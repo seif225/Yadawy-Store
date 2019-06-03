@@ -57,7 +57,7 @@ public class FindSellersRecyclerAdapter extends RecyclerView.Adapter<FindSellers
 
             }
 
-            viewHolder.profilePic.setOnClickListener(new View.OnClickListener() {
+            viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     sendUserToProfile(listOfUsers.get(i).getuId());
@@ -66,14 +66,6 @@ public class FindSellersRecyclerAdapter extends RecyclerView.Adapter<FindSellers
             });
 
 
-            viewHolder.userName.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    sendUserToProfile(listOfUsers.get(i).getuId());
-
-                }
-            });
 
         }
 

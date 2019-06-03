@@ -3,7 +3,7 @@ package com.example.ss.ProductActivityPack;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Color;
-import android.media.Rating;
+
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.ImageView;
@@ -30,7 +30,7 @@ import flepsik.github.com.progress_ring.ProgressRingView;
 
 class ProductActivityPresenter {
 
-    private String userId, productId;
+    private String  productId;
     private DatabaseReference reference;
     private ProductModel productModel;
     private ArrayList<String> listOfPictureLinks;
@@ -40,7 +40,7 @@ class ProductActivityPresenter {
 
     ProductActivityPresenter(Context context, String userId, String productId) {
 
-        this.userId = userId;
+
         this.productId = productId;
         productModel = new ProductModel();
         this.context = context;
@@ -55,9 +55,13 @@ class ProductActivityPresenter {
         progressDialog.setMessage("getting dataa ..");
         progressDialog.show();
 
+
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                listOfPictureLinks.clear();
+
+
 
                 if (dataSnapshot.hasChild("images")) {
                     //productModel.setImagesLinks(dataSnapshot.child("images").getValue().toString());
@@ -271,10 +275,13 @@ class ProductActivityPresenter {
 
 
                 progress.setProgress(rate * 2 / 10);
-                accuRate.setText(String.valueOf(rate));
+                // method Math.floor decreases the precision of float
+                accuRate.setText(String.valueOf(Math.floor(rate * 100) / 100));
                 progress.setAnimated(true);
                 progress.setAnimationDuration(500);
+
                 Log.e("productActPresenter","the rate is :" + rate);
+
                 if ((int) rate ==0) {
 
                     progress.setProgressColor(Color.RED);
@@ -303,6 +310,7 @@ class ProductActivityPresenter {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+
 
             }
         });

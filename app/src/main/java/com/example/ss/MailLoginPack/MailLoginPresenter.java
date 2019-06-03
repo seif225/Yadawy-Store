@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.widget.Toast;
 
 import com.example.ss.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -22,6 +23,8 @@ public class MailLoginPresenter {
     void signIn(String mail, String password , final ProgressDialog progressDialog){
         progressDialog.setMessage("login in..");
         progressDialog.show();
+
+
         auth.signInWithEmailAndPassword(mail,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -33,12 +36,17 @@ public class MailLoginPresenter {
            else{
                progressDialog.dismiss();
 
+               Toast.makeText(context, (CharSequence) task.getException(),Toast.LENGTH_LONG).show();
+
 
            }
 
             }
 
             private void sendUserToMain() {
+
+
+
             Intent i = new Intent(context, MainActivity.class);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(i);
