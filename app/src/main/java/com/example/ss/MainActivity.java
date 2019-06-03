@@ -23,6 +23,7 @@ import com.example.ss.AdminProfilePack.ProfileFragment;
 import com.example.ss.CategoryPackage.CategoryFragment;
 import com.example.ss.ChooseAccountTypeForBusinessAcountPack.ChooseAccountTypeForBusinessAccount;
 import com.example.ss.FindSellersPackage.FindSellersActivity;
+import com.example.ss.HomeFragmentV2Package.HomeFragmentV2;
 import com.example.ss.HomePackage.HomeActivity;
 import com.example.ss.LikesFragmentPack.LikesFragment;
 import com.example.ss.ProfileEditActivityPack.ProfileEditActivity;
@@ -51,6 +52,7 @@ public class MainActivity extends AppCompatActivity
     View navigationHeader;
     CircleImageView navuseRImage;
     TextView navUserName, navUserMail;
+
     public static Context MAIN_CONTEXT;
 
     @Override
@@ -215,7 +217,7 @@ public class MainActivity extends AppCompatActivity
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         userRef = firebaseDatabase.getReference().child("Users");
-        selectedFragment = new HomeActivity();
+        selectedFragment = new HomeFragmentV2();
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                 selectedFragment).commit();
 
@@ -270,7 +272,7 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_home) {
 
-            selectedFragment = new HomeActivity();
+            selectedFragment = new HomeFragmentV2();
 
 
         } else if (id == R.id.nav_categroies) {

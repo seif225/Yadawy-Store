@@ -115,7 +115,7 @@ public class HomeActivityPresenter {
 
                             listOfPictureLinks.add(imagesDataSnapShot.getValue().toString());
 
-                            i++;
+
                         }
                         productModel.setImagesLinks(listOfPictureLinks);
 
