@@ -87,7 +87,6 @@ public class HomeActivityPresenter {
         this.recyclerView = recyclerView;
         progressDialog = new ProgressDialog(context);
         adapter = new NewsFeedRecyclerAdapter(context, listOfProducts);
-        productsRef.addValueEventListener(productListner);
 
 
         productListner = new ValueEventListener() {
@@ -187,6 +186,9 @@ public class HomeActivityPresenter {
 
             }
         };
+
+        productsRef.addValueEventListener(productListner);
+
 
     }
 

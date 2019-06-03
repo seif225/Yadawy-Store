@@ -19,14 +19,18 @@
             android:name=".ChooseAccountTypeForBusinessAcountPack.ChooseAccountTypeForBusinessAccount"
             android:label="@string/title_activity_choose_account_type_for_business_account"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".FindSellersPackage.FindSellersActivity" />
+
         <activity android:name=".UserProfile.UserProfileActivity" />
         <activity android:name=".CategoryItems.CategoryItemsActivity" />
         <activity android:name=".ProductActivityPack.ProductActivity" />
-        <activity android:name=".HomePackage.HomeActivity" />
+
         <activity android:name=".AddProductPAckage.AddProductActivity" />
         <activity android:name=".financeForBusinessUserPack.addFinancialInfoActivity" />
-        <activity android:name=".MailLoginPack.MailLoginActivity" />
+        <activity android:name=".MailLoginPack.MailLoginActivity">
+            <intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".signUpPack.SingUpActivity" />
         <activity android:name=".ProfileEditActivityPack.ProfileEditActivity" />
         <activity android:name=".uploadProductImages.UploadProudctImagesActivity" />
