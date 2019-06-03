@@ -91,7 +91,7 @@ class HomeFragmentV2Presenter {
 
 
                 } else {
-                    //TODO: if the user has no followers..
+
                     previewDataOnView(homeRecycler,homeTextView);
 
 

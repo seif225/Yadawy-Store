@@ -30,7 +30,7 @@ import flepsik.github.com.progress_ring.ProgressRingView;
 
 class ProductActivityPresenter {
 
-    private String  productId;
+    private String productId;
     private DatabaseReference reference;
     private ProductModel productModel;
     private ArrayList<String> listOfPictureLinks;
@@ -45,6 +45,8 @@ class ProductActivityPresenter {
         productModel = new ProductModel();
         this.context = context;
         reference = FirebaseDatabase.getInstance().getReference().child("products").child(userId).child(productId);
+        listOfPictureLinks = new ArrayList<>();
+
 
     }
 
@@ -61,12 +63,14 @@ class ProductActivityPresenter {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 //                listOfPictureLinks.clear();
 
-
+                if (productModel.getImagesLinks() != null && productModel.getImagesLinks().size() > 0) {
+                    productModel.getImagesLinks().clear();
+                    listOfPictureLinks.clear();
+                }
 
                 if (dataSnapshot.hasChild("images")) {
                     //productModel.setImagesLinks(dataSnapshot.child("images").getValue().toString());
-                    int i = 0;
-                    listOfPictureLinks = new ArrayList<>();
+
                     for (DataSnapshot imagesDataSnapShot : dataSnapshot.child("images").getChildren()) {
 
                         listOfPictureLinks.add(imagesDataSnapShot.getValue().toString());
@@ -174,6 +178,10 @@ class ProductActivityPresenter {
 
     }
 
+
+
+
+
     private void setSliderViews(ArrayList<String> imagesLinks, SliderLayout sliderLayout) {
 
 
@@ -195,11 +203,18 @@ class ProductActivityPresenter {
                 sliderView.setDescription(productModel.getProductName());
                 sliderView.setDescriptionTextSize(18);
                 //            Log.e("product name ",productModel.getProductName());
+
                 sliderLayout.addSliderView(sliderView);
             }
 
         }
     }
+
+
+
+
+
+
 
     String getProducName() {
 
@@ -280,24 +295,24 @@ class ProductActivityPresenter {
                 progress.setAnimated(true);
                 progress.setAnimationDuration(500);
 
-                Log.e("productActPresenter","the rate is :" + rate);
+                Log.e("productActPresenter", "the rate is :" + rate);
 
-                if ((int) rate ==0) {
+                if ((int) rate == 0) {
 
                     progress.setProgressColor(Color.RED);
 
-                } else if ((int) rate ==1) {
+                } else if ((int) rate == 1) {
                     progress.setProgressColor(context.getResources().getColor(R.color.orange));
 
-                } else if ((int) rate ==2) {
+                } else if ((int) rate == 2) {
                     progress.setProgressColor(context.getResources().getColor(R.color.yellow));
 
 
-                } else if ((int) rate ==3) {
+                } else if ((int) rate == 3) {
                     progress.setProgressColor(context.getResources().getColor(R.color.lightGreen));
 
 
-                } else if ((int) rate ==4) {
+                } else if ((int) rate == 4) {
 
                     progress.setProgressColor(Color.GREEN);
 
