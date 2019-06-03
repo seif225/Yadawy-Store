@@ -1,5 +1,6 @@
 package com.example.ss.HomeFragmentV2Package;
 
+import android.app.ProgressDialog;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -30,12 +31,18 @@ class HomeFragmentV2Presenter {
     private List<ProductModel>  ListOfProducts;
     private NewsFeedRecyclerAdapter adapter;
     private  FragmentActivity activity;
+    private ProgressDialog progressDialog;
 
 
     //Constructor
     HomeFragmentV2Presenter(FragmentActivity activity) {
         //to make sure that the user is logged in as an extra check
         this.activity = activity;
+        progressDialog = new ProgressDialog(activity);
+        progressDialog.setCancelable(false);
+        progressDialog.setTitle("please wait ..");
+        progressDialog.setMessage("getting data..");
+        progressDialog.show();
         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
 
             currentUserRef = FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getUid());
@@ -85,6 +92,7 @@ class HomeFragmentV2Presenter {
 
                 } else {
                     //TODO: if the user has no followers..
+                    previewDataOnView(homeRecycler,homeTextView);
 
 
                 }
@@ -204,14 +212,14 @@ class HomeFragmentV2Presenter {
             //we will send these products to the adapter to view it
             homeRecycler.setLayoutManager(new LinearLayoutManager(activity));
             homeRecycler.setAdapter(adapter);
+            progressDialog.dismiss();
 
 
         }
         else {
             // if the list of products is empty , we will show a message to the user in the text view
-
-
-
+            homeTextView.setText("no products to show , follow more sellers ;)");
+            progressDialog.dismiss();
         }
 
 
