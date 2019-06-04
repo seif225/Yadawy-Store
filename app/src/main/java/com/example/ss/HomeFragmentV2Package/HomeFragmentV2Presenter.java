@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,6 +56,7 @@ class HomeFragmentV2Presenter {
 
 
         } else
+
             Toast.makeText(activity, "you've got problem with Authentication ", Toast.LENGTH_SHORT).show();
 
 
@@ -64,7 +66,11 @@ class HomeFragmentV2Presenter {
 
 
     void getDataForHomeActivity(RecyclerView homeRecycler, TextView homeTextView){
+        //TODO : Check current user
+        Log.e("HomeFragPresenter","v2");
+        if (FirebaseAuth.getInstance().getCurrentUser()!=null)
         getFollowersList(homeRecycler,homeTextView);
+        else getDataForHomeActivity(homeRecycler,homeTextView);
     }
 
 
@@ -75,9 +81,9 @@ class HomeFragmentV2Presenter {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 followersList.clear();
                 adapter.notifyDataSetChanged();
-                if (dataSnapshot.hasChild("followers")) {
+                if (dataSnapshot.hasChild("following")) {
 
-                    for (DataSnapshot d : dataSnapshot.child("followers").getChildren()) {
+                    for (DataSnapshot d : dataSnapshot.child("following").getChildren()) {
 
                         followersList.add(d.getValue().toString());
 
@@ -218,6 +224,7 @@ class HomeFragmentV2Presenter {
         }
         else {
             // if the list of products is empty , we will show a message to the user in the text view
+            homeTextView.setVisibility(View.VISIBLE);
             homeTextView.setText("no products to show , follow more sellers ;)");
             progressDialog.dismiss();
         }
