@@ -27,7 +27,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ProfileFragment extends Fragment {
     private View view;
     private ProfileFragmentPresenter presenter;
-    private TextView userNameTv,bioTv,productsTv;
+    private TextView userNameTv,bioTv,productsTv,numOfProductss,numOfFollowing,numOfFollowers;
     private CircleImageView profilePicture;
     private Button editProfileButton;
     private ProgressDialog progressDialog;
@@ -46,7 +46,7 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_profile, container, false);
         intialiaizeFields();
-        presenter.retriveUserData(progressDialog,userNameTv,profilePicture,bioTv);
+        presenter.retriveUserData(progressDialog,userNameTv,profilePicture,bioTv,numOfFollowers,numOfFollowing);
       presenter.showOrHideFab(uploadProductFab);
         presenter.getAndAddDataToRecycler(recyclerView,new ProgressDialog(getContext()));
         presenter.showProductsnumber(productsTv);
@@ -93,6 +93,8 @@ public class ProfileFragment extends Fragment {
         recyclerView = view.findViewById(R.id.admin_profile_recycler_view);
         cover = view.findViewById(R.id.cover_profile_admin);
         productsTv=view.findViewById(R.id.products_number_admin_profile);
+        numOfFollowing=view.findViewById(R.id.following_number_admin_profile);
+        numOfFollowers=view.findViewById(R.id.follower_number_admin_profile);
 
 
     }

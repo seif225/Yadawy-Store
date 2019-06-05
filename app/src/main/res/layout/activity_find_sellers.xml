@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FindSellersPackage.FindSellersActivity">
+<android.support.constraint.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".FindSellersPackage.FindSellersActivity">
@@ -11,7 +16,7 @@
         android:layout_height="wrap_content"
         android:textSize="32sp"
         android:text="sellers"
-        android:textColor="#000000"
+        android:textColor="@color/colorAccent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,14 +27,18 @@
 
 
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/find_sellers_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/find_sellers_recycler_view"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv"
-        ></android.support.v7.widget.RecyclerView>
+        app:layout_constraintVertical_bias="0.01"
+        />
 
 
 
 </android.support.constraint.ConstraintLayout>
+</android.support.v4.widget.NestedScrollView>

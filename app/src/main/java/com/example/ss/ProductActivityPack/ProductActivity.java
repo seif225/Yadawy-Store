@@ -50,6 +50,7 @@ public class ProductActivity extends AppCompatActivity {
        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
            @Override
            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+
                if(ratingBar.getRating()!=0){
                    presenter.updateRating(rating);
                    textView.setVisibility(View.VISIBLE);
@@ -124,6 +125,7 @@ public class ProductActivity extends AppCompatActivity {
                 Toast.makeText(ProductActivity.this, "Working on it :D , sry :( ", Toast.LENGTH_SHORT).show();
             }
         });
+
 
     }
 

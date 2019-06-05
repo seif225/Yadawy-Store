@@ -6,7 +6,15 @@ public class ProductModel {
 
     private ArrayList<String>imagesLinks;
     private String ProductName,prodcutPrice,productDescribtion,color,category
-            ,priceRange,uId,productId,productLikes;
+            ,priceRange,uId,productId,productLikes,numOfFollowers,numOfFollowing;
+
+    public void setNumOfFollowers(String numOfFollowers) {
+        this.numOfFollowers = numOfFollowers;
+    }
+
+    public void setNumOfFollowing(String numOfFollowing) {
+        this.numOfFollowing = numOfFollowing;
+    }
 
     public void setProductLikes(String productLikes) {
         this.productLikes = productLikes;

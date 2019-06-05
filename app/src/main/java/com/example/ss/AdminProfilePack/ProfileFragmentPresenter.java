@@ -53,7 +53,9 @@ public class ProfileFragmentPresenter {
     }
 
 
-    void retriveUserData(final ProgressDialog progressDialog, final TextView tv1, final CircleImageView pp, final TextView tv2) {
+    void retriveUserData(final ProgressDialog progressDialog,final TextView userNameTv,
+                         final CircleImageView profilePicture,
+                         final TextView bioTv, final TextView numOfFollowers, final TextView numOfFollowing) {
         progressDialog.setMessage("getting your data");
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -68,6 +70,12 @@ public class ProfileFragmentPresenter {
                     Log.e("image", image + "");
 
                 }
+                if(dataSnapshot.hasChild("following")){
+                    numOfFollowing.setText(dataSnapshot.child("following").getChildrenCount()+"");
+                }
+                if(dataSnapshot.hasChild("followers")){
+                    numOfFollowers.setText(dataSnapshot.child("followers").getChildrenCount()+"");
+                }
 
                 if (dataSnapshot.hasChild("bio")) {
 
@@ -77,7 +85,7 @@ public class ProfileFragmentPresenter {
                 }
 
 
-                fetchData(progressDialog,tv1, pp, tv2);
+                fetchData(progressDialog,userNameTv, profilePicture, bioTv);
 
 
             }

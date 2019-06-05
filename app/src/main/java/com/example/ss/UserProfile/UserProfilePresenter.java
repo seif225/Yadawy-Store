@@ -53,13 +53,22 @@ class UserProfilePresenter {
     }
 
 
-    void getAndPreviewUserData(final ProgressDialog progressDialog, final CircleImageView userPp, final TextView numberOfProducts, final TextView userName, TextView followers, TextView following, Button followButton, final RecyclerView productsRecyclerView, final String uid) {
+    void getAndPreviewUserData(final ProgressDialog progressDialog,
+                               final CircleImageView userPp,
+                               final TextView numberOfProducts,
+                               final TextView userName, final TextView followers, final TextView following, Button followButton, final RecyclerView productsRecyclerView, final String uid) {
         profileId = uid;
         userRef.child(uid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 userName.setText(dataSnapshot.child("userName").getValue().toString());
+                if(dataSnapshot.hasChild("following")){
+                    following.setText(dataSnapshot.child("following").getChildrenCount()+"");
+                }
+                if(dataSnapshot.hasChild("followers")){
+                    followers.setText(dataSnapshot.child("followers").getChildrenCount()+"");
+                }
 
                 if (dataSnapshot.hasChild("image")) {
                     Picasso.get().load(dataSnapshot.child("image").getValue().toString()).resize(200, 200).into(userPp);

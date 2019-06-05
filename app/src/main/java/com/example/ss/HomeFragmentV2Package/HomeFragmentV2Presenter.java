@@ -67,10 +67,10 @@ class HomeFragmentV2Presenter {
 
     void getDataForHomeActivity(RecyclerView homeRecycler, TextView homeTextView){
         //TODO : Check current user
-        Log.e("HomeFragPresenter","v2");
+        Log.e("HomeFragPresenter","v2 : getDataFrom Activity method :(");
         if (FirebaseAuth.getInstance().getCurrentUser()!=null)
         getFollowersList(homeRecycler,homeTextView);
-        else getDataForHomeActivity(homeRecycler,homeTextView);
+
     }
 
 
