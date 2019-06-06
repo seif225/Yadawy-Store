@@ -16,7 +16,9 @@
         android:orientation="vertical"
         >
 
-
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
         <com.smarteist.autoimageslider.SliderLayout
             android:id="@+id/imageSlider"
             android:layout_width="match_parent"
@@ -25,6 +27,25 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:background="#F50404"
+                android:text="Remove Product"
+                app:layout_constraintEnd_toEndOf="@+id/imageSlider"
+                app:layout_constraintStart_toStartOf="@+id/imageSlider"
+                app:layout_constraintTop_toTopOf="@+id/imageSlider"
+                app:layout_constraintBottom_toBottomOf="@+id/imageSlider"
+                android:id="@+id/remove_product_button"
+                app:layout_constraintVertical_bias="0.1"
+                app:layout_constraintHorizontal_bias="0.95"
+                android:padding="18dp"
+                android:elevation="8dp"
+                android:visibility="gone"
+                />
+        </android.support.constraint.ConstraintLayout>
 
 
         <android.support.v7.widget.CardView
@@ -290,6 +311,9 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/rate" />
+
+
+
             </android.support.constraint.ConstraintLayout>
 
 

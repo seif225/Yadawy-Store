@@ -2,16 +2,22 @@ package com.example.ss.ProductActivityPack;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.ss.HomePackage.ProductModel;
+import com.example.ss.MainActivity;
 import com.example.ss.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -50,9 +56,13 @@ class ProductActivityPresenter {
 
     }
 
+    public ProductModel getProductModel() {
+        return productModel;
+    }
+
     void getProductData(final ProgressDialog progressDialog, final SliderLayout sliderLayout, final TextView category,
                         final TextView price, final TextView describtion, final TextView userName, final TextView productIdTv,
-                        final CircleImageView userPp, final ProgressRingView progress, final TextView accuRate, final TextView rateCounter) {
+                        final CircleImageView userPp, final ProgressRingView progress, final TextView accuRate, final TextView rateCounter, final Button removeProductBtn) {
         progressDialog.setCancelable(false);
         progressDialog.setMessage("getting dataa ..");
         progressDialog.show();
@@ -124,6 +134,12 @@ class ProductActivityPresenter {
                             }
                             userName.setText(dataSnapshot.child("userName").getValue().toString());
 
+                            if(productId!=null) {
+
+                                if (productModel.getuId().equals(FirebaseAuth.getInstance().getUid())) {
+                                    removeProductBtn.setVisibility(View.VISIBLE);
+                                }
+                            }
                         }
 
                         @Override
@@ -331,6 +347,27 @@ class ProductActivityPresenter {
         });
 
 
+    }
+
+    public void removeProduct() {
+
+        FirebaseDatabase.getInstance().getReference().child("products").child(FirebaseAuth.getInstance().getUid()).child(productModel.getProductId()).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    sendUserToMainActivity();
+
+                }
+            }
+        });
+
+
+    }
+
+    private void sendUserToMainActivity() {
+        Intent i = new Intent(context, MainActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(i);
     }
 }
 
