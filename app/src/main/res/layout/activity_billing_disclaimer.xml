@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BillingDisclaimerPackage.BillingDisclaimerActivity">
+<android.support.constraint.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BillingDisclaimerPackage.BillingDisclaimerActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        app:titleTextColor="@color/colorAccent"
+        style="@style/DrawerIcon"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:popupTheme="@style/AppTheme.PopupOverlay"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:title="Yadawy"
+        />
+
+    <ImageView
+        android:layout_width="240dp"
+        android:layout_height="160dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        android:id="@+id/logo_disclamer"
+        android:src="@mipmap/ic_launcher_round"
+        android:layout_marginTop="18dp"
+        />
+    <TextView
+        android:textSize="18sp"
+        android:textColor="#000000"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/disclaimer"
+        android:layout_marginStart="18dp"
+        android:layout_marginEnd="18dp"
+
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/logo_disclamer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="18dp"
+        />
+
+    <TextView
+        android:id="@+id/tv1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="current date: "
+        android:textColor="#000000"
+        android:textSize="18sp"
+        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintEnd_toEndOf="@+id/logo_disclamer"
+
+        app:layout_constraintStart_toStartOf="@+id/logo_disclamer"
+        app:layout_constraintTop_toBottomOf="@id/disclaimer" />
+
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/current_date"
+    app:layout_constraintHorizontal_bias="0.05"
+    app:layout_constraintStart_toEndOf="@id/tv1"
+    app:layout_constraintEnd_toEndOf="@id/disclaimer"
+    app:layout_constraintTop_toBottomOf="@id/disclaimer"
+    android:textSize="18sp"
+    android:textColor="#000000"
+
+
+    />
+
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/tv2"
+
+    app:layout_constraintTop_toBottomOf="@id/tv1"
+    app:layout_constraintStart_toStartOf="@id/tv1"
+    app:layout_constraintEnd_toEndOf="@+id/tv1"
+   android:text="next billing date: "
+    android:textSize="18sp"
+    android:textColor="#000000"
+    app:layout_constraintHorizontal_bias="0.05"
+
+    />
+
+    <TextView
+        android:id="@+id/billing_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="18dp"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintStart_toEndOf="@id/tv2"
+        app:layout_constraintTop_toTopOf="@id/tv2"
+
+
+        app:layout_constraintVertical_bias="0.05" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:textSize="18sp"
+
+        android:layout_marginEnd="8dp"
+        android:text="terms and conditions"
+        android:textColor="#0027FF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv2" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+android:id="@+id/agree_disclaimer"
+        android:background="@drawable/rounded_button"
+        android:textColor="#FEFEFE"
+
+        android:layout_marginStart="48dp"
+        android:layout_marginEnd="48dp"
+        android:text="Agree"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+</android.support.constraint.ConstraintLayout>
+</android.support.v4.widget.NestedScrollView>

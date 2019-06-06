@@ -4,39 +4,66 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SplashPack.SplashActivity">
+    tools:context=".SplashPack.SplashActivity"
+    android:background="@color/colorAccent"
+    >
+
+    <ImageView
+        android:id="@+id/logo_splash"
+        android:layout_width="240dp"
+        android:layout_height="160dp"
+        android:layout_margin="18dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:src="@mipmap/ic_launcher_round"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.15"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/mailLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="340dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="#FEFEFE"
         android:text="Mail Login"
+        app:layout_constraintVertical_bias="0.3"
+        android:textColor="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/logo_splash" />
 
-    <Button
+    <com.google.android.gms.common.SignInButton
+
+
+        android:textColor="@color/colorAccent"
+        app:layout_constraintCircleRadius="80dp"
         android:id="@+id/googleLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
+       android:layout_marginTop="8dp"
         android:text="Google Login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mailLogin"
 
+
         />
 
 
-    <Button
+    <TextView
+
         android:id="@+id/signUp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -44,7 +71,10 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:text="signUp"
+        android:textColor="#FEFEFE"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:text="dont have an account?"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

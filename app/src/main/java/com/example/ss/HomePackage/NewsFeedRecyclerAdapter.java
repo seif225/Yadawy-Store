@@ -128,7 +128,7 @@ public class NewsFeedRecyclerAdapter extends RecyclerView.Adapter<NewsFeedRecycl
         viewHolder.productTitle.setText(list.get(i).getProductName());
         // Log.e("title fl adapter",list.get(i).getProductName() + " ya rab msh null :''D");
         viewHolder.productDescription.setText(list.get(i).getProductDescribtion());
-        viewHolder.productPrice.setText(list.get(i).getProdcutPrice());
+        viewHolder.productPrice.setText(list.get(i).getProdcutPrice()+" L.E");
 
 
         if(list.get(i).getProductLikes()!=null){

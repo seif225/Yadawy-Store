@@ -20,6 +20,8 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.example.ss.AdminProfilePack.ProfileFragment;
+import com.example.ss.BillingDisclaimerPackage.BillingDisclaimerActivity;
+import com.example.ss.BillingDisclaimerPackage.BillingDisclaimerPresenter;
 import com.example.ss.CategoryPackage.CategoryFragment;
 import com.example.ss.ChooseAccountTypeForBusinessAcountPack.ChooseAccountTypeForBusinessAccount;
 import com.example.ss.FindSellersPackage.FindSellersActivity;
@@ -135,10 +137,10 @@ public class MainActivity extends AppCompatActivity
                     } else if (dataSnapshot.hasChild("userName") && dataSnapshot.hasChild("phone") && dataSnapshot.hasChild("address")
                             && dataSnapshot.hasChild("account type")) {
 
-                        if (dataSnapshot.child("account type").getValue().equals("business account") && !dataSnapshot.hasChild("finance")) {
+                        if (dataSnapshot.child("account type").getValue().equals("business account") && !dataSnapshot.hasChild("billing_date")) {
 
 
-                            sendUsertoAddFinancialinfoActivity();
+                            sendUserToDisclaimerActivity();
 
 
                         }
@@ -169,6 +171,14 @@ public class MainActivity extends AppCompatActivity
 
     private void sendUsertoAddFinancialinfoActivity() {
         Intent i = new Intent(this, addFinancialInfoActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(i);
+
+    }
+
+    private void sendUserToDisclaimerActivity(){
+
+        Intent i = new Intent(this, BillingDisclaimerActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(i);
 
