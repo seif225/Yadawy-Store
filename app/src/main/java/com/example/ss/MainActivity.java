@@ -26,7 +26,6 @@ import com.example.ss.CategoryPackage.CategoryFragment;
 import com.example.ss.ChooseAccountTypeForBusinessAcountPack.ChooseAccountTypeForBusinessAccount;
 import com.example.ss.FindSellersPackage.FindSellersActivity;
 import com.example.ss.HomeFragmentV2Package.HomeFragmentV2;
-import com.example.ss.HomePackage.HomeActivity;
 import com.example.ss.LikesFragmentPack.LikesFragment;
 import com.example.ss.ProfileEditActivityPack.ProfileEditActivity;
 import com.example.ss.SplashPack.SplashActivity;

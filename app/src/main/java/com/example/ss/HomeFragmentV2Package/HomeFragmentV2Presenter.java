@@ -10,8 +10,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.ss.HomePackage.NewsFeedRecyclerAdapter;
-import com.example.ss.HomePackage.ProductModel;
+import com.example.ss.ProductSort;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,7 +28,7 @@ class HomeFragmentV2Presenter {
     private ProductModel productModel;
     private static final String TAG = "HomeActivityPresenter";
     private ArrayList<String> listOfPictureLinks ;
-    private List<ProductModel>  ListOfProducts;
+    private ArrayList<ProductModel>  ListOfProducts;
     private NewsFeedRecyclerAdapter adapter;
     private  FragmentActivity activity;
     private ProgressDialog progressDialog;
@@ -50,7 +49,10 @@ class HomeFragmentV2Presenter {
             productRef = FirebaseDatabase.getInstance().getReference().child("products");
             followersList = new ArrayList<>();
             ListOfProducts=new ArrayList<>();
+
+
             adapter = new NewsFeedRecyclerAdapter(activity,ListOfProducts);
+
 
             //the upcoming operations in the class will be done in this snippt , where the user is 100% logged in
 
@@ -121,7 +123,6 @@ class HomeFragmentV2Presenter {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 ListOfProducts.clear();
-                adapter.notifyDataSetChanged();
 
 
 
@@ -188,8 +189,14 @@ class HomeFragmentV2Presenter {
                             productModel.setProductLikes(d.child("Likers").getChildrenCount() + "");
 
                         }
+                        if(d.hasChild("product_number")){
 
-                        ListOfProducts.add(productModel);
+                            productModel.setProductNumberAsInt(Integer.parseInt(d.child("product_number").getValue().toString()));
+                            Log.e("productNumber",d.child("product_number").getValue().toString()+" test");
+                        }
+
+                        adapter.notifyDataSetChanged();
+                       ListOfProducts.add(productModel);
                     }
 
 
@@ -197,6 +204,7 @@ class HomeFragmentV2Presenter {
 
                 }
 
+               adapter.notifyDataSetChanged();
                 previewDataOnView(homeRecycler,homeTextView);
 
 
@@ -216,6 +224,8 @@ class HomeFragmentV2Presenter {
         if(!ListOfProducts.isEmpty()){
             //in this case, list of products has already products
             //we will send these products to the adapter to view it
+           // ListOfProducts=new ProductSort().fillTemp(ListOfProducts,ListOfProducts.size());
+
             homeRecycler.setLayoutManager(new LinearLayoutManager(activity));
             homeRecycler.setAdapter(adapter);
             progressDialog.dismiss();
@@ -224,6 +234,7 @@ class HomeFragmentV2Presenter {
         }
         else {
             // if the list of products is empty , we will show a message to the user in the text view
+
             homeTextView.setVisibility(View.VISIBLE);
             homeTextView.setText("no products to show , follow more sellers ;)");
             progressDialog.dismiss();

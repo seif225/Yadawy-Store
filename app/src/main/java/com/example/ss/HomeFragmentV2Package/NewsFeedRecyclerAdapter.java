@@ -1,4 +1,4 @@
-package com.example.ss.HomePackage;
+package com.example.ss.HomeFragmentV2Package;
 
 //ackage com.example.ss.UserProfile;
 
@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.ss.ProductActivityPack.ProductActivity;
+import com.example.ss.ProductSort;
 import com.example.ss.R;
 import com.example.ss.UserProfile.UserProfileActivity;
 import com.google.firebase.auth.FirebaseAuth;
@@ -43,6 +44,7 @@ public class NewsFeedRecyclerAdapter extends RecyclerView.Adapter<NewsFeedRecycl
         if(FirebaseAuth.getInstance().getCurrentUser()!=null) {
             likesRef = FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getUid());
             userRef = FirebaseDatabase.getInstance().getReference().child("Users");
+
         }else{
 
             notifyDataSetChanged();

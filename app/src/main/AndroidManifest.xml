@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".BillingDisclaimerPackage.BillingDisclaimerActivity"></activity>
+        <activity android:name=".EditProductPackage.EditProductActivity"></activity>
+        <activity android:name=".BillingDisclaimerPackage.BillingDisclaimerActivity" />
         <activity
             android:name=".ChooseAccountTypeForBusinessAcountPack.ChooseAccountTypeForBusinessAccount"
             android:label="@string/title_activity_choose_account_type_for_business_account"

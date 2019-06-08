@@ -42,6 +42,7 @@ public class ProductActivity extends AppCompatActivity {
     private Button removeProductBtn;
     private AlertDialog.Builder alertDialogBuilder ;
     private AlertDialog alertDialog ;
+    private Button edit;
 
 
     @Override
@@ -50,7 +51,15 @@ public class ProductActivity extends AppCompatActivity {
         setContentView(R.layout.activity_product);
         //Log.e("activity shit",productModel.getCategory()+"what so evaaaa ");
         intializeFields();
+        edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+
+                presenter.sendUserToEditProductActivity();
+
+            }
+        });
 
        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
            @Override
@@ -81,7 +90,7 @@ public class ProductActivity extends AppCompatActivity {
             });
 
 
-        presenter.getProductData(new ProgressDialog(this),sliderLayout,category,price,describtion,userName,productIdTv,userPp,progress,accuRate,rateCounter,removeProductBtn);
+        presenter.getProductData(new ProgressDialog(this),sliderLayout,category,price,describtion,userName,productIdTv,userPp,progress,accuRate,rateCounter,removeProductBtn,edit);
 
 
         DatabaseReference likRef= FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getUid());
@@ -145,8 +154,11 @@ public class ProductActivity extends AppCompatActivity {
     }
 
 
+
+
     private void intializeFields() {
         Intent i = getIntent();
+        edit=findViewById(R.id.edit_product);
         alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setTitle("are you sure ?");
         alertDialogBuilder.setMessage("this operation can't be undone.");
@@ -171,6 +183,7 @@ public class ProductActivity extends AppCompatActivity {
         likeButton=findViewById(R.id.like_image_button_in_product_activity);
         ratingBar = findViewById(R.id.rate);
         ratingBar.setMax(5);
+
         /*ratingBar.setStepSize(0.01f);*/
         textView= findViewById(R.id.write_review);
 

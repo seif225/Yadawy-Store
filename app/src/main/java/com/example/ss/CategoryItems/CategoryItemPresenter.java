@@ -7,8 +7,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
-import com.example.ss.HomePackage.NewsFeedRecyclerAdapter;
-import com.example.ss.HomePackage.ProductModel;
+import com.example.ss.HomeFragmentV2Package.NewsFeedRecyclerAdapter;
+import com.example.ss.HomeFragmentV2Package.ProductModel;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

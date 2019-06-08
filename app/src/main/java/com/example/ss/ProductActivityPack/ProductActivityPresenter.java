@@ -13,7 +13,8 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.example.ss.HomePackage.ProductModel;
+import com.example.ss.EditProductPackage.EditProductActivity;
+import com.example.ss.HomeFragmentV2Package.ProductModel;
 import com.example.ss.MainActivity;
 import com.example.ss.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -41,7 +42,7 @@ class ProductActivityPresenter {
     private ProductModel productModel;
     private ArrayList<String> listOfPictureLinks;
     private Context context;
-    float rate = 0;
+    private float rate = 0;
 
 
     ProductActivityPresenter(Context context, String userId, String productId) {
@@ -62,7 +63,7 @@ class ProductActivityPresenter {
 
     void getProductData(final ProgressDialog progressDialog, final SliderLayout sliderLayout, final TextView category,
                         final TextView price, final TextView describtion, final TextView userName, final TextView productIdTv,
-                        final CircleImageView userPp, final ProgressRingView progress, final TextView accuRate, final TextView rateCounter, final Button removeProductBtn) {
+                        final CircleImageView userPp, final ProgressRingView progress, final TextView accuRate, final TextView rateCounter, final Button removeProductBtn, final Button edit) {
         progressDialog.setCancelable(false);
         progressDialog.setMessage("getting dataa ..");
         progressDialog.show();
@@ -138,6 +139,7 @@ class ProductActivityPresenter {
 
                                 if (productModel.getuId().equals(FirebaseAuth.getInstance().getUid())) {
                                     removeProductBtn.setVisibility(View.VISIBLE);
+                                    edit.setVisibility(View.VISIBLE);
                                 }
                             }
                         }
@@ -368,6 +370,16 @@ class ProductActivityPresenter {
         Intent i = new Intent(context, MainActivity.class);
         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(i);
+    }
+
+    public void sendUserToEditProductActivity() {
+
+    Intent i = new Intent (context, EditProductActivity.class);
+    i.putExtra("uId",productModel.getuId());
+        i.putExtra("productId",productModel.getProductId());
+
+    context.startActivity(i);
+
     }
 }
 

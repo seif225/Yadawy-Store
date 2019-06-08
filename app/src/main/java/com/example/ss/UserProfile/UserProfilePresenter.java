@@ -12,8 +12,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-import com.example.ss.HomePackage.NewsFeedRecyclerAdapter;
-import com.example.ss.HomePackage.ProductModel;
+import com.example.ss.HomeFragmentV2Package.NewsFeedRecyclerAdapter;
+import com.example.ss.HomeFragmentV2Package.ProductModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

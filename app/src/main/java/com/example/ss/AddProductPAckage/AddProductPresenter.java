@@ -11,8 +11,11 @@ import com.example.ss.uploadProductImages.UploadProudctImagesActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -23,6 +26,8 @@ public class AddProductPresenter {
     FirebaseAuth mAuth;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference productsRef;
+   private long size=0;
+
     AddProductPresenter(Context context){
 
         this.context=context;
@@ -58,6 +63,7 @@ public class AddProductPresenter {
         attributes.put("price_range",priceRangeString);
         attributes.put("use_id",mAuth.getUid());
         attributes.put("product_id",randomProductId);
+        attributes.put("product_number",getProductsNumber()+"");
 
 
 
@@ -85,6 +91,27 @@ public class AddProductPresenter {
 
     }
 
+    private long getProductsNumber(){
 
+
+        FirebaseDatabase.getInstance().getReference().child("products").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot d:dataSnapshot.getChildren()) {
+                    size=d.getChildrenCount();
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        return size;
+    }
 
 }

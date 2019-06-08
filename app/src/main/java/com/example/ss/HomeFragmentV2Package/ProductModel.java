@@ -1,12 +1,59 @@
-package com.example.ss.HomePackage;
+package com.example.ss.HomeFragmentV2Package;
+
+import com.example.ss.ProductSort;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ProductModel {
 
-    private ArrayList<String>imagesLinks;
-    private String ProductName,prodcutPrice,productDescribtion,color,category
-            ,priceRange,uId,productId,productLikes,numOfFollowers,numOfFollowing;
+    private ArrayList<String> imagesLinks;
+    private HashMap<String, String> imageLinksWithKeys;
+    private String ProductName, prodcutPrice, productDescribtion, color,
+            category, priceRange, uId, productId, productLikes, numOfFollowers, numOfFollowing, productNumber, proudctDate;
+    private int productNumberAsInt;
+
+
+ public void setImageLinksWithKeys(HashMap<String, String> imageLinksWithKeys) {
+        this.imageLinksWithKeys = imageLinksWithKeys;
+    }
+
+    public void setProductNumber(String productNumber) {
+        this.productNumber = productNumber;
+    }
+
+    public void setProductNumberAsInt(int productNumberAsInt) {
+        this.productNumberAsInt = productNumberAsInt;
+    }
+
+    public void setProudctDate(String proudctDate) {
+        this.proudctDate = proudctDate;
+    }
+
+    public int getProductNumberAsInt() {
+        return productNumberAsInt;
+    }
+
+    public String getNumOfFollowers() {
+        return numOfFollowers;
+    }
+
+    public String getNumOfFollowing() {
+        return numOfFollowing;
+    }
+
+    public String getProductNumber() {
+        return productNumber;
+    }
+
+    public String getProudctDate() {
+        return proudctDate;
+    }
+
+
+    public HashMap<String, String> getImageLinksWithKeys() {
+        return imageLinksWithKeys;
+    }
 
     public void setNumOfFollowers(String numOfFollowers) {
         this.numOfFollowers = numOfFollowers;
