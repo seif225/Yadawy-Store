@@ -156,7 +156,12 @@ public class ProductActivity extends AppCompatActivity {
                 addNewReview();
             }
         });
-
+        seeMoreReviews.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(ProductActivity.this, "working on it ^_^ ", Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 
