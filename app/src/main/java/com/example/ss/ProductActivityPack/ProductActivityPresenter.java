@@ -2,10 +2,14 @@ package com.example.ss.ProductActivityPack;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 
 import android.support.annotation.NonNull;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -29,8 +33,12 @@ import com.smarteist.autoimageslider.SliderLayout;
 import com.smarteist.autoimageslider.SliderView;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import flepsik.github.com.progress_ring.ProgressRingView;
@@ -43,7 +51,8 @@ class ProductActivityPresenter {
     private ArrayList<String> listOfPictureLinks;
     private Context context;
     private float rate = 0;
-
+    private List<ReviewModel> listOfReviews;
+    private ReviewsAdapter adapter;
 
     ProductActivityPresenter(Context context, String userId, String productId) {
 
@@ -53,7 +62,8 @@ class ProductActivityPresenter {
         this.context = context;
         reference = FirebaseDatabase.getInstance().getReference().child("products").child(userId).child(productId);
         listOfPictureLinks = new ArrayList<>();
-
+        listOfReviews = new ArrayList<>();
+        adapter = new ReviewsAdapter(listOfReviews, context);
 
     }
 
@@ -135,7 +145,7 @@ class ProductActivityPresenter {
                             }
                             userName.setText(dataSnapshot.child("userName").getValue().toString());
 
-                            if(productId!=null) {
+                            if (productId != null) {
 
                                 if (productModel.getuId().equals(FirebaseAuth.getInstance().getUid())) {
                                     removeProductBtn.setVisibility(View.VISIBLE);
@@ -197,9 +207,6 @@ class ProductActivityPresenter {
     }
 
 
-
-
-
     private void setSliderViews(ArrayList<String> imagesLinks, SliderLayout sliderLayout) {
 
 
@@ -227,11 +234,6 @@ class ProductActivityPresenter {
 
         }
     }
-
-
-
-
-
 
 
     String getProducName() {
@@ -356,7 +358,7 @@ class ProductActivityPresenter {
         FirebaseDatabase.getInstance().getReference().child("products").child(FirebaseAuth.getInstance().getUid()).child(productModel.getProductId()).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                if(task.isSuccessful()){
+                if (task.isSuccessful()) {
                     sendUserToMainActivity();
 
                 }
@@ -368,17 +370,91 @@ class ProductActivityPresenter {
 
     private void sendUserToMainActivity() {
         Intent i = new Intent(context, MainActivity.class);
-        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(i);
     }
 
     public void sendUserToEditProductActivity() {
 
-    Intent i = new Intent (context, EditProductActivity.class);
-    i.putExtra("uId",productModel.getuId());
-        i.putExtra("productId",productModel.getProductId());
+        Intent i = new Intent(context, EditProductActivity.class);
+        i.putExtra("uId", productModel.getuId());
+        i.putExtra("productId", productModel.getProductId());
 
-    context.startActivity(i);
+        context.startActivity(i);
+
+    }
+
+    public void uploadReviewToFirebase(String review, String userIdOfUploader, String prodcutId, String uid, final DialogInterface dialog) {
+        String reviewId = UUID.randomUUID().toString();
+
+
+        ReviewModel reviewModel = new ReviewModel();
+        reviewModel.setReviewId(reviewId);
+        reviewModel.setUserId(FirebaseAuth.getInstance().getUid());
+        Calendar currentMonth;
+        SimpleDateFormat dateFormat;
+        currentMonth = Calendar.getInstance();
+        dateFormat = new SimpleDateFormat("dd/MM/YYYY");
+        reviewModel.setUserReview(review);
+        reviewModel.setReviewDate(dateFormat.format(currentMonth.getTime()));
+
+
+        FirebaseDatabase.getInstance().getReference().child("products").child(userIdOfUploader)
+                .child(prodcutId).child("reviews").child(reviewId).setValue(reviewModel);
+
+        FirebaseDatabase.getInstance().getReference().child("Users")
+                .child(uid).child("reviews").child(prodcutId).child(reviewId).setValue(review).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                dialog.dismiss();
+            }
+        });
+
+
+    }
+
+    public void getAndPreviewReviews(final RecyclerView reviewRecyclerView, String id, String productId, final Button seeMoreReviews) {
+
+        FirebaseDatabase.getInstance().getReference().child("products").child(id).child(productId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                listOfReviews.clear();
+
+                if (dataSnapshot.hasChild("reviews")) {
+                    for (DataSnapshot d : dataSnapshot.child("reviews").getChildren()) {
+
+                        ReviewModel reviewModel = new ReviewModel();
+                        reviewModel.setReviewDate(d.child("reviewDate").getValue().toString());
+                        reviewModel.setUserId(d.child("userId").getValue().toString());
+                        reviewModel.setUserReview(d.child("userReview").getValue().toString());
+                        Log.e("getReviews", reviewModel.getReviewDate() + reviewModel.getUserReview() + " (Y)");
+                        listOfReviews.add(reviewModel);
+                    }
+
+
+                }
+                if (listOfReviews.size() > 5) {
+                    seeMoreReviews.setVisibility(View.VISIBLE);
+                }
+                previewData(reviewRecyclerView);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+    }
+
+    private void previewData(RecyclerView reviewRecyclerView) {
+
+        reviewRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+        reviewRecyclerView.addItemDecoration(new DividerItemDecoration(reviewRecyclerView.getContext(), DividerItemDecoration.VERTICAL));
+        reviewRecyclerView.setAdapter(adapter);
+
 
     }
 }

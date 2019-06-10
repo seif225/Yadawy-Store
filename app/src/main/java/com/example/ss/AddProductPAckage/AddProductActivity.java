@@ -1,6 +1,5 @@
 package com.example.ss.AddProductPAckage;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -12,7 +11,6 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.ss.R;
-import com.example.ss.uploadProductImages.UploadProudctImagesActivity;
 
 import java.util.ArrayList;
 
@@ -85,13 +83,13 @@ public class AddProductActivity extends AppCompatActivity {
     private void intializeFields() {
 
 
-    productName = findViewById(R.id.product_name_et);
-    productPrice=findViewById(R.id.price_et);
-    productDescribtion=findViewById(R.id.description_et);
+    productName = findViewById(R.id.product_name_et_edit_product);
+    productPrice=findViewById(R.id.price_et_edit_product);
+    productDescribtion=findViewById(R.id.description_et_edit_product);
     colorSpinner = findViewById(R.id.color_spinner);
     categorySpinner=findViewById(R.id.category_spinner);
     priceRangeSpinner=findViewById(R.id.price_range_spinner);
-    uploadButton=findViewById(R.id.upload_product_data_btn);
+    uploadButton=findViewById(R.id.upload_product_data_btn_edit_product);
     presenter=new AddProductPresenter(this);
     callSpinnerLists();
     }

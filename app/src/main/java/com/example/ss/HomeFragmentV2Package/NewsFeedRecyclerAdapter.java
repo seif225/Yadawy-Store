@@ -14,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.ss.ProductActivityPack.ProductActivity;
-import com.example.ss.ProductSort;
 import com.example.ss.R;
 import com.example.ss.UserProfile.UserProfileActivity;
 import com.google.firebase.auth.FirebaseAuth;

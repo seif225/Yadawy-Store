@@ -55,4 +55,7 @@ dependencies {
     implementation 'com.willowtreeapps.spruce:spruce-android:1.0.1'
     implementation 'com.beardedhen:androidbootstrap:2.3.0'
     implementation 'com.github.flepsik:progress-ring-view:1.2.1'
+//multi image select
+    implementation 'com.zfdang.multiple-images-selector:multiple-images-selector:1.1.5'
+
 }

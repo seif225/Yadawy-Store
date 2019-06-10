@@ -1,4 +1,4 @@
-package com.example.ss;
+package com.example.ss.Algorithims;
 
 import android.util.Log;
 

@@ -1,7 +1,5 @@
 package com.example.ss.HomeFragmentV2Package;
 
-import com.example.ss.ProductSort;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 

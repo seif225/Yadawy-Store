@@ -7,9 +7,12 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,7 +34,7 @@ public class ProductActivity extends AppCompatActivity {
 
     private String prodcutId,userId;
     private ProductActivityPresenter presenter;
-    private SliderLayout sliderLayout;;
+    private SliderLayout sliderLayout;
     private TextView price,category,describtion,userName,productIdTv;
     private CircleImageView userPp;
     private ShineButton likeButton;
@@ -43,7 +46,9 @@ public class ProductActivity extends AppCompatActivity {
     private AlertDialog.Builder alertDialogBuilder ;
     private AlertDialog alertDialog ;
     private Button edit;
-
+    private RecyclerView reviewRecyclerView;
+    private ProgressDialog progressDialog;
+    private Button seeMoreReviews;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,11 +147,13 @@ public class ProductActivity extends AppCompatActivity {
             }
         });
 
+        presenter.getAndPreviewReviews(reviewRecyclerView,userId,prodcutId,seeMoreReviews);
+
        presenter.previewUserRate(ratingBar);
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(ProductActivity.this, "Working on it :D , sry :( ", Toast.LENGTH_SHORT).show();
+                addNewReview();
             }
         });
 
@@ -164,6 +171,7 @@ public class ProductActivity extends AppCompatActivity {
         alertDialogBuilder.setMessage("this operation can't be undone.");
         prodcutId=i.getStringExtra("productId");
         userId=i.getStringExtra("uid");
+        seeMoreReviews = findViewById(R.id.see_more_reviews);
         Log.e("haahaha",prodcutId+"yid"+userId+"heyyou");
         presenter=new ProductActivityPresenter(this,userId,prodcutId);
         sliderLayout = findViewById(R.id.imageSlider);
@@ -183,7 +191,8 @@ public class ProductActivity extends AppCompatActivity {
         likeButton=findViewById(R.id.like_image_button_in_product_activity);
         ratingBar = findViewById(R.id.rate);
         ratingBar.setMax(5);
-
+        progressDialog = new ProgressDialog(this);
+        reviewRecyclerView=findViewById(R.id.reviews_recycler_view);
         /*ratingBar.setStepSize(0.01f);*/
         textView= findViewById(R.id.write_review);
 
@@ -204,6 +213,48 @@ public class ProductActivity extends AppCompatActivity {
 
         alertDialog = alertDialogBuilder.create();
 
+    }
+
+
+    private void addNewReview() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(ProductActivity.this, R.style.AlertDialog);
+        builder
+                .setTitle("add review");
+        final EditText reviewEt = new EditText(ProductActivity.this);
+
+        reviewEt.setHint("  write your review here..                                       ");
+
+        builder.setView(reviewEt);
+        builder.setPositiveButton("Create ", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String review= reviewEt.getText().toString();
+                if(TextUtils.isEmpty(review)){
+                    // Toast.makeText(getApplicationContext(),"please enter a group name",Toast.LENGTH_LONG).show();
+                    reviewEt.setError("please add review");
+                    reviewEt.requestFocus();
+
+                }
+                else{
+
+
+                  presenter.uploadReviewToFirebase(review,userId,prodcutId,FirebaseAuth.getInstance().getUid(),dialog);
+
+                }
+
+            }
+        });
+
+        builder.setNegativeButton("cancel ", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                dialog.cancel();
+
+            }
+        });
+
+        builder.show();
     }
 
 

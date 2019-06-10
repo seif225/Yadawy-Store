@@ -18,7 +18,7 @@
 
 
     <EditText
-        android:id="@+id/product_name_et"
+        android:id="@+id/product_name_et_edit_product"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -35,7 +35,7 @@
 
 
     <EditText
-        android:id="@+id/price_et"
+        android:id="@+id/price_et_edit_product"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -47,7 +47,7 @@
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/product_name_et" />
+        app:layout_constraintTop_toBottomOf="@+id/product_name_et_edit_product" />
 
     <TextView
         android:id="@+id/textView8"
@@ -57,8 +57,8 @@
         android:layout_marginLeft="8dp"
         android:text="price range"
         android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="@+id/price_et"
-        app:layout_constraintTop_toBottomOf="@id/price_et" />
+        app:layout_constraintStart_toStartOf="@+id/price_et_edit_product"
+        app:layout_constraintTop_toBottomOf="@id/price_et_edit_product" />
 
     <Spinner
         android:id="@+id/price_range_spinner"
@@ -124,7 +124,7 @@
         app:layout_constraintTop_toTopOf="@+id/category_tv" />
 
     <EditText
-        android:id="@+id/description_et"
+        android:id="@+id/description_et_edit_product"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
@@ -146,12 +146,12 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:text="upload"
-        android:id="@+id/upload_product_data_btn"
+        android:id="@+id/upload_product_data_btn_edit_product"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/description_et" />
+        app:layout_constraintTop_toBottomOf="@id/description_et_edit_product" />
 
 
 </android.support.constraint.ConstraintLayout>

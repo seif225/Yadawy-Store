@@ -3,7 +3,8 @@
     package="com.example.ss">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- the following two permissions are required if you want to take photo in selector -->
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
@@ -13,7 +14,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".EditProductPackage.EditProductActivity"></activity>
+        <activity android:name=".AddReviewPackage.AddReviewActivity"></activity>
+        <activity
+            android:name="com.zfdang.multiple_images_selector.ImagesSelectorActivity"
+            android:configChanges="orientation|screenSize" />
+        <activity android:name=".EditProductPackage.EditProductActivity" />
+        <activity android:name=".uploadProductImages.UploadProudctImagesActivity" />
         <activity android:name=".BillingDisclaimerPackage.BillingDisclaimerActivity" />
         <activity
             android:name=".ChooseAccountTypeForBusinessAcountPack.ChooseAccountTypeForBusinessAccount"
@@ -31,7 +37,6 @@
         </activity>
         <activity android:name=".signUpPack.SingUpActivity" />
         <activity android:name=".ProfileEditActivityPack.ProfileEditActivity" />
-        <activity android:name=".uploadProductImages.UploadProudctImagesActivity" />
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
