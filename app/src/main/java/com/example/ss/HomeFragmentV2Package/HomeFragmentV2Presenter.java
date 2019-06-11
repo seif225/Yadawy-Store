@@ -123,11 +123,6 @@ class HomeFragmentV2Presenter {
 
                 ListOfProducts.clear();
 
-
-
-
-
-
                 for (int i = 0; i < followersList.size(); i++) {
 
                     for (DataSnapshot d : dataSnapshot.child(followersList.get(i)).getChildren()) {
@@ -172,8 +167,8 @@ class HomeFragmentV2Presenter {
                         }
                         if (d.hasChild("product_name")) {
                             productModel.setProductName(d.child("product_name").getValue().toString());
-
                         }
+
                         if (d.hasChild("product_price")) {
                             productModel.setProdcutPrice(d.child("product_price").getValue().toString());
 

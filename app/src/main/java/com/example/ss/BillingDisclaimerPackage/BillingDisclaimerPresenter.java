@@ -26,7 +26,7 @@ public class BillingDisclaimerPresenter {
     BillingDisclaimerPresenter(Context context){
         this.context=context;
         currentMonth = Calendar.getInstance();
-        dateFormat = new SimpleDateFormat("dd/MM/YYYY");
+        dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         userRef= FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getUid());
 
     }

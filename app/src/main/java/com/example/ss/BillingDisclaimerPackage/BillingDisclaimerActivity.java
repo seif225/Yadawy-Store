@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.ss.R;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class BillingDisclaimerActivity extends AppCompatActivity {
 
@@ -20,6 +21,7 @@ public class BillingDisclaimerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_billing_disclaimer);
         initializeFields();
+
         fillFields();
 
         agree.setOnClickListener(new View.OnClickListener() {
@@ -35,10 +37,10 @@ public class BillingDisclaimerActivity extends AppCompatActivity {
             ", the charged amount will be collected automatically , in case of having insufficient cash to precede , your plan will be changed to a user account , which means that you won't be able to upload any product" +
             ", to know more read  terms and conditions  ");
 
-
+if(FirebaseAuth.getInstance().getUid()!=null) {
     currentDate.setText(presenter.getCurrentDateFormat());
     nextDate.setText(presenter.getNextMonthFormat());
-
+}
 
     }
 
