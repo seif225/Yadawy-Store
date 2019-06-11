@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SplashPack.SplashActivity"
-    android:background="@drawable/splash2final"
+    android:background="@drawable/splash2"
     >
 
     <ImageView
@@ -20,7 +20,7 @@
         android:elevation="180dp"
 
         android:scaleType="centerCrop"
-        android:src="@drawable/logowhiteslogan"
+        android:src="@drawable/logowithblackslogan"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintVertical_bias="0.15"

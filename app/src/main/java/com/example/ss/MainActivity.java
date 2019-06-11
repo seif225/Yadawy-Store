@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-       // ActionBar actionBar = getSupportActionBar();
+        // ActionBar actionBar = getSupportActionBar();
         //actionBar.setDisplayShowHomeEnabled(true);
 
         navigationHeader = navigationView.getHeaderView(0);
@@ -123,16 +123,13 @@ public class MainActivity extends AppCompatActivity
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                    if(!dataSnapshot.hasChild("mail")){
+                    if (!dataSnapshot.hasChild("mail")) {
 
                         sendUserToSplash();
-                    }
-                    else if(!dataSnapshot.hasChild("account type") && dataSnapshot.hasChild("mail")){
+                    } else if (!dataSnapshot.hasChild("account type") && dataSnapshot.hasChild("mail")) {
                         sendUserToChooseAccountType();
 
-                    }
-
-                    else if (!dataSnapshot.hasChild("userName") || !dataSnapshot.hasChild("phone") || !dataSnapshot.hasChild("address")) {
+                    } else if (!dataSnapshot.hasChild("userName") || !dataSnapshot.hasChild("phone") || !dataSnapshot.hasChild("address")) {
 
                         sendUserToProfileEditActivity();
 
@@ -179,7 +176,7 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    private void sendUserToDisclaimerActivity(){
+    private void sendUserToDisclaimerActivity() {
 
         Intent i = new Intent(this, BillingDisclaimerActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -311,10 +308,9 @@ public class MainActivity extends AppCompatActivity
             sendUserToSplash();
 
         } else if (id == R.id.find_sellers_nav_menu) {
-           selectedFragment = new FindSellersActivity();
+            selectedFragment = new FindSellersActivity();
 
-        }
-        else if (id == R.id.finance){
+        } else if (id == R.id.finance) {
 
             sendUsertoAddFinancialinfoActivityWithoutFlag();
 
