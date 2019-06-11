@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -32,23 +33,24 @@ import flepsik.github.com.progress_ring.ProgressRingView;
 
 public class ProductActivity extends AppCompatActivity {
 
-    private String prodcutId,userId;
+    private String prodcutId, userId;
     private ProductActivityPresenter presenter;
     private SliderLayout sliderLayout;
-    private TextView price,category,describtion,userName,productIdTv;
+    private TextView price, category, describtion, userName, productIdTv;
     private CircleImageView userPp;
     private ShineButton likeButton;
     private boolean likeState;
     private RatingBar ratingBar;
-    private TextView textView,accuRate,rateCounter;
+    private TextView textView, accuRate, rateCounter;
     private ProgressRingView progress;
     private Button removeProductBtn;
-    private AlertDialog.Builder alertDialogBuilder ;
-    private AlertDialog alertDialog ;
+    private AlertDialog.Builder alertDialogBuilder;
+    private AlertDialog alertDialog;
     private Button edit;
     private RecyclerView reviewRecyclerView;
     private ProgressDialog progressDialog;
     private Button seeMoreReviews;
+    private FloatingActionButton addToCartFab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,52 +68,51 @@ public class ProductActivity extends AppCompatActivity {
             }
         });
 
-       ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-           @Override
-           public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
 
-               if(ratingBar.getRating()!=0){
-                   presenter.updateRating(rating);
-                   textView.setVisibility(View.VISIBLE);
-               }
-               if(rating==0){
-                   textView.setVisibility(View.GONE);
-                   presenter.updateRating(0);
-
-               }
-
-
-           }
-       });
-
-
-            removeProductBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    alertDialog.show();
+                if (ratingBar.getRating() != 0) {
+                    presenter.updateRating(rating);
+                    textView.setVisibility(View.VISIBLE);
+                }
+                if (rating == 0) {
+                    textView.setVisibility(View.GONE);
+                    presenter.updateRating(0);
 
                 }
-            });
 
 
-        presenter.getProductData(new ProgressDialog(this),sliderLayout,category,price,describtion,userName,productIdTv,userPp,progress,accuRate,rateCounter,removeProductBtn,edit);
+            }
+        });
 
 
-        DatabaseReference likRef= FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getUid());
+        removeProductBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                alertDialog.show();
+
+            }
+        });
+
+
+        presenter.getProductData(new ProgressDialog(this), sliderLayout, category, price, describtion, userName, productIdTv, userPp, progress, accuRate, rateCounter, removeProductBtn, edit);
+
+
+        DatabaseReference likRef = FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getUid());
         likRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                if(dataSnapshot.hasChild("Likes")){
-                    if (dataSnapshot.child("Likes").hasChild(presenter.getProducName())){
+                if (dataSnapshot.hasChild("Likes")) {
+                    if (dataSnapshot.child("Likes").hasChild(presenter.getProducName())) {
 
 
                         likeState = true;
                         likeButton.setChecked(true);
 
-                    }
-                    else {
+                    } else {
 
                         likeButton.setChecked(false);
                         likeState = false;
@@ -134,12 +135,11 @@ public class ProductActivity extends AppCompatActivity {
             public void onClick(View v) {
 
 
-                if(!likeState){
+                if (!likeState) {
                     presenter.like();
                     likeButton.setChecked(true);
 
-                }
-                else if (likeState){
+                } else if (likeState) {
                     presenter.disLike();
                     likeButton.setChecked(false);
 
@@ -147,9 +147,9 @@ public class ProductActivity extends AppCompatActivity {
             }
         });
 
-        presenter.getAndPreviewReviews(reviewRecyclerView,userId,prodcutId,seeMoreReviews);
+        presenter.getAndPreviewReviews(reviewRecyclerView, userId, prodcutId, seeMoreReviews);
 
-       presenter.previewUserRate(ratingBar);
+        presenter.previewUserRate(ratingBar);
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -163,43 +163,52 @@ public class ProductActivity extends AppCompatActivity {
             }
         });
 
+        addToCartFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                presenter.addProductToCart(userId,prodcutId);
+
+            }
+        });
+
+
     }
-
-
 
 
     private void intializeFields() {
         Intent i = getIntent();
-        edit=findViewById(R.id.edit_product);
+        edit = findViewById(R.id.edit_product);
         alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setTitle("are you sure ?");
+        addToCartFab = findViewById(R.id.floatingActionButton);
         alertDialogBuilder.setMessage("this operation can't be undone.");
-        prodcutId=i.getStringExtra("productId");
-        userId=i.getStringExtra("uid");
+        prodcutId = i.getStringExtra("productId");
+        userId = i.getStringExtra("uid");
         seeMoreReviews = findViewById(R.id.see_more_reviews);
-        Log.e("haahaha",prodcutId+"yid"+userId+"heyyou");
-        presenter=new ProductActivityPresenter(this,userId,prodcutId);
+        Log.e("haahaha", prodcutId + "yid" + userId + "heyyou");
+        presenter = new ProductActivityPresenter(this, userId, prodcutId);
         sliderLayout = findViewById(R.id.imageSlider);
         sliderLayout.setIndicatorAnimation(SliderLayout.Animations.WORM);
         sliderLayout.animate();
         sliderLayout.setScrollTimeInSec(2);
-        removeProductBtn =findViewById(R.id.remove_product_button);
+        removeProductBtn = findViewById(R.id.remove_product_button);
         progress = findViewById(R.id.progressRing);
         accuRate = findViewById(R.id.accumlated_rate);
         rateCounter = findViewById(R.id.ratings_counter);
-        category=findViewById(R.id.product_category_tv);
-        price=findViewById(R.id.product_price_tv);
-        describtion=findViewById(R.id.product_describtion_tv);
-        userName=findViewById(R.id.user_name_in_product_activity);
-        productIdTv=findViewById(R.id.product_code_tv);
-        userPp=findViewById(R.id.profile_picture_in_product_activity);
-        likeButton=findViewById(R.id.like_image_button_in_product_activity);
+        category = findViewById(R.id.product_category_tv);
+        price = findViewById(R.id.product_price_tv);
+        describtion = findViewById(R.id.product_describtion_tv);
+        userName = findViewById(R.id.user_name_in_product_activity);
+        productIdTv = findViewById(R.id.product_code_tv);
+        userPp = findViewById(R.id.profile_picture_in_product_activity);
+        likeButton = findViewById(R.id.like_image_button_in_product_activity);
         ratingBar = findViewById(R.id.rate);
         ratingBar.setMax(5);
         progressDialog = new ProgressDialog(this);
-        reviewRecyclerView=findViewById(R.id.reviews_recycler_view);
+        reviewRecyclerView = findViewById(R.id.reviews_recycler_view);
         /*ratingBar.setStepSize(0.01f);*/
-        textView= findViewById(R.id.write_review);
+        textView = findViewById(R.id.write_review);
 
         alertDialogBuilder.setPositiveButton("yes", new DialogInterface.OnClickListener() {
             @Override
@@ -233,17 +242,16 @@ public class ProductActivity extends AppCompatActivity {
         builder.setPositiveButton("Create ", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                String review= reviewEt.getText().toString();
-                if(TextUtils.isEmpty(review)){
+                String review = reviewEt.getText().toString();
+                if (TextUtils.isEmpty(review)) {
                     // Toast.makeText(getApplicationContext(),"please enter a group name",Toast.LENGTH_LONG).show();
                     reviewEt.setError("please add review");
                     reviewEt.requestFocus();
 
-                }
-                else{
+                } else {
 
 
-                  presenter.uploadReviewToFirebase(review,userId,prodcutId,FirebaseAuth.getInstance().getUid(),dialog);
+                    presenter.uploadReviewToFirebase(review, userId, prodcutId, FirebaseAuth.getInstance().getUid(), dialog);
 
                 }
 

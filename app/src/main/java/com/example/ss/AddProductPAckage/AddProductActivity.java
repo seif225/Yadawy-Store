@@ -127,9 +127,9 @@ public class AddProductActivity extends AppCompatActivity {
 
         final ArrayList<String>category=new ArrayList<>();
         category.add("Accessories");
-        category.add("Handmade gifts");
-        category.add("Krosheh");
-        category.add("Notebooks");
+        category.add("Customised crafts");
+        category.add("Crochet");
+        category.add("Tableau gallery");
 
         //category.add("DIY");
 

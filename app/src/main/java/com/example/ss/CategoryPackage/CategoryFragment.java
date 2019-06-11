@@ -48,7 +48,7 @@ public class CategoryFragment extends Fragment {
         giftsImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                i.putExtra("category","Handmade gifts");
+                i.putExtra("category","Customised crafts");
                 startActivity(i);
             }
         });
@@ -56,7 +56,7 @@ public class CategoryFragment extends Fragment {
     krosheshImageView.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            i.putExtra("category","Krosheh");
+            i.putExtra("category","Crochet");
             startActivity(i);
         }
     });
@@ -65,7 +65,7 @@ public class CategoryFragment extends Fragment {
     notebooksImageView.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            i.putExtra("category","Notebooks");
+            i.putExtra("category","Tableau gallery");
             startActivity(i);
         }
     });

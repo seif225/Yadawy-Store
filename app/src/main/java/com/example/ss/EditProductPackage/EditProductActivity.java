@@ -14,13 +14,11 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.ss.R;
-import com.facebook.drawee.backends.pipeline.Fresco;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.FirebaseDatabase;
 import com.theartofdev.edmodo.cropper.CropImage;
-import com.zfdang.multiple_images_selector.ImagesSelectorActivity;
-import com.zfdang.multiple_images_selector.SelectorSettings;
 
 import java.net.URI;
 import java.util.ArrayList;
@@ -42,7 +40,7 @@ public class EditProductActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_product);
-        Fresco.initialize(getApplicationContext());
+
         initializeFields();
 
         addImages.setOnClickListener(new View.OnClickListener() {

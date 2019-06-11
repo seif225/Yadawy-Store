@@ -29,6 +29,7 @@ import com.example.ss.FindSellersPackage.FindSellersActivity;
 import com.example.ss.HomeFragmentV2Package.HomeFragmentV2;
 import com.example.ss.LikesFragmentPack.LikesFragment;
 import com.example.ss.ProfileEditActivityPack.ProfileEditActivity;
+import com.example.ss.ShoppingCartPackage.ShoppingCartActivity;
 import com.example.ss.SplashPack.SplashActivity;
 import com.example.ss.financeForBusinessUserPack.addFinancialInfoActivity;
 import com.google.firebase.FirebaseApp;
@@ -260,10 +261,13 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-       /* if (id == R.id.action_settings) {
+        if (id == R.id.cart_button) {
+
+            startActivity(new Intent(this, ShoppingCartActivity.class));
+
             return true;
         }
-*/
+
 
         return super.onOptionsItemSelected(item);
     }

@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ss.EditProductPackage.EditProductActivity;
 import com.example.ss.HomeFragmentV2Package.ProductModel;
@@ -79,7 +80,7 @@ class ProductActivityPresenter {
         progressDialog.show();
 
 
-        reference.addValueEventListener(new ValueEventListener() {
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 //                listOfPictureLinks.clear();
@@ -134,7 +135,8 @@ class ProductActivityPresenter {
 
                 if (dataSnapshot.hasChild("use_id")) {
                     productModel.setuId(dataSnapshot.child("use_id").getValue().toString());
-                    FirebaseDatabase.getInstance().getReference().child("Users").child(productModel.getuId()).addValueEventListener(new ValueEventListener() {
+                    FirebaseDatabase.getInstance().getReference().child("Users").
+                            child(productModel.getuId()).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -457,6 +459,18 @@ class ProductActivityPresenter {
 
 
     }
+
+
+    void addProductToCart(String userId, String prodcutId){
+
+        FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getUid()).child("cart")
+                .child(prodcutId)
+                .setValue(productModel);
+
+        Toast.makeText(context, "this product has been added to your cart", Toast.LENGTH_SHORT).show();
+    }
+
+
 }
 
 

@@ -3,4 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
+
+    <item
+        android:id="@+id/cart_button"
+        android:title="cart"
+        android:icon="@drawable/cart_icon_accent_color_24dp"
+        app:showAsAction="always|withText"
+        android:iconTint="@color/colorAccent"
+
+        />
+
 </menu>

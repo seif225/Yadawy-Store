@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.ss.R;
+import com.google.firebase.auth.FirebaseAuth;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,6 +27,7 @@ public class HomeFragmentV2 extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         initializeFields(inflater,container);
+        if(FirebaseAuth.getInstance().getUid()!=null)
         presenter.getDataForHomeActivity(homeRecycler,homeTextView);
 
 

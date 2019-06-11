@@ -8,11 +8,27 @@ public class ProductModel {
     private ArrayList<String> imagesLinks;
     private HashMap<String, String> imageLinksWithKeys;
     private String ProductName, prodcutPrice, productDescribtion, color,
-            category, priceRange, uId, productId, productLikes, numOfFollowers, numOfFollowing, productNumber, proudctDate;
+            category, priceRange, uId, productId, productLikes, numOfFollowers, numOfFollowing, productNumber, proudctDate,thumbnail;
     private int productNumberAsInt;
+    private int priceAsInt;
 
+    public void setPriceAsInt(int priceAsInt) {
+        this.priceAsInt = priceAsInt;
+    }
 
- public void setImageLinksWithKeys(HashMap<String, String> imageLinksWithKeys) {
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
+    }
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public int getPriceAsInt() {
+        return priceAsInt;
+    }
+
+    public void setImageLinksWithKeys(HashMap<String, String> imageLinksWithKeys) {
         this.imageLinksWithKeys = imageLinksWithKeys;
     }
 
