@@ -136,7 +136,7 @@ class ProductActivityPresenter {
                 if (dataSnapshot.hasChild("use_id")) {
                     productModel.setuId(dataSnapshot.child("use_id").getValue().toString());
                     FirebaseDatabase.getInstance().getReference().child("Users").
-                            child(productModel.getuId()).addListenerForSingleValueEvent(new ValueEventListener() {
+                            child(productModel.getuId()).addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
