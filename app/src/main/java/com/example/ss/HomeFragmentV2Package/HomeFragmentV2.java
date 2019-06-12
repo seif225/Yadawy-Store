@@ -41,6 +41,8 @@ public class HomeFragmentV2 extends Fragment {
     private void initializeFields(LayoutInflater inflater, ViewGroup container) {
         view = inflater.inflate(R.layout.fragment_home_fragment_v2, container, false);
         homeRecycler = view.findViewById(R.id.homeRecyclerV2);
+
+
         homeTextView=view.findViewById(R.id.home_text_messageV2);
         presenter = new HomeFragmentV2Presenter(getActivity());
 

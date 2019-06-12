@@ -3,6 +3,7 @@ package com.example.ss.HomeFragmentV2Package;
 import android.app.ProgressDialog;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -220,6 +221,8 @@ class HomeFragmentV2Presenter {
             //we will send these products to the adapter to view it
            // ListOfProducts=new ProductSort().fillTemp(ListOfProducts,ListOfProducts.size());
 
+            // homeRecycler.setNestedScrollingEnabled(false);
+           //ViewCompat.setNestedScrollingEnabled(homeRecycler, false);
             homeRecycler.setLayoutManager(new LinearLayoutManager(activity));
             homeRecycler.setAdapter(adapter);
             progressDialog.dismiss();
@@ -231,6 +234,10 @@ class HomeFragmentV2Presenter {
 
             homeTextView.setVisibility(View.VISIBLE);
             homeTextView.setText("no products to show , follow more sellers ;)");
+            //it's attempt to make the main scroll action by the nested scroll view not the recycler , to save the
+            //position of the last clicked item
+
+            // ViewCompat.setNestedScrollingEnabled(homeRecycler, false);
             progressDialog.dismiss();
         }
 

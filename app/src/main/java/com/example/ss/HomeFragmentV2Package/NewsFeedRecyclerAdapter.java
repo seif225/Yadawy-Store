@@ -23,6 +23,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.sackcentury.shinebuttonlib.ShineButton;
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
@@ -84,12 +85,12 @@ public class NewsFeedRecyclerAdapter extends RecyclerView.Adapter<NewsFeedRecycl
        startListeningOnLikes(i,viewHolder);
 
         likesRef.addValueEventListener(likesListner);
-        startListeningOnUsers(viewHolder);
+        startListeningOnUsers(viewHolder,i);
 
 
 
         Log.e("NewsAdapter",list.get(i).getuId());
-        userRef.child(list.get(i).getuId()).addValueEventListener(userListner);
+        userRef.child(list.get(i).getuId()).addListenerForSingleValueEvent(userListner);
 
 
 
@@ -98,6 +99,7 @@ public class NewsFeedRecyclerAdapter extends RecyclerView.Adapter<NewsFeedRecycl
                     .load(list.get(i).getImagesLinks().get(0))
                     .resize(600, 200) // resizes the image to these dimensions (in pixel)
                     .centerCrop()
+                    //.memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
                     .into(viewHolder.ProductImage);
             Log.e("image in adapter",list.get(i).getImagesLinks().get(0)+"i =" +i + "size= "+list.get(i).getImagesLinks().size());
         }
@@ -185,15 +187,20 @@ public class NewsFeedRecyclerAdapter extends RecyclerView.Adapter<NewsFeedRecycl
 
     }
 
-    private void startListeningOnUsers(final ViewHolder viewHolder) {
+    private void startListeningOnUsers(final ViewHolder viewHolder, final int i) {
 
         userListner=new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.hasChild("image")){
-                    Picasso.get().load(dataSnapshot.child("image").getValue().toString()).resize(100,100).placeholder(R.drawable.user).into(viewHolder.userPp);}
+                    Picasso.get().load(dataSnapshot.child("image").getValue().toString())
+                            .resize(100,100)
+                            .placeholder(R.drawable.user).into(viewHolder.userPp);}
+
                 if(dataSnapshot.hasChild("userName")){
-                    viewHolder.userName.setText(dataSnapshot.child("userName").getValue().toString());
+
+                    list.get(i).setUserName(dataSnapshot.child("userName").getValue().toString());
+                    viewHolder.userName.setText(list.get(i).getUserName());
                 }
 
 

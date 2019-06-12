@@ -8,9 +8,17 @@ public class ProductModel {
     private ArrayList<String> imagesLinks;
     private HashMap<String, String> imageLinksWithKeys;
     private String ProductName, prodcutPrice, productDescribtion, color,
-            category, priceRange, uId, productId, productLikes, numOfFollowers, numOfFollowing, productNumber, proudctDate,thumbnail;
+            category, priceRange, uId, productId, productLikes, numOfFollowers, numOfFollowing, productNumber, proudctDate,thumbnail,userName;
     private int productNumberAsInt;
     private int priceAsInt;
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
 
     public void setPriceAsInt(int priceAsInt) {
         this.priceAsInt = priceAsInt;
