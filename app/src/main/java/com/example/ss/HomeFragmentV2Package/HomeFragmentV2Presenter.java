@@ -177,6 +177,24 @@ class HomeFragmentV2Presenter {
                         if (d.hasChild("use_id")) {
                             productModel.setuId(d.child("use_id").getValue().toString());
 
+                            FirebaseDatabase.getInstance().getReference().child("Users").child(productModel.getuId())
+                                    .addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                                            productModel.setUserName(dataSnapshot.child("userName").getValue().toString());
+                                            Log.e("username",productModel.getUserName());
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                        }
+                                    });
+
+
+
+
                         }
 
                         if (d.hasChild("Likers")) {
@@ -189,6 +207,8 @@ class HomeFragmentV2Presenter {
                             productModel.setProductNumberAsInt(Integer.parseInt(d.child("product_number").getValue().toString()));
                             Log.e("productNumber",d.child("product_number").getValue().toString()+" test");
                         }
+
+
 
                         adapter.notifyDataSetChanged();
                        ListOfProducts.add(productModel);
@@ -216,6 +236,12 @@ class HomeFragmentV2Presenter {
 
     private void previewDataOnView(RecyclerView homeRecycler, TextView homeTextView) {
 
+
+
+
+
+
+
         if(!ListOfProducts.isEmpty()){
             //in this case, list of products has already products
             //we will send these products to the adapter to view it
@@ -223,6 +249,7 @@ class HomeFragmentV2Presenter {
 
             // homeRecycler.setNestedScrollingEnabled(false);
            //ViewCompat.setNestedScrollingEnabled(homeRecycler, false);
+            homeRecycler.setNestedScrollingEnabled(false);
             homeRecycler.setLayoutManager(new LinearLayoutManager(activity));
             homeRecycler.setAdapter(adapter);
             progressDialog.dismiss();

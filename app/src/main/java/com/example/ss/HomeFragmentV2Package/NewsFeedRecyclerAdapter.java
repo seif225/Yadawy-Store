@@ -89,7 +89,7 @@ public class NewsFeedRecyclerAdapter extends RecyclerView.Adapter<NewsFeedRecycl
 
 
 
-        Log.e("NewsAdapter",list.get(i).getuId());
+        //Log.e("NewsAdapter",list.get(i).getuId());
         userRef.child(list.get(i).getuId()).addListenerForSingleValueEvent(userListner);
 
 
@@ -106,6 +106,12 @@ public class NewsFeedRecyclerAdapter extends RecyclerView.Adapter<NewsFeedRecycl
         else if(list.get(i).getImagesLinks()==null ){
 
             viewHolder.ProductImage.setImageResource(R.drawable.user);
+
+        }
+
+        if(list.get(i).getUserName()!=null){
+
+            viewHolder.userName.setText(list.get(i).getUserName());
 
         }
 
@@ -196,13 +202,19 @@ public class NewsFeedRecyclerAdapter extends RecyclerView.Adapter<NewsFeedRecycl
                     Picasso.get().load(dataSnapshot.child("image").getValue().toString())
                             .resize(100,100)
                             .placeholder(R.drawable.user).into(viewHolder.userPp);}
+                if(list.get(i).getUserName()==null) {
+                    if (dataSnapshot.hasChild("userName")) {
 
-                if(dataSnapshot.hasChild("userName")){
-
-                    list.get(i).setUserName(dataSnapshot.child("userName").getValue().toString());
-                    viewHolder.userName.setText(list.get(i).getUserName());
+                        list.get(i).setUserName(dataSnapshot.child("userName").getValue().toString());
+                        viewHolder.userName.setText(list.get(i).getUserName());
+                    }
                 }
+                else {
 
+
+                    viewHolder.userName.setText(list.get(i).getUserName());
+
+                }
 
             }
 

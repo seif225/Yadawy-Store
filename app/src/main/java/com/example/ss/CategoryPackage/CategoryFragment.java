@@ -12,6 +12,10 @@ import android.widget.ImageView;
 
 import com.example.ss.CategoryItems.CategoryItemsActivity;
 import com.example.ss.R;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.doubleclick.PublisherAdRequest;
+import com.google.android.gms.ads.doubleclick.PublisherAdView;
 import com.smarteist.autoimageslider.SliderLayout;
 
 public class CategoryFragment extends Fragment {
@@ -20,6 +24,10 @@ public class CategoryFragment extends Fragment {
     private Intent i ;
     private SliderLayout sliderLayout;
     private CategoryPresenter presenter;
+    private AdView mAdView;
+    PublisherAdView adView;
+    private PublisherAdView mPublisherAdView;
+
 
     public CategoryFragment() {
 
@@ -85,6 +93,13 @@ public class CategoryFragment extends Fragment {
         sliderLayout.setIndicatorAnimation(SliderLayout.Animations.WORM);
         sliderLayout.animate();
         sliderLayout.setScrollTimeInSec(2);
+         adView = new PublisherAdView(getActivity());
+
+
+        mPublisherAdView = view.findViewById(R.id.adView);
+        PublisherAdRequest adRequest = new PublisherAdRequest.Builder().build();
+        mPublisherAdView.loadAd(adRequest);
+
     presenter=new CategoryPresenter(getContext());
 
     }

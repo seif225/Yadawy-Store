@@ -24,28 +24,26 @@
         />
 
 
-
         <ImageView
-            android:layout_marginTop="8dp"
-            android:layout_width="0dp"
-            android:scaleType="centerCrop"
-            android:layout_marginEnd="8dp"
-            android:layout_height="150dp"
             android:id="@+id/accessories_image_view"
-            app:layout_constraintTop_toBottomOf="@id/imageSlider_in_cayegory_fragment"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/krosheh"
+            android:layout_width="0dp"
+            android:layout_height="150dp"
             android:layout_marginStart="24dp"
+            android:layout_marginEnd="8dp"
+            android:scaleType="centerCrop"
             android:src="@drawable/access"
+            app:layout_constraintTop_toBottomOf="@+id/adView"
+            app:layout_constraintEnd_toStartOf="@id/krosheh"
+            app:layout_constraintStart_toStartOf="parent"
 
 
-            />
+            tools:layout_editor_absoluteY="258dp" />
         <ImageView
             android:layout_marginStart="8dp"
             android:layout_width="0dp"
             android:layout_height="190dp"
             android:id="@+id/krosheh"
-            app:layout_constraintTop_toBottomOf="@id/imageSlider_in_cayegory_fragment"
+            app:layout_constraintTop_toBottomOf="@id/adView"
            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/accessories_image_view"
             android:layout_marginEnd="24dp"
@@ -147,6 +145,21 @@
             app:layout_constraintTop_toTopOf="@+id/accessories_image_view"
 
             app:layout_constraintVertical_bias="0.9" />
+
+
+        <com.google.android.gms.ads.doubleclick.PublisherAdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/adView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            ads:adSize="BANNER"
+            ads:adUnitId="/6499/example/banner"
+            ads:layout_constraintEnd_toEndOf="parent"
+            ads:layout_constraintStart_toStartOf="parent"
+            ads:layout_constraintTop_toBottomOf="@id/imageSlider_in_cayegory_fragment"/>
 
 
     </android.support.constraint.ConstraintLayout>

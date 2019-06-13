@@ -55,6 +55,8 @@ dependencies {
     implementation 'com.willowtreeapps.spruce:spruce-android:1.0.1'
     implementation 'com.beardedhen:androidbootstrap:2.3.0'
     implementation 'com.github.flepsik:progress-ring-view:1.2.1'
+    implementation 'com.google.firebase:firebase-ads:17.2.1'
+    implementation 'com.google.android.gms:play-services-ads:17.2.1'
 
 
 }
