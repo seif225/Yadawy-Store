@@ -7,18 +7,21 @@
     tools:context=".AddWorkshopPackage.AddWorkshopActivity">
 
 
+
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
+        app:titleTextColor="@color/colorAccent"
         style="@style/DrawerIcon"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-
         android:background="?attr/colorPrimary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:popupTheme="@style/AppTheme.PopupOverlay"
-        app:titleTextColor="@color/colorAccent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:title="Yadawy"
+
+        />
 
 
     <EditText

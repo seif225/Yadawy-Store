@@ -31,7 +31,7 @@ public class ProfileFragment extends Fragment {
     private CircleImageView profilePicture;
     private Button editProfileButton;
     private ProgressDialog progressDialog;
-    private Button uploadProductFab;
+    private FloatingActionButton uploadProductFab;
     private RecyclerView recyclerView;
     private ImageView cover;
 

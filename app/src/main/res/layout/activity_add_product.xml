@@ -34,6 +34,16 @@
         />
 
 
+    <ImageView
+        android:id="@+id/logo_imageView"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_margin="8dp"
+        android:layout_marginStart="8dp"
+        android:src="@drawable/logowithblackslogan"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
     <EditText
         android:id="@+id/product_name_et_edit_product"
         android:layout_width="0dp"
@@ -42,7 +52,7 @@
         android:layout_marginEnd="8dp"
         android:hint="Product name"
         android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintTop_toBottomOf="@+id/logo_imageView"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -161,8 +171,12 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:text="upload"
+        android:background="@drawable/rounded_button"
+        android:textAllCaps="false"
+        android:textColor="#fefefe"
+        android:layout_margin="8dp"
         android:id="@+id/upload_product_data_btn_edit_product"
-        android:textSize="14sp"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -3,6 +3,7 @@ package com.example.ss.AdminProfilePack;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -125,7 +126,7 @@ public class ProfileFragmentPresenter {
 
     }
 
-    public void showOrHideFab(final Button button) {
+    public void showOrHideFab(final FloatingActionButton button) {
 
       userRef.addValueEventListener(new ValueEventListener() {
           @Override
@@ -133,7 +134,7 @@ public class ProfileFragmentPresenter {
 
               if(dataSnapshot.child("account type").getValue().toString().equals("business account")){
 
-                button.setVisibility(View.VISIBLE);
+                button.show();
 
               }
           }

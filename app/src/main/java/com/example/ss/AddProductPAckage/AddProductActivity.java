@@ -2,6 +2,8 @@ package com.example.ss.AddProductPAckage;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -9,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
+
 
 import com.example.ss.R;
 
@@ -92,7 +95,26 @@ public class AddProductActivity extends AppCompatActivity {
     uploadButton=findViewById(R.id.upload_product_data_btn_edit_product);
     presenter=new AddProductPresenter(this);
     callSpinnerLists();
+        Toolbar toolbar =  findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        // add back arrow to toolbar
+        if (getSupportActionBar() != null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // handle arrow click here
+        if (item.getItemId() == android.R.id.home) {
+            finish(); // close this activity and return to preview activity (if there is any)
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
 
     private void callSpinnerLists() {
 

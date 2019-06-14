@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <Button
+        <android.support.design.widget.FloatingActionButton
             android:id="@+id/upload_product_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -21,23 +21,26 @@
             android:text="uploadProduct"
             android:textSize="18sp"
             android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@+id/edit_profile_btn"
+            android:src="@drawable/ic_add_black_24dp"
+            app:layout_constraintBottom_toTopOf="@+id/fab"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.79"
+            app:layout_constraintHorizontal_bias="0.976"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/edit_profile_btn"
-            app:layout_constraintVertical_bias="0.82" />
+            app:layout_constraintVertical_bias="1.0" />
 
         <ImageView
             android:id="@+id/cover_profile_admin"
             android:layout_width="match_parent"
             android:layout_height="250dp"
             android:scaleType="centerCrop"
-            android:background="@color/colorAccent"
+            android:background="@drawable/cover"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+
+            />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/proile_picture_admin_profile"
@@ -254,10 +257,15 @@
             android:id="@+id/edit_profile_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="edit profile"
+            android:text=" edit profile"
+            android:elevation="18dp"
+            android:padding="8dp"
+            android:textAllCaps="false"
+            android:textColor="#fefefe"
+            android:background="@drawable/rounded_button"
             app:layout_constraintBottom_toBottomOf="@+id/cover_profile_admin"
             app:layout_constraintEnd_toEndOf="@+id/userName_tv_profile"
-
+           android:drawableStart="@drawable/ic_edit_black_24dp"
             app:layout_constraintStart_toStartOf="@+id/userName_tv_profile"
             app:layout_constraintTop_toBottomOf="@+id/bio_tv"
 
