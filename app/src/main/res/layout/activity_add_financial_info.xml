@@ -6,6 +6,21 @@
     android:layout_height="match_parent"
     tools:context=".financeForBusinessUserPack.addFinancialInfoActivity">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        app:titleTextColor="@color/colorAccent"
+        style="@style/DrawerIcon"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:popupTheme="@style/AppTheme.PopupOverlay"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:title="Yadawy"
+
+        />
+
     <TextView
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
@@ -13,9 +28,8 @@
 
         android:layout_margin="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:text="card number:"
         android:textSize="20sp"
@@ -23,7 +37,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.04"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
         app:layout_constraintVertical_bias="0.13999999" />
 
     <TextView
@@ -87,15 +101,14 @@
         android:id="@+id/expiary_month"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:inputType="number"
-
+        app:layout_constraintHorizontal_bias="0.1"
         android:hint="mm"
-        android:layout_marginRight="8dp"
+        android:inputType="number"
         app:layout_constraintBottom_toBottomOf="@+id/textView5"
         app:layout_constraintEnd_toEndOf="@+id/card_number"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/card_number"
+        app:layout_constraintStart_toEndOf="@+id/textView5"
         app:layout_constraintTop_toTopOf="@+id/textView5" />
 
     <EditText

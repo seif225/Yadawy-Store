@@ -24,6 +24,10 @@ public class addFinancialInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_financial_info);
         intializeFields();
+        presenter.checkData(cardNumberEt,expairyMonthEt,expairyYearEt,cvvEt,confirm);
+
+
+
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
