@@ -20,6 +20,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.example.ss.AddWorkshopPackage.AddWorkshopActivity;
 import com.example.ss.AdminProfilePack.ProfileFragment;
 import com.example.ss.BillingDisclaimerPackage.BillingDisclaimerActivity;
 import com.example.ss.BillingDisclaimerPackage.BillingDisclaimerPresenter;
@@ -31,6 +32,7 @@ import com.example.ss.LikesFragmentPack.LikesFragment;
 import com.example.ss.ProfileEditActivityPack.ProfileEditActivity;
 import com.example.ss.ShoppingCartPackage.ShoppingCartActivity;
 import com.example.ss.SplashPack.SplashActivity;
+import com.example.ss.WorkShopsPackage.WorkShopsFragment;
 import com.example.ss.financeForBusinessUserPack.addFinancialInfoActivity;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
@@ -315,6 +317,12 @@ public class MainActivity extends AppCompatActivity
             sendUsertoAddFinancialinfoActivityWithoutFlag();
 
         }
+        else if (id == R.id.workshops_nav_menu) {
+
+          selectedFragment = new WorkShopsFragment();
+
+        }
+
         //return true;
 
 
@@ -325,4 +333,6 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
 }
