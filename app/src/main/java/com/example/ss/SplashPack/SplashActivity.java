@@ -21,7 +21,7 @@ public class SplashActivity extends AppCompatActivity {
 
     private static final int RC_SIGN_IN = 0;
 
-    Button mailLog;
+    Button mailLog,guest;
     SignInButton googleLog;
     TextView signUp;
     SplashPresenter splashPresenter;
@@ -66,6 +66,19 @@ public class SplashActivity extends AppCompatActivity {
             }
         });
 
+
+        guest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                splashPresenter.anonymousLogin();
+
+
+            }
+        });
+
+
+
     }
 
 
@@ -78,7 +91,7 @@ public class SplashActivity extends AppCompatActivity {
         splashPresenter = new SplashPresenter(this);
             //gso is an object that takes the project id in order for the user to make a google account (FIREBASE)
         signUp.setPaintFlags(signUp.getPaintFlags() |   Paint.UNDERLINE_TEXT_FLAG);
-
+        guest = findViewById(R.id.guest);
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()

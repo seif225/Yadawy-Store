@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,6 +35,7 @@ public class ProfileFragment extends Fragment {
     private FloatingActionButton uploadProductFab;
     private RecyclerView recyclerView;
     private ImageView cover;
+    private CardView cardView;
 
     public ProfileFragment() {
 
@@ -50,6 +52,10 @@ public class ProfileFragment extends Fragment {
       presenter.showOrHideFab(uploadProductFab);
         presenter.getAndAddDataToRecycler(recyclerView,new ProgressDialog(getContext()));
         presenter.showProductsnumber(productsTv);
+        presenter.showOrHideCardView(cardView);
+
+
+
       uploadProductFab.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
@@ -95,6 +101,7 @@ public class ProfileFragment extends Fragment {
         productsTv=view.findViewById(R.id.products_number_admin_profile);
         numOfFollowing=view.findViewById(R.id.following_number_admin_profile);
         numOfFollowers=view.findViewById(R.id.follower_number_admin_profile);
+        cardView = view.findViewById(R.id.card_view);
 
 
     }

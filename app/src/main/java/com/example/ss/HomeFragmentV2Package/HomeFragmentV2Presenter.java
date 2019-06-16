@@ -78,10 +78,13 @@ class HomeFragmentV2Presenter {
 
 
     private void getFollowersList(final RecyclerView homeRecycler, final TextView homeTextView) {
+
         currentUserRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
                 followersList.clear();
+
                 adapter.notifyDataSetChanged();
                 if (dataSnapshot.hasChild("following")) {
 

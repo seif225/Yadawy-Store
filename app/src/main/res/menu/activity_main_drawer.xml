@@ -20,11 +20,7 @@
             android:id="@+id/nav_profile"
             android:icon="@drawable/ic_person_black_24dp"
             android:title="profile" />
-        android:title="Saved" />
-        <item
-            android:id="@+id/finance"
-            android:icon="@drawable/ic_attach_money_black_24dp"
-            android:title="financial info" />
+
         <item
             android:id="@+id/find_sellers_nav_menu"
             android:icon="@drawable/ic_people_black_24dp"

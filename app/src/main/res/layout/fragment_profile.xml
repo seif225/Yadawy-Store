@@ -5,11 +5,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".AdminProfilePack.ProfileFragment">
+    tools:context=".AdminProfilePack.ProfileFragment"
+
+    >
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="8dp"
+        android:src="@drawable/cover"
+         />
+
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/upload_product_fab"
@@ -93,7 +105,7 @@
 
         <TextView
             android:id="@+id/bio_tv_profile_fragment"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
@@ -121,7 +133,6 @@
             app:cardCornerRadius="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-
             app:layout_constraintTop_toBottomOf="@id/cover_profile_admin"
 
             android:layout_marginTop="8dp"
@@ -132,6 +143,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="24dp"
+
                 >
 
                 <TextView

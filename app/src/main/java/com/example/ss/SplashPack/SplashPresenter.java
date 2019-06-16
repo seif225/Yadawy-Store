@@ -1,5 +1,6 @@
 package com.example.ss.SplashPack;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -142,7 +143,58 @@ public class SplashPresenter {
 
 
 
-        Log.e("testttt","succcc");
-        Toast.makeText(context, "Succccccc", Toast.LENGTH_SHORT).show();
+        Log.e("testttt","succccessss");
+        //Toast.makeText(context, "Succccccc", Toast.LENGTH_SHORT).show();
+    }
+
+     void anonymousLogin() {
+
+
+        final ProgressDialog progressDialog = new ProgressDialog(context);
+        progressDialog.setMessage("loading");
+        progressDialog.show();
+        FirebaseAuth.getInstance().signInAnonymously()
+                .addOnCompleteListener( new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.e("anonymous",mAuth.getUid()+" uid");
+                            FirebaseDatabase.getInstance().getReference().child("Users").child(mAuth.getUid().toString())
+                                    .child("userID").setValue(mAuth.getUid()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+
+                                    if(task.isSuccessful()){
+                                        FirebaseDatabase.getInstance().getReference().child("Users")
+                                                .child(FirebaseAuth.getInstance().getUid())
+                                                .child("anonymous").setValue("anonymous").addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                Intent i = new Intent (context,MainActivity.class);
+                                                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                context.startActivity(i);
+                                            }
+                                        });
+
+
+
+
+
+                                    }
+                                    progressDialog.dismiss();
+
+                                }
+                            });
+
+                        } else {
+                            // If sign in fails, display a message to the user
+                            Toast.makeText(context, ""+task.getException() , Toast.LENGTH_SHORT).show();
+                                    progressDialog.dismiss();
+                        }
+
+                        // ...
+                    }
+                });
     }
 }

@@ -3,6 +3,7 @@ package com.example.ss.UserProfile;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -16,7 +17,12 @@ import android.widget.TextView;
 
 import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.example.ss.R;
+import com.example.ss.signUpPack.SingUpActivity;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -50,18 +56,49 @@ public class UserProfileActivity extends AppCompatActivity {
 
                 presenter.checkButtonSettings(followButton,uid);
 
-                if (presenter.isFollowed(uid)) {
-                    presenter.unFollow();
-                    presenter.checkButtonSettings(followButton,uid);
+                FirebaseDatabase.getInstance().getReference().child("Users")
+                        .child(FirebaseAuth.getInstance().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
 
-                } else {
-                    presenter.follow();
-                    presenter.checkButtonSettings(followButton,uid);
+
+                        if(dataSnapshot.hasChild("anonymous")){
+                            startActivity(new Intent(getApplicationContext(), SingUpActivity.class));
+
+                        }
+                        else {
+
+                            if (presenter.isFollowed(uid)) {
+                                presenter.unFollow();
+                                presenter.checkButtonSettings(followButton,uid);
 
 
-                }
-                ;
+                            } else {
+                                presenter.follow();
+                                presenter.checkButtonSettings(followButton,uid);
+
+
+                            }
+                            ;
+                        }
+
+
+
+
+
+
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+
 
             }
 

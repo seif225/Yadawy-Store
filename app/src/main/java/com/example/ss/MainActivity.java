@@ -19,6 +19,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ss.AddWorkshopPackage.AddWorkshopActivity;
 import com.example.ss.AdminProfilePack.ProfileFragment;
@@ -49,14 +50,13 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
 
-    FirebaseAuth mAuth;
-    String currentUser;
-    FirebaseDatabase firebaseDatabase;
-    DatabaseReference userRef;
-    Fragment selectedFragment;
-    View navigationHeader;
-    CircleImageView navuseRImage;
-    TextView navUserName, navUserMail;
+    private FirebaseAuth mAuth;
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference userRef;
+    private Fragment selectedFragment;
+    private View navigationHeader;
+    private CircleImageView navuseRImage;
+    private TextView navUserName, navUserMail;
 
     public static Context MAIN_CONTEXT;
 
@@ -69,13 +69,13 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        // ActionBar actionBar = getSupportActionBar();
-        //actionBar.setDisplayShowHomeEnabled(true);
+
 
         navigationHeader = navigationView.getHeaderView(0);
         navuseRImage = navigationHeader.findViewById(R.id.userImageView_nav);
         navUserName = navigationHeader.findViewById(R.id.userName_nav);
         navUserMail = navigationHeader.findViewById(R.id.userMail_nav);
+        getSupportActionBar().setIcon(R.drawable.yaaadaw);
         updateUserInfo();
 
 
@@ -125,21 +125,24 @@ public class MainActivity extends AppCompatActivity
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                    if (!dataSnapshot.hasChild("mail")) {
+                    if (!dataSnapshot.hasChild("userID")) {
 
                         sendUserToSplash();
-                    } else if (!dataSnapshot.hasChild("account type") && dataSnapshot.hasChild("mail")) {
+                    } else if (!dataSnapshot.hasChild("account type") && dataSnapshot.hasChild("mail") && !dataSnapshot.hasChild("anonymous")) {
                         sendUserToChooseAccountType();
 
                     } else if (!dataSnapshot.hasChild("userName") || !dataSnapshot.hasChild("phone") || !dataSnapshot.hasChild("address")) {
 
-                        sendUserToProfileEditActivity();
+                        if (!dataSnapshot.hasChild("anonymous")) {
+                            sendUserToProfileEditActivity();
+                        }
 
 
                     } else if (dataSnapshot.hasChild("userName") && dataSnapshot.hasChild("phone") && dataSnapshot.hasChild("address")
                             && dataSnapshot.hasChild("account type")) {
 
-                        if (dataSnapshot.child("account type").getValue().equals("business account") && !dataSnapshot.hasChild("billing_date")) {
+                        if (dataSnapshot.child("account type").getValue().equals("business account") &&
+                                !dataSnapshot.hasChild("billing_date") && !dataSnapshot.hasChild("anonymous")) {
 
 
                             sendUserToDisclaimerActivity();
@@ -262,7 +265,25 @@ public class MainActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.cart_button) {
 
-            startActivity(new Intent(this, ShoppingCartActivity.class));
+            FirebaseDatabase.getInstance().getReference().child("Users")
+                    .child(FirebaseAuth.getInstance().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                    if (dataSnapshot.hasChild("anonymous"))
+                        Toast.makeText(MainActivity.this, " you have to login first", Toast.LENGTH_SHORT).show();
+                    else
+                        startActivity(new Intent(getApplicationContext(), ShoppingCartActivity.class));
+
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
 
             return true;
         }
@@ -298,7 +319,31 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_profile) {
 
-            selectedFragment = new ProfileFragment();
+            FirebaseDatabase.getInstance().getReference().child("Users")
+                    .child(FirebaseAuth.getInstance().getUid()).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                    if (!dataSnapshot.hasChild("anonymous")){
+                        selectedFragment = new ProfileFragment();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                                selectedFragment).commit();
+                    }
+
+                    else
+                    Toast.makeText(MainActivity.this, " you have to login first", Toast.LENGTH_SHORT).show();
+
+
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
+
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_settings) {
@@ -312,14 +357,33 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.find_sellers_nav_menu) {
             selectedFragment = new FindSellersActivity();
 
-        } else if (id == R.id.finance) {
 
-            sendUsertoAddFinancialinfoActivityWithoutFlag();
 
-        }
-        else if (id == R.id.workshops_nav_menu) {
+        } else if (id == R.id.workshops_nav_menu) {
 
-          selectedFragment = new WorkShopsFragment();
+            FirebaseDatabase.getInstance().getReference().child("Users")
+                    .child(FirebaseAuth.getInstance().getUid()).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                    if (!dataSnapshot.hasChild("anonymous")) {
+                        selectedFragment = new WorkShopsFragment();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                                selectedFragment).commit();
+                    }
+                    else
+                    Toast.makeText(MainActivity.this, " you have to login first", Toast.LENGTH_SHORT).show();
+
+
+
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
 
         }
 

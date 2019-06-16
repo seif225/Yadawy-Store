@@ -8,7 +8,8 @@ public class ProductModel {
     private ArrayList<String> imagesLinks;
     private HashMap<String, String> imageLinksWithKeys;
     private String ProductName, prodcutPrice, productDescribtion, color,
-            category, priceRange, uId, productId, productLikes, numOfFollowers, numOfFollowing, productNumber, proudctDate,thumbnail,userName;
+            category, priceRange, uId, productId, productLikes,
+            numOfFollowers, numOfFollowing, productNumber, proudctDate,thumbnail,userName;
     private int productNumberAsInt;
     private int priceAsInt;
 
