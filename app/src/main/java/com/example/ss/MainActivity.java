@@ -346,9 +346,7 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_share) {
 
-        } else if (id == R.id.nav_settings) {
-
-        } else if (id == R.id.nav_contct_us) {
+        }  else if (id == R.id.nav_contct_us) {
 
         } else if (id == R.id.nav_logOut) {
             mAuth.signOut();

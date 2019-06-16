@@ -100,9 +100,10 @@
             android:id="@+id/remove_button_cart"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:background="#EC0303"
-            android:text="X"
+            android:background="@drawable/close"
+
             android:textSize="24dp"
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"

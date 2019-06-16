@@ -27,10 +27,10 @@ class HomeFragmentV2Presenter {
     private List<String> followersList;
     private ProductModel productModel;
     private static final String TAG = "HomeActivityPresenter";
-    private ArrayList<String> listOfPictureLinks ;
-    private ArrayList<ProductModel>  ListOfProducts;
+    private ArrayList<String> listOfPictureLinks;
+    private ArrayList<ProductModel> ListOfProducts;
     private NewsFeedRecyclerAdapter adapter;
-    private  FragmentActivity activity;
+    private FragmentActivity activity;
     private ProgressDialog progressDialog;
 
 
@@ -48,10 +48,10 @@ class HomeFragmentV2Presenter {
             currentUserRef = FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getUid());
             productRef = FirebaseDatabase.getInstance().getReference().child("products");
             followersList = new ArrayList<>();
-            ListOfProducts=new ArrayList<>();
+            ListOfProducts = new ArrayList<>();
 
 
-            adapter = new NewsFeedRecyclerAdapter(activity,ListOfProducts);
+            adapter = new NewsFeedRecyclerAdapter(activity, ListOfProducts);
 
 
             //the upcoming operations in the class will be done in this snippt , where the user is 100% logged in
@@ -65,16 +65,13 @@ class HomeFragmentV2Presenter {
     }
 
 
-
-
-    void getDataForHomeActivity(RecyclerView homeRecycler, TextView homeTextView){
+    void getDataForHomeActivity(RecyclerView homeRecycler, TextView homeTextView) {
         //TODO : Check current user
-        Log.e("HomeFragPresenter","v2 : getDataFrom Activity method :(");
-        if (FirebaseAuth.getInstance().getCurrentUser()!=null)
-        getFollowersList(homeRecycler,homeTextView);
+        Log.e("HomeFragPresenter", "v2 : getDataFrom Activity method :(");
+        if (FirebaseAuth.getInstance().getCurrentUser() != null)
+            getFollowersList(homeRecycler, homeTextView);
 
     }
-
 
 
     private void getFollowersList(final RecyclerView homeRecycler, final TextView homeTextView) {
@@ -98,12 +95,12 @@ class HomeFragmentV2Presenter {
                     //after filling the list with the people you follow
                     //the app will search for their products in the next snippt
 
-                    getProductsOfFollowers(homeRecycler,homeTextView);
+                    getProductsOfFollowers(homeRecycler, homeTextView);
 
 
                 } else {
 
-                    previewDataOnView(homeRecycler,homeTextView);
+                    previewDataOnView(homeRecycler, homeTextView);
 
 
                 }
@@ -186,7 +183,7 @@ class HomeFragmentV2Presenter {
                                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                                             productModel.setUserName(dataSnapshot.child("userName").getValue().toString());
-                                            Log.e("username",productModel.getUserName());
+                                            Log.e("username", productModel.getUserName());
                                         }
 
                                         @Override
@@ -196,8 +193,6 @@ class HomeFragmentV2Presenter {
                                     });
 
 
-
-
                         }
 
                         if (d.hasChild("Likers")) {
@@ -205,25 +200,22 @@ class HomeFragmentV2Presenter {
                             productModel.setProductLikes(d.child("Likers").getChildrenCount() + "");
 
                         }
-                        if(d.hasChild("product_number")){
+                        if (d.hasChild("product_number")) {
 
                             productModel.setProductNumberAsInt(Integer.parseInt(d.child("product_number").getValue().toString()));
-                            Log.e("productNumber",d.child("product_number").getValue().toString()+" test");
+                            Log.e("productNumber", d.child("product_number").getValue().toString() + " test");
                         }
 
 
-
                         adapter.notifyDataSetChanged();
-                       ListOfProducts.add(productModel);
+                        ListOfProducts.add(productModel);
                     }
-
-
 
 
                 }
 
-               adapter.notifyDataSetChanged();
-                previewDataOnView(homeRecycler,homeTextView);
+                adapter.notifyDataSetChanged();
+                previewDataOnView(homeRecycler, homeTextView);
 
 
             }
@@ -240,26 +232,20 @@ class HomeFragmentV2Presenter {
     private void previewDataOnView(RecyclerView homeRecycler, TextView homeTextView) {
 
 
-
-
-
-
-
-        if(!ListOfProducts.isEmpty()){
+        if (!ListOfProducts.isEmpty()) {
             //in this case, list of products has already products
             //we will send these products to the adapter to view it
-           // ListOfProducts=new ProductSort().fillTemp(ListOfProducts,ListOfProducts.size());
+            // ListOfProducts=new ProductSort().fillTemp(ListOfProducts,ListOfProducts.size());
 
             // homeRecycler.setNestedScrollingEnabled(false);
-           //ViewCompat.setNestedScrollingEnabled(homeRecycler, false);
+            //ViewCompat.setNestedScrollingEnabled(homeRecycler, false);
             homeRecycler.setNestedScrollingEnabled(false);
             homeRecycler.setLayoutManager(new LinearLayoutManager(activity));
             homeRecycler.setAdapter(adapter);
             progressDialog.dismiss();
 
 
-        }
-        else {
+        } else {
             // if the list of products is empty , we will show a message to the user in the text view
 
             homeTextView.setVisibility(View.VISIBLE);
@@ -272,10 +258,138 @@ class HomeFragmentV2Presenter {
         }
 
 
-
-
     }
 
+    public void handleAnonymous(final RecyclerView homeRecycler, final TextView homeTextView) {
+        if (FirebaseAuth.getInstance().getUid() != null) {
+            FirebaseDatabase.getInstance().getReference().
+                    child(FirebaseAuth.getInstance().getUid()).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                    if (dataSnapshot.hasChild("anonymous")) {
+
+                        FirebaseDatabase.getInstance().getReference().child("products").addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+
+
+
+                                for (DataSnapshot dd : dataSnapshot.getChildren()) {
+                                    for (DataSnapshot d : dd.getChildren()) {
+
+
+                                        Log.e("anon datasnap",d + " this is d");
+
+                                        productModel = new ProductModel();
+
+                                        if (d.hasChild("images")) {
+                                            //productModel.setImagesLinks(dataSnapshot.child("images").getValue().toString());
+
+                                            listOfPictureLinks = new ArrayList<>();
+                                            for (DataSnapshot imagesDataSnapShot : d.child("images").getChildren()) {
+
+                                                listOfPictureLinks.add(imagesDataSnapShot.getValue().toString());
+
+
+                                            }
+                                            productModel.setImagesLinks(listOfPictureLinks);
+
+                                        }
+
+
+                                        if (d.hasChild("category")) {
+                                            productModel.setCategory(d.child("category").getValue().toString());
+                                            Log.e(TAG, "onDataChange");
+
+                                        }
+                                        if (d.hasChild("color")) {
+                                            productModel.setColor(d.child("color").getValue().toString());
+
+                                        }
+                                        if (d.hasChild("price_range")) {
+                                            productModel.setPriceRange(d.child("price_range").getValue().toString());
+
+                                        }
+                                        if (d.hasChild("product_describtion")) {
+                                            productModel.setProductDescribtion(d.child("product_describtion").getValue().toString());
+
+                                        }
+                                        if (d.hasChild("product_id")) {
+                                            productModel.setProductId(d.child("product_id").getValue().toString());
+
+                                        }
+                                        if (d.hasChild("product_name")) {
+                                            productModel.setProductName(d.child("product_name").getValue().toString());
+                                        }
+
+                                        if (d.hasChild("product_price")) {
+                                            productModel.setProdcutPrice(d.child("product_price").getValue().toString());
+
+                                        }
+                                        if (d.hasChild("use_id")) {
+                                            productModel.setuId(d.child("use_id").getValue().toString());
+
+                                            FirebaseDatabase.getInstance().getReference().child("Users").child(productModel.getuId())
+                                                    .addValueEventListener(new ValueEventListener() {
+                                                        @Override
+                                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                                                            productModel.setUserName(dataSnapshot.child("userName").getValue().toString());
+                                                            Log.e("username", productModel.getUserName());
+                                                        }
+
+                                                        @Override
+                                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                                        }
+                                                    });
+
+
+                                        }
+
+                                        if (d.hasChild("Likers")) {
+
+                                            productModel.setProductLikes(d.child("Likers").getChildrenCount() + "");
+
+                                        }
+                                        if (d.hasChild("product_number")) {
+
+                                            productModel.setProductNumberAsInt(Integer.parseInt(d.child("product_number").getValue().toString()));
+                                            Log.e("productNumber", d.child("product_number").getValue().toString() + " test");
+                                        }
+
+
+                                        adapter.notifyDataSetChanged();
+                                        ListOfProducts.add(productModel);
+                                    }
+
+
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+
+
+                    }
+
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
+
+        }
+    }
     ;
 
 
