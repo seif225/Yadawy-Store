@@ -8,6 +8,8 @@ import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.ss.MailLoginPack.MailLoginActivity;
+import com.example.ss.MainActivity;
 import com.example.ss.SplashPack.SplashActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -56,8 +58,10 @@ public class SingUpPresnenter {
                   databaseReference.child("Users").child(mAuth.getCurrentUser().getUid()).child("password").setValue(password);
                   databaseReference.child("Users").child(mAuth.getCurrentUser().getUid()).child("account type").setValue(accountType);
                   databaseReference.child("Users").child(mAuth.getCurrentUser().getUid()).child("userID").setValue(mAuth.getUid());
-                  sendUserToSplash();
-
+                  //sendUserToSignIn();
+                  Intent i = new Intent(context, MainActivity.class);
+                    i. setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(i);
                 }
 
 
@@ -81,6 +85,20 @@ public class SingUpPresnenter {
             //starting the activity
 
             context.startActivity(i);
+
+            }
+
+            private void sendUserToSignIn() {
+
+                //this line redirects you to splash activity
+
+                Intent i = new Intent(context, MailLoginActivity.class);
+
+                //this line kills the the activity before directing
+                //i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                //starting the activity
+
+                context.startActivity(i);
 
             }
 
