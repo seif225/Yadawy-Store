@@ -2,7 +2,7 @@ package com.example.ss.ProductActivityPack;
 
 public class ReviewModel {
 
-    String userName,userReview,userImage , reviewDate,reviewId,userId;
+    public String userName,userReview,userImage , reviewDate,reviewId,userId;
 
 
     public void setUserId(String userId) {

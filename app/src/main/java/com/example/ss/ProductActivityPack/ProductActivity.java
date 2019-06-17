@@ -20,6 +20,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ss.MoreReviewsPackage.MoreReviewsActivity;
 import com.example.ss.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -161,7 +162,12 @@ public class ProductActivity extends AppCompatActivity {
         seeMoreReviews.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(ProductActivity.this, "working on it ^_^ ", Toast.LENGTH_SHORT).show();
+                Intent j =  new Intent(getApplicationContext(), MoreReviewsActivity.class);
+                j.putExtra("uid",userId);
+              //  Log.e("uid in adapter",list.get(i).getuId()+"  helafhasjf");
+                j.putExtra("productId",prodcutId);
+                startActivity(j);
+                //Toast.makeText(ProductActivity.this, "working on it ^_^ ", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -187,6 +193,7 @@ public class ProductActivity extends AppCompatActivity {
         alertDialogBuilder.setMessage("this operation can't be undone.");
         prodcutId = i.getStringExtra("productId");
         userId = i.getStringExtra("uid");
+
         seeMoreReviews = findViewById(R.id.see_more_reviews);
         Log.e("haahaha", prodcutId + "yid" + userId + "heyyou");
         presenter = new ProductActivityPresenter(this, userId, prodcutId);
