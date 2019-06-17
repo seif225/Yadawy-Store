@@ -167,90 +167,79 @@ class SearchPresenter {
 
     }
 
-     List<ProductModel> getListOfProducts() {
+    List<ProductModel> getListOfProducts() {
         return listOfProducts;
     }
 
-     void handleAnonymousUser() {
+    void handleAnonymousUser() {
 
         FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getUid())
                 .addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                if(dataSnapshot.hasChild("anonymous")){
+                        if (dataSnapshot.hasChild("anonymous")) {
 
-                    AlertDialog alertDialog = new AlertDialog.Builder(context).create();
-                    alertDialog.setTitle("Alert");
-                    alertDialog.setMessage("you are logged in as a guest , and this app has amazing features too ," +
-                            " so it's highly recommended to login from the login button above to get benefits from these features ^_^");
-                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                }
-                            });
-                    alertDialog.show();
+                            AlertDialog alertDialog = new AlertDialog.Builder(context).create();
+                            alertDialog.setTitle("Alert");
+                            alertDialog.setMessage("you are logged in as a guest , and this app has amazing features too ," +
+                                    " so it's highly recommended to login from the login button above to get benefits from these features ^_^");
+                            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+                                        }
+                                    });
+                            alertDialog.show();
 
-                }
-
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+                        }
 
 
+                    }
 
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
 
-
-
-
-
+                    }
+                });
 
 
     }
 
-     void handleLoginButton(final Button logIn, final ImageView imageView, final SearchView searchView, final RecyclerView recyclerView) {
+    void handleLoginButton(final Button logIn, final ImageView imageView, final SearchView searchView, final RecyclerView recyclerView) {
 
         FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getUid())
                 .addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
 
-                Log.e(TAG, "onDataChange: "+ FirebaseAuth.getInstance().getUid() );
+                        Log.e(TAG, "onDataChange: " + FirebaseAuth.getInstance().getUid());
 
 
-                if(dataSnapshot.hasChild("anonymous")) {
-                    Log.e(TAG, "onDataChange: "+ "anon" );
-                    logIn.setVisibility(View.VISIBLE);
+                        if (dataSnapshot.hasChild("anonymous")) {
+                            Log.e(TAG, "onDataChange: " + "anon");
+                            logIn.setVisibility(View.VISIBLE);
                     /*searchView.setFocusable(true);
                     searchView.setIconified(false);*/
-                    search(" ",recyclerView);
+                            search(" ", recyclerView);
 
 
-                }
-                else {
-                    Log.e(TAG, "onDataChange: "+ "unanon" );
-                    logIn.setVisibility(View.GONE);
-                    imageView.setVisibility(View.INVISIBLE);
+                        } else {
+                            Log.e(TAG, "onDataChange: " + "unanon");
+                            logIn.setVisibility(View.GONE);
+                            imageView.setVisibility(View.INVISIBLE);
 
-                }
-
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+                        }
 
 
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
 
 
     }
