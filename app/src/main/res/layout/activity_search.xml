@@ -11,8 +11,9 @@
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
-        app:titleTextColor="@color/colorAccent"
         style="@style/DrawerIcon"
+        app:titleTextColor="@color/colorAccent"
+
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
@@ -20,21 +21,39 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:title="Yadawy"
+
+        />
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/toolbar"
+        app:layout_constraintBottom_toBottomOf="@id/toolbar"
+        android:id="@+id/logo_search"
 
         />
 
     <android.support.v7.widget.SearchView
         android:id="@+id/search_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_width="0dp"
+       app:layout_constraintStart_toEndOf="@id/logo_search"
+        android:layout_height="0dp"
         android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:queryHint="search.."
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        tools:layout_editor_absoluteY="8dp" />
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/rounded_button"
+        app:layout_constraintBottom_toBottomOf="@id/toolbar"
+
+        app:layout_constraintEnd_toStartOf="@+id/login_button_search"
+
+
+        app:layout_constraintTop_toTopOf="@+id/toolbar"
+        app:queryHint="search.." />
 
 
     <android.support.v7.widget.RecyclerView
@@ -48,6 +67,23 @@
         app:layout_constraintTop_toBottomOf="@+id/search_view">
 
     </android.support.v7.widget.RecyclerView>
+
+    <Button
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:id="@+id/login_button_search"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:background="@drawable/rounded_button"
+        android:text="log in"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="@id/toolbar"
+        app:layout_constraintBottom_toBottomOf="@id/toolbar"
+        android:textAllCaps="false"
+        android:textColor="#fefefe"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
 </android.support.constraint.ConstraintLayout>

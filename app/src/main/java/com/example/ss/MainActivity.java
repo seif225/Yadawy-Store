@@ -129,7 +129,10 @@ public class MainActivity extends AppCompatActivity
                     if (!dataSnapshot.hasChild("userID")) {
 
                         sendUserToSplash();
-                    } else if (!dataSnapshot.hasChild("account type") && dataSnapshot.hasChild("mail") && !dataSnapshot.hasChild("anonymous")) {
+                    }
+                    else if (dataSnapshot.hasChild("anonymous")){sendUserToSearchFlag(); }
+
+                    else if (!dataSnapshot.hasChild("account type") && dataSnapshot.hasChild("mail") && !dataSnapshot.hasChild("anonymous")) {
                         sendUserToChooseAccountType();
 
                     } else if (!dataSnapshot.hasChild("userName") || !dataSnapshot.hasChild("phone") || !dataSnapshot.hasChild("address")) {
@@ -139,7 +142,11 @@ public class MainActivity extends AppCompatActivity
                         }
 
 
-                    } else if (dataSnapshot.hasChild("userName") && dataSnapshot.hasChild("phone") && dataSnapshot.hasChild("address")
+
+
+                    }
+
+                    else if (dataSnapshot.hasChild("userName") && dataSnapshot.hasChild("phone") && dataSnapshot.hasChild("address")
                             && dataSnapshot.hasChild("account type")) {
 
                         if (dataSnapshot.child("account type").getValue().equals("business account") &&
@@ -164,6 +171,15 @@ public class MainActivity extends AppCompatActivity
 
 
         }
+
+
+    }
+
+    private void sendUserToSearchFlag() {
+
+    Intent i = new Intent (this,SearchActivity.class);
+    i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+    startActivity(i);
 
 
     }

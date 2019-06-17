@@ -92,7 +92,7 @@
         android:layout_height="wrap_content"
 android:layout_marginTop="8dp"
         android:background="#FEFEFE"
-        android:text="guest"
+        android:text="complete as a guest"
 
         android:textAllCaps="false"
         android:textColor="@color/colorAccent"
