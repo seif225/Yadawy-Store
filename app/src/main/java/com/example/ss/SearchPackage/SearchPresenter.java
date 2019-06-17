@@ -183,7 +183,7 @@ class SearchPresenter {
                     AlertDialog alertDialog = new AlertDialog.Builder(context).create();
                     alertDialog.setTitle("Alert");
                     alertDialog.setMessage("you are logged in as a guest , and this app has amazing features too ," +
-                            " so it's highly recommended to login from the login button above to benefits from these features ^_^");
+                            " so it's highly recommended to login from the login button above to get benefits from these features ^_^");
                     alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
