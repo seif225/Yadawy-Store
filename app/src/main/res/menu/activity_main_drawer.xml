@@ -13,6 +13,11 @@
             android:icon="@drawable/ic_widgets_black_24dp"
             android:title="Categories" />
         <item
+            android:id="@+id/nav_search"
+            android:icon="@drawable/ic_search_black_24dp"
+            android:title="search" />
+
+        <item
             android:id="@+id/nav_save"
             android:icon="@drawable/ic_bookmark_black_24dp"
             android:title="Saved" />

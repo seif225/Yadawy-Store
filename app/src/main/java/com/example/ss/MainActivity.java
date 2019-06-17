@@ -31,6 +31,7 @@ import com.example.ss.FindSellersPackage.FindSellersActivity;
 import com.example.ss.HomeFragmentV2Package.HomeFragmentV2;
 import com.example.ss.LikesFragmentPack.LikesFragment;
 import com.example.ss.ProfileEditActivityPack.ProfileEditActivity;
+import com.example.ss.SearchPackage.SearchActivity;
 import com.example.ss.ShoppingCartPackage.ShoppingCartActivity;
 import com.example.ss.SplashPack.SplashActivity;
 import com.example.ss.WorkShopsPackage.WorkShopsFragment;
@@ -314,7 +315,37 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_categroies) {
             selectedFragment = new CategoryFragment();
 
-        } else if (id == R.id.nav_save) {
+        }
+
+        else if (id == R.id.nav_search) {
+
+            FirebaseDatabase.getInstance().getReference().child("Users")
+                    .child(FirebaseAuth.getInstance().getUid()).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                    if (!dataSnapshot.hasChild("anonymous")){
+                        Intent i = new Intent(getApplicationContext(), SearchActivity.class);
+                        startActivity(i);
+
+                    }
+
+                    else
+                        Toast.makeText(MainActivity.this, " you have to login first", Toast.LENGTH_SHORT).show();
+
+
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
+        }
+
+        else if (id == R.id.nav_save) {
             selectedFragment = new LikesFragment();
 
         } else if (id == R.id.nav_profile) {
