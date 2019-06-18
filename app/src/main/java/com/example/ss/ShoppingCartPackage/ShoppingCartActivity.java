@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.example.ss.HomeFragmentV2Package.ProductModel;
 import com.example.ss.ProductActivityPack.ProductActivity;

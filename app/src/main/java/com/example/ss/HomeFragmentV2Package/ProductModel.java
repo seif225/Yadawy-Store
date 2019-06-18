@@ -9,12 +9,20 @@ public class ProductModel {
     private HashMap<String, String> imageLinksWithKeys;
     private String ProductName, prodcutPrice, productDescribtion, color,
             category, priceRange, uId, productId, productLikes,
-            numOfFollowers, numOfFollowing, productNumber, proudctDate,thumbnail,userName;
+            numOfFollowers, numOfFollowing, productNumber, proudctDate,thumbnail,userName,customisation;
     private int productNumberAsInt;
     private int priceAsInt,quantity;
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public void setCustomisation(String customisation) {
+        this.customisation = customisation;
+    }
+
+    public String getCustomisation() {
+        return customisation;
     }
 
     public void setQuantity(int quantity) {

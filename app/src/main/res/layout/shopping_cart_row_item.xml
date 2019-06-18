@@ -2,6 +2,7 @@
 <android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp">
@@ -89,7 +90,7 @@
             android:id="@+id/price_cart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
+           android:layout_margin="8dp"
             android:textColor="#0DDF53"
             app:layout_constraintEnd_toStartOf="@+id/increament"
             app:layout_constraintStart_toStartOf="@id/textView14"
@@ -111,13 +112,13 @@
             />
 
         <TextView
+            android:id="@+id/textView15"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="total:"
-            android:id="@+id/textView15"
             app:layout_constraintEnd_toEndOf="@+id/textView14"
             app:layout_constraintStart_toStartOf="@+id/textView14"
-            app:layout_constraintTop_toBottomOf="@+id/price_cart" />
+            app:layout_constraintTop_toBottomOf="@+id/customisation_et" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -129,6 +130,18 @@
             android:textColor="#0DDF53"
 
             />
+
+        <EditText
+            android:id="@+id/customisation_et"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="add customisation"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toStartOf="@+id/remove_button_cart"
+            app:layout_constraintStart_toEndOf="@+id/product_image_cart"
+           app:layout_constraintTop_toBottomOf="@+id/price_cart" />
 
     </android.support.constraint.ConstraintLayout>
 

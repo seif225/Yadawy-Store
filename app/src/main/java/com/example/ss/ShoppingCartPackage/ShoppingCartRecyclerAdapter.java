@@ -4,13 +4,19 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +34,8 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
+import static android.support.constraint.Constraints.TAG;
 
 public class ShoppingCartRecyclerAdapter extends RecyclerView.Adapter<ShoppingCartRecyclerAdapter.ViewHolder> {
     private List<ProductModel> listOfProducts;
@@ -97,6 +105,7 @@ public class ShoppingCartRecyclerAdapter extends RecyclerView.Adapter<ShoppingCa
         return new ViewHolder(view);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onBindViewHolder(@NonNull final ShoppingCartRecyclerAdapter.ViewHolder viewHolder, final int i) {
         viewHolder.quantity=1;
@@ -109,7 +118,6 @@ public class ShoppingCartRecyclerAdapter extends RecyclerView.Adapter<ShoppingCa
                 viewHolder.quantityTv.setText(viewHolder.quantity+"");
                 viewHolder.totalPriceTv.setText(viewHolder.quantity * listOfProducts.get(i).getPriceAsInt()+"");
                 listOfProducts.get(i).setQuantity(viewHolder.quantity);
-
 
 
             }
@@ -166,6 +174,23 @@ public class ShoppingCartRecyclerAdapter extends RecyclerView.Adapter<ShoppingCa
             }
         });
 
+        viewHolder.customisationEt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                listOfProducts.get(i).setCustomisation(viewHolder.customisationEt.getText().toString());
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
     }
 
@@ -182,6 +207,7 @@ public class ShoppingCartRecyclerAdapter extends RecyclerView.Adapter<ShoppingCa
         TextView productNameTv, productPriceTv, quantityTv, totalPriceTv;
         Button increament, decreament, remove;
         int quantity = 1;
+         EditText customisationEt;
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -195,6 +221,7 @@ public class ShoppingCartRecyclerAdapter extends RecyclerView.Adapter<ShoppingCa
             decreament = itemView.findViewById(R.id.decreament);
             remove = itemView.findViewById(R.id.remove_button_cart);
             totalPriceTv = itemView.findViewById(R.id.total_price);
+            customisationEt = itemView.findViewById(R.id.customisation_et);
 
         }
     }
