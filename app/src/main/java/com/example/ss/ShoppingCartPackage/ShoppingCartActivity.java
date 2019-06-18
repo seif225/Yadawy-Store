@@ -1,19 +1,31 @@
 package com.example.ss.ShoppingCartPackage;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 
+import com.example.ss.HomeFragmentV2Package.ProductModel;
+import com.example.ss.ProductActivityPack.ProductActivity;
 import com.example.ss.R;
+import com.example.ss.TestingActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.UUID;
 
 public class ShoppingCartActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private Button proceedBtn;
     private ShoppingCartPresenter presenter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +39,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
     private void initializeFields() {
     recyclerView=findViewById(R.id.cart_recycler_view);
     proceedBtn=findViewById(R.id.check_out_btn);
-    presenter=new ShoppingCartPresenter(this);
+    presenter=new ShoppingCartPresenter(this,proceedBtn);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -36,6 +48,10 @@ public class ShoppingCartActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
+
+
+
+
     }
 
     @Override

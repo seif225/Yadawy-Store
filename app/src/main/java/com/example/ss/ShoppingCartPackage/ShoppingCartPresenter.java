@@ -24,15 +24,20 @@ public class ShoppingCartPresenter {
     private DatabaseReference cartRef;
     private List<ProductModel> listOfProducts;
     private ShoppingCartRecyclerAdapter adapter;
-
-    public ShoppingCartPresenter(Context context) {
+    private Button proceedBtn;
+    public ShoppingCartPresenter(Context context, Button proceedBtn) {
         this.context = context;
         cartRef = FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getUid())
                 .child("cart");
+        this.proceedBtn=proceedBtn;
         listOfProducts = new ArrayList<>();
-        adapter = new ShoppingCartRecyclerAdapter(listOfProducts, context);
+        adapter = new ShoppingCartRecyclerAdapter(listOfProducts, context,proceedBtn);
     }
 
+
+    public List<ProductModel> getListOfProducts() {
+        return listOfProducts;
+    }
 
     public void getDataAndPreview(final RecyclerView recyclerView, Button proceedBtn) {
 

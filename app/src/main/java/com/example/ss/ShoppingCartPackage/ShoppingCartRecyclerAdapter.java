@@ -1,7 +1,9 @@
 package com.example.ss.ShoppingCartPackage;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -11,31 +13,80 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ss.HomeFragmentV2Package.NewsFeedRecyclerAdapter;
 import com.example.ss.HomeFragmentV2Package.ProductModel;
 import com.example.ss.R;
+import com.example.ss.ReceiptPackage.ReceiptActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class ShoppingCartRecyclerAdapter extends RecyclerView.Adapter<ShoppingCartRecyclerAdapter.ViewHolder> {
-    List<ProductModel> listOfProducts;
-    Context context;
+    private List<ProductModel> listOfProducts;
+    private Context context;
     private AlertDialog.Builder alertDialogBuilder;
     private AlertDialog alertDialog;
+    private Button proceedBtn;
 
-    ShoppingCartRecyclerAdapter(List<ProductModel> listOfProducts, Context context) {
+    ShoppingCartRecyclerAdapter(final List<ProductModel> listOfProducts, final Context context, Button proceedBtn) {
         this.listOfProducts = listOfProducts;
         this.context = context;
         alertDialogBuilder = new AlertDialog.Builder(context);
         alertDialogBuilder.setTitle("are you sure ?");
         alertDialogBuilder.setMessage("this operation can't be undone.");
+        this.proceedBtn=proceedBtn;
+        proceedBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (listOfProducts.size() > 0) {
+
+                    final String orderNumber = UUID.randomUUID().toString();
+                    final ProgressDialog progressDialog = new ProgressDialog(context);
+                    progressDialog.setTitle("just a glance..");
+                    progressDialog.setMessage("submitting your order ...");
+                    progressDialog.setCancelable(false);
+                    progressDialog.show();
+                    FirebaseDatabase.getInstance().getReference().child("orders").child(FirebaseAuth.getInstance().getUid())
+                            .child(orderNumber).setValue(listOfProducts).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+
+                                FirebaseDatabase.getInstance().getReference().child("Users")
+                                        .child(FirebaseAuth.getInstance().getUid()).child("cart").removeValue();
+                                Intent i = new Intent(context, ReceiptActivity.class);
+                                progressDialog.dismiss();
+                                i.putExtra("orderId", orderNumber);
+
+
+                                context.startActivity(i);
+                            } else {
+                                Toast.makeText(context, "" + task.getResult(), Toast.LENGTH_SHORT).show();
+                                progressDialog.dismiss();
+
+                            }
+                        }
+                    });
+
+
+                }
+            }
+        });
 
     }
 
+    public List<ProductModel> getListOfProducts() {
+        return listOfProducts;
+    }
 
     @NonNull
     @Override
@@ -48,12 +99,17 @@ public class ShoppingCartRecyclerAdapter extends RecyclerView.Adapter<ShoppingCa
 
     @Override
     public void onBindViewHolder(@NonNull final ShoppingCartRecyclerAdapter.ViewHolder viewHolder, final int i) {
+        viewHolder.quantity=1;
+        listOfProducts.get(i).setQuantity(viewHolder.quantity);
+
         viewHolder.increament.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 viewHolder.quantity = viewHolder.quantity + 1;
                 viewHolder.quantityTv.setText(viewHolder.quantity+"");
                 viewHolder.totalPriceTv.setText(viewHolder.quantity * listOfProducts.get(i).getPriceAsInt()+"");
+                listOfProducts.get(i).setQuantity(viewHolder.quantity);
+
 
 
             }
@@ -66,6 +122,8 @@ public class ShoppingCartRecyclerAdapter extends RecyclerView.Adapter<ShoppingCa
                     viewHolder.quantity = viewHolder.quantity - 1;
                     viewHolder.quantityTv.setText(viewHolder.quantity+"");
                     viewHolder.totalPriceTv.setText(viewHolder.quantity * listOfProducts.get(i).getPriceAsInt()+"");
+                    listOfProducts.get(i).setQuantity(viewHolder.quantity);
+
 
                 }
             }

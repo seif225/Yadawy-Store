@@ -11,10 +11,18 @@ public class ProductModel {
             category, priceRange, uId, productId, productLikes,
             numOfFollowers, numOfFollowing, productNumber, proudctDate,thumbnail,userName;
     private int productNumberAsInt;
-    private int priceAsInt;
+    private int priceAsInt,quantity;
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public int getQuantity() {
+        return quantity;
     }
 
     public String getUserName() {
