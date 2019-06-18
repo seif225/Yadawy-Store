@@ -129,10 +129,9 @@ public class MainActivity extends AppCompatActivity
                     if (!dataSnapshot.hasChild("userID")) {
 
                         sendUserToSplash();
-                    }
-                    else if (dataSnapshot.hasChild("anonymous")){sendUserToSearchFlag(); }
-
-                    else if (!dataSnapshot.hasChild("account type") && dataSnapshot.hasChild("mail") && !dataSnapshot.hasChild("anonymous")) {
+                    } else if (dataSnapshot.hasChild("anonymous")) {
+                        sendUserToSearchFlag();
+                    } else if (!dataSnapshot.hasChild("account type") && dataSnapshot.hasChild("mail") && !dataSnapshot.hasChild("anonymous")) {
                         sendUserToChooseAccountType();
 
                     } else if (!dataSnapshot.hasChild("userName") || !dataSnapshot.hasChild("phone") || !dataSnapshot.hasChild("address")) {
@@ -142,11 +141,7 @@ public class MainActivity extends AppCompatActivity
                         }
 
 
-
-
-                    }
-
-                    else if (dataSnapshot.hasChild("userName") && dataSnapshot.hasChild("phone") && dataSnapshot.hasChild("address")
+                    } else if (dataSnapshot.hasChild("userName") && dataSnapshot.hasChild("phone") && dataSnapshot.hasChild("address")
                             && dataSnapshot.hasChild("account type")) {
 
                         if (dataSnapshot.child("account type").getValue().equals("business account") &&
@@ -177,9 +172,9 @@ public class MainActivity extends AppCompatActivity
 
     private void sendUserToSearchFlag() {
 
-    Intent i = new Intent (this,SearchActivity.class);
-    i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-    startActivity(i);
+        Intent i = new Intent(this, SearchActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(i);
 
 
     }
@@ -331,69 +326,25 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_categroies) {
             selectedFragment = new CategoryFragment();
 
-        }
-
-        else if (id == R.id.nav_search) {
-
-            FirebaseDatabase.getInstance().getReference().child("Users")
-                    .child(FirebaseAuth.getInstance().getUid()).addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                    if (!dataSnapshot.hasChild("anonymous")){
-                        Intent i = new Intent(getApplicationContext(), SearchActivity.class);
-                        startActivity(i);
-
-                    }
-
-                    else
-                        Toast.makeText(MainActivity.this, " you have to login first", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.nav_search) {
 
 
+            Intent i = new Intent(getApplicationContext(), SearchActivity.class);
+            startActivity(i);
 
-                }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
-
-        }
-
-        else if (id == R.id.nav_save) {
+        } else if (id == R.id.nav_save) {
             selectedFragment = new LikesFragment();
 
         } else if (id == R.id.nav_profile) {
 
-            FirebaseDatabase.getInstance().getReference().child("Users")
-                    .child(FirebaseAuth.getInstance().getUid()).addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                    if (!dataSnapshot.hasChild("anonymous")){
-                        selectedFragment = new ProfileFragment();
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                                selectedFragment).commit();
-                    }
-
-                    else
-                    Toast.makeText(MainActivity.this, " you have to login first", Toast.LENGTH_SHORT).show();
-
-
-
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
+            selectedFragment = new ProfileFragment();
 
 
         } else if (id == R.id.nav_share) {
 
-        }  else if (id == R.id.nav_contct_us) {
+        } else if (id == R.id.nav_contct_us) {
 
         } else if (id == R.id.nav_logOut) {
             mAuth.signOut();
@@ -403,34 +354,12 @@ public class MainActivity extends AppCompatActivity
             selectedFragment = new FindSellersActivity();
 
 
-
         } else if (id == R.id.workshops_nav_menu) {
 
-            FirebaseDatabase.getInstance().getReference().child("Users")
-                    .child(FirebaseAuth.getInstance().getUid()).addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                    if (!dataSnapshot.hasChild("anonymous")) {
-                        selectedFragment = new WorkShopsFragment();
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                                selectedFragment).commit();
-                    }
-                    else
-                    Toast.makeText(MainActivity.this, " you have to login first", Toast.LENGTH_SHORT).show();
-
-
-
-
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
+            selectedFragment = new WorkShopsFragment();
 
         }
+
 
         //return true;
 
